@@ -20,6 +20,7 @@
 % Definition of acronyms
 \acrodef{FOP}{Feature Oriented Programming}
 \acrodef{DSL}{Domain Specific Language}
+\acrodef{JVM}{Java Virtual Machine}
 \acrodef{AST}{Abstract Syntax Tree}
 
 
@@ -55,6 +56,49 @@ Write your intro here.
 \label{chap:background}
 %----------------------------------------------------------------------------------------
 
+\section{Neverlang}
+Neverlang Language Workbench è un framework sviluppato presso l’Università di Milano dal professor Cazzola e dai suoi collaboratori, il cui 
+scopo è favorire lo sviluppo di linguaggi di programmazione, in particolare secondo il paradigma di programmazione feature-oriented.
+
+È basato sull’idea che i linguaggi di programmazione abbiano un’intrinseca divisione modulare in più caratteristiche, o \textit{features}, ciascuna 
+delle quali è implementata da un componente specifico. In accordo con tale visione, l’obiettivo del framework è definire i linguaggi tramite 
+una divisione in frammenti, chiamati moduli, ognuno dei quali si occupa di implementare una specifica caratteristica e, infine, tramite la 
+combinazione dei diversi moduli, ottenere un linguaggio di programmazione specifico per il contesto applicativo richiesto, ossia un  
+\ac{DSL} \cite{NeverlangWebsite}.
+
+In particolare, all’interno di ogni modulo vengono definite due parti principali:
+\begin{itemize}
+    \item la \textbf{sintassi}, utilizzando una grammatica formale;
+    \item la \textbf{semantica}, in funzione della sintassi e sfruttando i vari elementi non-terminali e i loro attributi. Inoltre, il 
+    comportamento del componente può essere suddiviso in diverse fasi, ciascuna identificata da un ruolo specifico del componente.
+\end{itemize}
+Successivamente, i componenti del linguaggio vengono definiti combinando definizioni di sintassi e semantica provenienti da diversi moduli, 
+all’interno di elementi detti \textit{slice} \cite{Vacchi2015}.
+
+Tra i vantaggi principali di Neverlang troviamo \cite{Cazzola2012}:
+\begin{itemize}
+    \item \textbf{Modularità}: Ognuno dei moduli che compongono il linguaggio viene compilato separatamente, permettendo di utilizzarne uno o 
+    più di uno (in tal caso aggregandoli in uno \textit{slice}) all’interno di altri linguaggi.
+    \item \textbf{Riutilizzo}: Neverlang offre la possibilità di riutilizzare frammenti di linguaggio in più di un contesto. Ad esempio, un 
+    frammento può utilizzare la sintassi di un altro frammento definito in precedenza e ridefinire la semantica, o viceversa. Inoltre, è 
+    possibile ridefinire l’ordine dei simboli non-terminali utilizzati nella sintassi o nella semantica importata.
+    \item \textbf{Estensibilità}: L’architettura modulare utilizzata all’interno di Neverlang facilita l’estensione di linguaggi esistenti. 
+    Per aggiungere nuove funzionalità non è necessario modificare il codice, ma è sufficiente integrare un nuovo \textit{slice}.
+\end{itemize}
+
+\section{Java}
+In aggiunta a Neverlang, per la realizzazione del progetto è stato utilizzato il linguaggio di programmazione Java. Java è un linguaggio di 
+programmazione ad alto livello, orientato agli oggetti e a tipizzazione statica, sviluppato da Sun Microsystems nel 1991. È molto diffuso e 
+ben supportato, con una vasta comunità di sviluppatori e una grande quantità di librerie. Uno degli obiettivi principali di Java è quello di 
+essere il più possibile indipendente dalla piattaforma di esecuzione, permettendo di scrivere una volta il codice e farlo eseguire su qualsiasi 
+\ac{JVM}, indipendentemente dall'architettura del computer \cite{IBMWebsite}.
+
+Java è stato utilizzato per la realizzazione del progetto in quanto Neverlang è sviluppato per essere completamente integrato con esso.
+Il suo compilatore, nlgc, è stato sviluppato per poter convertire il codice scritto utilizzando il DSL di Neverlang, generando un nuovo codice
+supportato dalla \ac{JVM}. Inoltre, Neverlang permette di utilizzare Java (ma non solo; anche Scala, ad esempio, è supportato) come linguaggio 
+per la definizione della semantica all'interno dei moduli del \ac{DSL}. Ciò è possibile in quanto gli accessi a variabili non-terminali, 
+definiti all'interno della sintassi, sono sostituiti dallo specifico plug-in con accessi alla reale rappresentazione interna del linguaggio. 
+In particolare, l'accesso alle variabili viene effettuato tramite una chiamata all'n-esimo figlio dell'\ac{AST} \cite{Cazzola2013}.
 
 %----------------------------------------------------------------------------------------
 \chapter{Requisiti}
