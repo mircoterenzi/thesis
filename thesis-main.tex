@@ -56,6 +56,27 @@ Write your intro here.
 \label{chap:background}
 %----------------------------------------------------------------------------------------
 
+\section{Domain-Specific Languages}
+In modo del tutto opposto rispetto ai linguaggi general-purpose, progettati per poter essere utilizzati in ogni contesto con un’efficienza e 
+un grado d’espressività relativamente uguali, i \ac{DSL} sono ottimizzati per uno specifico ambito e risultano essere, in molti casi, una soluzione 
+molto più naturale rispetto a quella fornita dai primi \cite{Hudak1997}. Tra gli esempi più comuni di \ac{DSL} troviamo SQL, LaTeX (utilizzato anche per 
+la scrittura di questo documento) e CSS.
+
+Nonostante la definizione di \ac{DSL} sia chiara, non è altrettanto immediato definire se un linguaggio sia o meno un \ac{DSL}. In questo caso, ci sono 
+quattro fattori chiave da osservare \cite{Fowler2010}:
+\begin{itemize}
+    \item Un \ac{DSL} è un linguaggio di programmazione pensato per eseguire delle operazioni su un computer. Per tale motivo, la sua struttura 
+    dovrebbe essere progettata in modo da essere facile da comprendere per gli esseri umani e, al tempo stesso, eseguibile da un compilatore.
+    \item Essendo un linguaggio, deve avere un senso di fluidità e la sua espressività deve essere derivata non solo da un’espressione 
+    individuale, ma anche dall’unione di più istruzioni.
+    \item Per essere coerente con la sua natura specializzata, un \ac{DSL} dovrebbe avere le caratteristiche minime per poter supportare il 
+    dominio applicativo di interesse ed evitare funzioni non strettamente necessarie che potrebbero rendere il linguaggio più difficile 
+    da usare e da comprendere.
+\end{itemize}
+
+%TODO: implement from draft
+
+
 \section{Neverlang}
 Neverlang Language Workbench è un framework sviluppato presso l’Università di Milano dal professor Cazzola e dai suoi collaboratori, il cui 
 scopo è favorire lo sviluppo di linguaggi di programmazione, in particolare secondo il paradigma di programmazione feature-oriented.
