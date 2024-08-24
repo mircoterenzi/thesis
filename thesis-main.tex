@@ -36,7 +36,7 @@ Max 2000 characters, strict.
 
 %----------------------------------------------------------------------------------------
 \tableofcontents   
-%\listoffigures     % (optional) comment if empty
+\listoffigures     % (optional) comment if empty
 %\lstlistoflistings % (optional) comment if empty
 %----------------------------------------------------------------------------------------
 
@@ -58,24 +58,54 @@ Write your intro here.
 
 \section{Domain-Specific Languages}
 In modo del tutto opposto rispetto ai linguaggi general-purpose, progettati per poter essere utilizzati in ogni contesto con un’efficienza e 
-un grado d’espressività relativamente uguali, i \ac{DSL} sono ottimizzati per uno specifico ambito e risultano essere, in molti casi, una soluzione 
-molto più naturale rispetto a quella fornita dai primi \cite{Hudak1997}. Tra gli esempi più comuni di \ac{DSL} troviamo SQL, LaTeX (utilizzato anche per 
-la scrittura di questo documento) e CSS.
+un grado d’espressività relativamente uguali, i \ac{DSL} sono ottimizzati per uno specifico ambito e risultano essere, in molti casi, una 
+soluzione molto più naturale rispetto a quella fornita dai primi \cite{Hudak1997}. Tra gli esempi più comuni di \ac{DSL} troviamo SQL, LaTeX 
+(utilizzato anche per la scrittura di questo documento) e CSS.
 
-Nonostante la definizione di \ac{DSL} sia chiara, non è altrettanto immediato definire se un linguaggio sia o meno un \ac{DSL}. In questo caso, ci sono 
-quattro fattori chiave da osservare \cite{Fowler2010}:
+Nonostante la definizione di \ac{DSL} sia chiara, non è altrettanto immediato definire se un linguaggio sia o meno un \ac{DSL}. In questo caso, 
+vi sono alcuni principi chiave da osservare \cite{Fowler2010}:
 \begin{itemize}
-    \item Un \ac{DSL} è un linguaggio di programmazione pensato per eseguire delle operazioni su un computer. Per tale motivo, la sua struttura 
-    dovrebbe essere progettata in modo da essere facile da comprendere per gli esseri umani e, al tempo stesso, eseguibile da un compilatore.
+    \item Un \ac{DSL} è un linguaggio di programmazione e, come tale, la sua struttura dovrebbe essere progettata in modo da essere facile da 
+    comprendere per gli esseri umani e, al tempo stesso, eseguibile da un compilatore.
     \item Essendo un linguaggio, deve avere un senso di fluidità e la sua espressività deve essere derivata non solo da un’espressione 
-    individuale, ma anche dall’unione di più istruzioni.
-    \item Per essere coerente con la sua natura specializzata, un \ac{DSL} dovrebbe avere le caratteristiche minime per poter supportare il 
-    dominio applicativo di interesse ed evitare funzioni non strettamente necessarie che potrebbero rendere il linguaggio più difficile 
-    da usare e da comprendere.
+    individuale, ma anche dalla combinazione di più istruzioni.
+    \item Coerentemente alla definizione, un \ac{DSL} dovrebbe implementare l'insieme minimo di caratteristiche necessarie per poter supportare 
+    il dominio applicativo di interesse ed evitare funzioni non strettamente necessarie che potrebbero rendere il linguaggio più difficile, 
+    sia da utilizzare, sia da comprendere.
 \end{itemize}
 
-%TODO: implement from draft
+L’utilizzo di questa tipologia di linguaggi di programmazione comporta una serie di vantaggi:
+\begin{itemize}
+    \item \textbf{Produttività}: È possibile aumentare il livello d’astrazione e, di conseguenza, aumentare la produttività. Questo perché è 
+    possibile utilizzare direttamente i concetti propri del dominio applicativo, non essendo limitati dalla necessità di mantenere una 
+    generalità atta ad ottenere un linguaggio applicabile in molteplici contesti  \cite{Kelly2008}. Come indicato da Paul Hudak 
+    \cite{Hudak1997} ed illustrato nella \cref{fig:sw-dev-cost}, assumendo che il costo di sviluppo di un programma sia lineare, possiamo 
+    ipotizzare che il costo iniziale richiesto sia maggiore nel caso si utilizzasse un \ac{DSL} rispetto a metodologie più convenzionali 
+    (considerando il caso in cui il linguaggio andasse sviluppato, se ne venisse utilizzato uno esistente tale costo sarebbe significativamente 
+    minore). Ciò nonostante, la pendenza della curva è considerevolmente più bassa e quindi, da un determinato punto in poi, l’utilizzo di 
+    \ac{DSL} porterebbe un risparmio significativo.
+    \begin{figure}
+        \centering
+        \includegraphics[width=.8\linewidth]{figures/sw-dev-cost.pdf}
+        \caption{Il vantaggio ottenuto dall'utilizzo di DSL.}
+        \label{fig:sw-dev-cost}
+    \end{figure}
+    \item \textbf{Qualità del codice}: L'utilizzo di \ac{DSL} favorisce anche una migliore qualità del codice. Infatti, il linguaggio può 
+    includere regole direttamente trasposte dal dominio all'interno del quale è applicato. In questo modo risulta molto più difficile, talvolta 
+    impossibile, ottenere dei risultati non attesi. Ad esempio, Antti Raunio, capo ingegnere del progetto EADS \cite{EADS}, afferma che ``la 
+    qualità del codice generato è chiaramente migliore [...] perché il linguaggio di modellazione è stato progettato per adattarsi 
+    all'architettura del nostro terminale''\footnote{Di seguito riportata l'affermazione citata, in lingua originale: "the quality of the 
+    generated code is clearly better, simply because the modelling language was designed to fit our terminal architecture"}. Inoltre, 
+    l'offuscamento della reale complessità del problema, dovuto all'utilizzo di \ac{DSL}, consente ai nuovi sviluppatori di lavorare ad un 
+    alto livello d'astrazione, senza dover conoscere tutti i dettagli inerenti all'implementazione del linguaggio \cite{EADS}. 
+    \item \textbf{Migliore manutenibilità}: Sebbene l'uso di \ac{DSL} non renda l'implementazione necessariamente meno complessa di quanto 
+    si possa ottenere utilizzando un linguaggio \textit{general-purpose}, la manutenibilità del codice risulta essere accentuata 
+    \cite{Klint2010}.  Infatti, considerando il volume del codice, l'utilizzo di \ac{DSL} comporta una minor quantità di codice da comprendere, 
+    facilitandone la modifica. Inoltre, è possibile  ignorare il problema di mantenere coerente ciò che è definito dalla grammatica con la 
+    struttura gerarchica definita dall'\ac{AST} in quanto quest'ultimo si evolve con la prima \cite{Brabrand2010}.
+\end{itemize}
 
+%TODO: Il parsing è una delle parti principali durante l’esecuzione di un codice scritto utilizzando un \ac{DSL}. Quando una porzione di codice viene analizzata, le varie parti che lo compongono vengono inserite all’interno di una struttura ad albero, chiamata albero di sintassi.
 
 \section{Neverlang}
 Neverlang Language Workbench è un framework sviluppato presso l’Università di Milano dal professor Cazzola e dai suoi collaboratori, il cui 
@@ -145,8 +175,6 @@ In particolare, l'accesso alle variabili viene effettuato tramite una chiamata a
 %----------------------------------------------------------------------------------------
 
 \backmatter
-
-\nocite{*} % Remove this as soon as you have the first citation
 
 \bibliographystyle{alpha}
 \bibliography{bibliography}
