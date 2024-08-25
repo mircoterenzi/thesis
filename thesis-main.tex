@@ -22,6 +22,7 @@
 \acrodef{DSL}{Domain Specific Language}
 \acrodef{JVM}{Java Virtual Machine}
 \acrodef{AST}{Abstract Syntax Tree}
+\acrodef{CFG}{Context-Free Grammar}
 
 
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
@@ -105,7 +106,21 @@ L’utilizzo di questa tipologia di linguaggi di programmazione comporta una ser
     struttura gerarchica definita dall'\ac{AST} in quanto quest'ultimo si evolve con la prima \cite{Brabrand2010}.
 \end{itemize}
 
-\section{Compilatore}
+\section{Grammatica non contestuale}
+Nel campo dell’informatica, una grammatica formale è costituita da regole che descrivono precisamente come vengono generati i simboli di un 
+linguaggio formale, partendo da un insieme finito chiamato alfabeto. Ogni regola sintattica, detta anche produzione, è espressa nella forma 
+$A \rightarrow x$, dove $A$ è un simbolo non terminale e $x$ è una combinazione di simboli terminali e/o non terminali.
+
+In particolare, la grammatica non contestuale, o \ac{CFG}, è un tipo specifico di grammatica formale che deriva il proprio nome dal fatto che 
+le regole sintattiche mantengono la loro validità indipendentemente dai simboli che precedono o seguono il simbolo non terminale a cui si 
+applicano. Questa caratteristica è dovuta al fatto che le regole sintattiche di una grammatica non contestuale ammettono soltanto una variabile 
+non terminale sul lato sinistro della regola \cite{Linz2022}.
+
+Le grammatiche non contestuali assumono un ruolo fondamentale nella teoria dei linguaggi formali, in particolare nella definizione e nell’analisi 
+dei linguaggi di programmazione. La \ac{CFG} è utilizzata principalmente per la modellazione della sintassi, ma viene impiegata anche nella 
+costruzione di interpreti e compilatori \cite{Linz2022}.
+
+\section{Compilazione del codice}
 Il compilatore è un software fondamentale nel campo della programmazione e dell’informatica, il cui compito è tradurre il codice sorgente, 
 scritto in un linguaggio di alto livello, in un linguaggio di basso livello, tipicamente il linguaggio macchina o codice oggetto, che può 
 essere eseguito 
