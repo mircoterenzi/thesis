@@ -105,7 +105,45 @@ L’utilizzo di questa tipologia di linguaggi di programmazione comporta una ser
     struttura gerarchica definita dall'\ac{AST} in quanto quest'ultimo si evolve con la prima \cite{Brabrand2010}.
 \end{itemize}
 
-%TODO: Il parsing è una delle parti principali durante l’esecuzione di un codice scritto utilizzando un \ac{DSL}. Quando una porzione di codice viene analizzata, le varie parti che lo compongono vengono inserite all’interno di una struttura ad albero, chiamata albero di sintassi.
+\section{Compilatore}
+Il compilatore è un software fondamentale nel campo della programmazione e dell’informatica, il cui compito è tradurre il codice sorgente, 
+scritto in un linguaggio di alto livello, in un linguaggio di basso livello, tipicamente il linguaggio macchina o codice oggetto, che può 
+essere eseguito 
+dal calcolatore.
+
+Il processo di compilazione è suddiviso in diverse fasi, ognuna delle quali ha un ruolo specifico nel convertire il codice sorgente in un 
+programma eseguibile. Le fasi principali sono di seguito elencate \cite{Aho2006}:
+\begin{itemize}
+    \item \textbf{Analisi lessicale}: Durante la fase dell'analisi lessicale, talvolta definita anche \textit{scanning}, la sequenza di 
+    caratteri di input viene analizzata e divisa in porzioni significative, chiamate lessemi. Per ogni lessema viene prodotto come output un 
+    token, definito come coppia di valori \texttt{<nome-token, valore-attributo>}, che viene processato dalla fase successiva.
+    \item \textbf{Analisi sintattica}: La fase dell'analisi sintattica, più comunemente indicata come \textit{parsing} o, in italiano, 
+    parsificazione (allo stesso modo, il programma che svolge queste operazioni è chiamato \textit{parser}), prevede che i token siano 
+    utilizzati per creare una rappresentazione ad albero che descriva efficacemente la struttura grammaticale dell'input. Un esempio di 
+    questo tipo di rappresentazione è costituito dall'albero sintattico. Al suo interno, ogni nodo rappresenta un'operazione e i nodi ad 
+    esso discendenti, chiamati anche figli, rappresentano gli operandi dell'operazione definita dal primo. La parsificazione è svolta 
+    principalmente secondo due metodologie \cite{Grune2006}:
+    \begin{itemize}
+        \item l’analisi \textbf{top-down} consiste nell'emulare il processo di produzione della frase. In questo modo, partendo dal simbolo 
+        iniziale si procede per fasi ad evolvere l'output in modo da farlo corrispondere alla frase ottenuta come input. Il nome indica che 
+        l'albero sintattico viene costruito partendo dall'alto, ossia dal nodo radice, proseguendo verso il basso;
+        \item l’analisi \textbf{bottom-up}, al contrario, prevede di invertire il processo di produzione della frase, ossia ha come obiettivo 
+        quello di ridurre la frase di input al simbolo iniziale.
+    \end{itemize}
+    \item \textbf{Analisi semantica}: In questo stadio della compilazione, il fine è analizzare la correttezza semantica del programma. Più 
+    nello specifico, vengono utilizzati l'albero sintattico ottenuto dalla fase precedente e la tabella dei simboli per controllare che 
+    l'input sia semanticamente coerente con quanto è definito dal linguaggio. Una parte fondamentale dell'analisi semantica è quella del 
+    controllo del tipo (in inglese \textit{type-checking}), durante la quale il compilatore si accerta che il valore assegnato ad una 
+    variabile sia ammissibile con il tipo di tale variabile e, allo stesso modo, che gli operandi utilizzati in un’operazione siano 
+    compatibili con l’operazione stessa. Talora, le specifiche del linguaggio permettono delle conversioni di tipo chiamate coercizioni.
+    \item \textbf{Generazione di codice intermedio}: Durante la compilazione, il compilatore genera una o più rappresentazioni intermedie. 
+    L'albero sintattico prima descritto rappresenta una delle varie forme che tali rappresentazioni possono assumere. In particolare, devono 
+    essere rispettate due proprietà significative: le rappresentazioni devono essere facili da generare e facili da trasporre in codice 
+    target (spesso si tratta di linguaggio macchina).
+    \item \textbf{Ottimizzazione del codice}: Successivamente, si procede a perfezionare, per quanto possibile, il codice intermedio in modo 
+    che si possa poi ottenere un codice finale migliore.
+    \item \textbf{Generazione del codice}: Infine, il codice intermedio viene utilizzato per generare il codice target.
+\end{itemize}
 
 \section{Neverlang}
 Neverlang Language Workbench è un framework sviluppato presso l’Università di Milano dal professor Cazzola e dai suoi collaboratori, il cui 
