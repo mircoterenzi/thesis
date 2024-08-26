@@ -54,7 +54,7 @@ Max 2000 characters, strict.
 \note{TODO}
 
 %----------------------------------------------------------------------------------------
-\chapter{Background}
+\chapter{Background}\note{TODO: è corretto background o sarebbe meglio utilizzare un termine italiano (es. contesto)?}
 \label{chap:background}
 %----------------------------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ L’utilizzo di questa tipologia di linguaggi di programmazione comporta una ser
     \ac{DSL} porterebbe un risparmio significativo.
     \begin{figure}
         \centering
-        \includegraphics[width=.8\linewidth]{figures/sw-dev-cost.pdf}
+        \includegraphics[width=.7\linewidth]{figures/sw-dev-cost.pdf}
         \caption{Il vantaggio ottenuto dall'utilizzo di DSL.}
         \label{fig:sw-dev-cost}
     \end{figure}
@@ -220,25 +220,29 @@ all’interno di costrutti denominati \textit{slice}, ognuno dei quali contiene 
 
 Tra i vantaggi principali di Neverlang troviamo \cite{Cazzola2012}:
 \begin{itemize}
-    \item \textbf{Modularità}: Ognuno dei moduli che compongono il linguaggio viene compilato separatamente, permettendo di utilizzarne uno o più di uno (in tal caso aggregandoli in uno \textit{slice}) all’interno di altri linguaggi.
-    \item \textbf{Riutilizzo}: Neverlang offre la possibilità di riutilizzare frammenti di linguaggio in più di un contesto. Ad esempio, un frammento può utilizzare la sintassi di un altro frammento definito in precedenza e ridefinire la semantica, o viceversa. Inoltre, è possibile ridefinire l’ordine dei simboli non-terminali utilizzati nella sintassi o nella semantica importata.
-    \item \textbf{Estensibilità}: L’architettura modulare utilizzata all’interno di Neverlang facilita l’estensione di linguaggi esistenti. Per aggiungere nuove funzionalità non è necessario modificare il codice, ma è sufficiente integrare un nuovo \textit{slice}.
+    \item \textbf{Modularità}: Ognuno dei moduli che compongono il linguaggio viene compilato separatamente, permettendo di utilizzarne uno o 
+    più di uno (in tal caso aggregandoli in uno \textit{slice}) all’interno di altri linguaggi.
+    \item \textbf{Riutilizzo}: Neverlang offre la possibilità di riutilizzare frammenti di linguaggio in più di un contesto. Ad esempio, un 
+    frammento può utilizzare la sintassi di un altro frammento definito in precedenza e ridefinire la semantica, o viceversa. Inoltre, è 
+    possibile ridefinire l’ordine dei simboli non-terminali utilizzati nella sintassi o nella semantica importata.
+    \item \textbf{Estensibilità}: L’architettura modulare utilizzata all’interno di Neverlang facilita l’estensione di linguaggi esistenti. 
+    Per aggiungere nuove funzionalità non è necessario modificare il codice, ma è sufficiente integrare un nuovo \textit{slice}.
 \end{itemize}
 
 
 \section{Java}
-In aggiunta a Neverlang, per la realizzazione del progetto è stato utilizzato il linguaggio di programmazione Java. Java è un linguaggio di 
-programmazione ad alto livello, orientato agli oggetti e a tipizzazione statica, sviluppato da Sun Microsystems nel 1991. È molto diffuso e 
-ben supportato, con una vasta comunità di sviluppatori e una grande quantità di librerie. Uno degli obiettivi principali di Java è quello di 
-essere il più possibile indipendente dalla piattaforma di esecuzione, permettendo di scrivere una volta il codice e farlo eseguire su qualsiasi 
-\ac{JVM}, indipendentemente dall'architettura del computer \cite{IBMWebsite}.
+In aggiunta a Neverlang, per la realizzazione del progetto è stato utilizzato Java. Java è un linguaggio di programmazione ad alto livello, 
+orientato agli oggetti e a tipizzazione statica, sviluppato da Sun Microsystems nel 1991. È molto diffuso e ben supportato, con una vasta 
+comunità di sviluppatori e una grande quantità di librerie. Uno degli obiettivi principali di Java è quello di essere il più possibile 
+autonomo rispetto alla piattaforma di esecuzione, permettendo di scrivere una volta il codice e farlo eseguire su qualsiasi \ac{JVM}, 
+indipendentemente dall'architettura del calcolatore \cite{IBMWebsite}.
 
-Java è stato utilizzato per la realizzazione del progetto in quanto Neverlang è sviluppato per essere completamente integrato con esso.
-Il suo compilatore, nlgc, è stato sviluppato per poter convertire il codice scritto utilizzando il DSL di Neverlang, generando un nuovo codice
-supportato dalla \ac{JVM}. Inoltre, Neverlang permette di utilizzare Java (ma non solo; anche Scala, ad esempio, è supportato) come linguaggio 
-per la definizione della semantica all'interno dei moduli del \ac{DSL}. Ciò è possibile in quanto gli accessi a variabili non-terminali, 
-definiti all'interno della sintassi, sono sostituiti dallo specifico plug-in con accessi alla reale rappresentazione interna del linguaggio. 
-In particolare, l'accesso alle variabili viene effettuato tramite una chiamata all'n-esimo figlio dell'\ac{AST} \cite{Cazzola2013}.
+Java è stato utilizzato per la realizzazione del progetto in quanto Neverlang è progettato per essere completamente integrato con esso. Il suo 
+compilatore (nlgc) è stato sviluppato per poter convertire il codice scritto utilizzando il DSL di Neverlang in un nuovo codice supportato 
+dalla \ac{JVM}. Inoltre, Neverlang permette di utilizzare Java (ma non solo; anche Scala, ad esempio, è supportato) come linguaggio per la 
+definizione della semantica all'interno dei moduli del \ac{DSL}. Ciò è possibile in quanto gli accessi a variabili non-terminali, definiti 
+all'interno della sintassi, sono sostituiti dallo specifico plug-in con accessi alla reale rappresentazione interna del linguaggio. In 
+particolare, l'accesso alle variabili viene effettuato tramite una chiamata all'n-esimo figlio dell'\ac{AST} \cite{Cazzola2013}.
 
 %----------------------------------------------------------------------------------------
 %\chapter{Requisiti}
