@@ -18,8 +18,9 @@
 \academicyear{2023-2024}
 
 % Definition of acronyms
-\acrodef{FOP}{Feature Oriented Programming}
-\acrodef{DSL}{Domain Specific Language}
+\acrodef{FOP}{Feature-Oriented Programming}
+\acrodef{OOP}{Object-Oriented Programming}
+\acrodef{DSL}{Domain-Specific Language}
 \acrodef{JVM}{Java Virtual Machine}
 \acrodef{AST}{Abstract Syntax Tree}
 \acrodef{CFG}{Context-Free Grammar}
@@ -158,6 +159,28 @@ programma eseguibile. Le fasi principali sono di seguito elencate \cite{Aho2006}
     \item \textbf{Ottimizzazione del codice}: Successivamente, si procede a perfezionare, per quanto possibile, il codice intermedio in modo 
     che si possa poi ottenere un codice finale migliore.
     \item \textbf{Generazione del codice}: Infine, il codice intermedio viene utilizzato per generare il codice target.
+\end{itemize}
+
+\section{Programmazione feature-oriented}
+La programmazione orientata alle funzionalità, comunemente nota come \ac{FOP}, è un paradigma di programmazione focalizzato sulla modularizzazione 
+del software. L’obiettivo principale della \ac{FOP} è facilitare la gestione e lo sviluppo di programmi complessi, consentendo ai programmatori 
+di scomporli in unità modulari. Questa metodologia è ampiamente applicata in contesti di linee produttive di software e viene utilizzata per 
+gestire la creazione di diverse versioni di un programma, adatte alle specifiche richieste dei clienti \cite{Apel2013}. Inoltre, la \ac{FOP} è 
+impiegata per costruire sistemi configurabili, che prevedono l’attivazione o la disattivazione di funzionalità specifiche e offrono un elevato 
+grado di personalizzazione.
+
+Le caratteristiche principali della \ac{FOP} sono le seguenti:
+\begin{itemize}
+    \item \textbf{Riusabilità}: Confrontando la \ac{FOP} con l’approccio più classico della \ac{OOP}, si nota come la prima offra una maggiore 
+    modularità e flessibilità del codice. Di conseguenza, la riusabilità è amplificata, poiché ogni funzionalità implementata separa il nucleo 
+    dalla parte relativa alle interazioni \cite{Prehofer1997}.
+    \item \textbf{Gestione della complessità}: La \ac{FOP} permette di gestire progetti di considerevole complessità grazie allo sviluppo 
+    modulare del codice in unità distinte. Queste unità possono essere sviluppate e mantenute in modo indipendente, riducendo significativamente 
+    l’interdipendenza e la complessità del sistema complessivo. Inoltre, la separazione delle funzionalità semplifica l’evoluzione del software, 
+    poiché ogni modifica può essere limitata a una singola funzionalità senza influenzare l’intero sistema \cite{Prehofer1997}.
+    \item \textbf{Adattabilità}: La \ac{FOP} consente una facile configurazione e personalizzazione dei sistemi software attraverso la selezione 
+    e la composizione delle funzionalità. Questo approccio permette di creare diverse varianti di un prodotto software a seconda dei requisiti 
+    specifici, facilitando l’adattamento a nuovi contesti o a esigenze mutate nel tempo \cite{Apel2013}.
 \end{itemize}
 
 \section{Neverlang}
