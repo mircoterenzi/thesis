@@ -67,17 +67,17 @@ Nonostante la definizione di \ac{DSL} sia chiara, non è altrettanto immediato d
 vi sono alcuni principi chiave da osservare \cite{Fowler2010}\sidenote{TODO: è corretto inserire qui il riferimento alla documentazione utilizzata per ciò che è scritto all'interno dell'elenco puntato?}:
 \begin{itemize}
     \item Un \ac{DSL} è un linguaggio di programmazione e, come tale, la sua struttura dovrebbe essere progettata in modo da essere facile da 
-    comprendere per gli esseri umani e, al tempo stesso, eseguibile da un compilatore.
+    comprendere per gli esseri umani e, al tempo stesso, eseguibile da un calcolatore.
     \item Essendo un linguaggio, deve avere un senso di fluidità e la sua espressività deve essere derivata non solo da un’espressione 
     individuale, ma anche dalla combinazione di più istruzioni.
     \item Coerentemente alla definizione, un \ac{DSL} dovrebbe implementare l'insieme minimo di caratteristiche necessarie per poter supportare 
-    il dominio applicativo di interesse ed evitare funzioni non strettamente necessarie che potrebbero rendere il linguaggio più difficile, 
-    sia da utilizzare, sia da comprendere.
+    il dominio applicativo di interesse ed evitare funzioni non fondamentali che potrebbero rendere il linguaggio più difficile, 
+    sia da utilizzare sia da comprendere.
 \end{itemize}
 
 L’utilizzo di questa tipologia di linguaggi di programmazione comporta una serie di vantaggi:
 \begin{itemize}
-    \item \textbf{Produttività}: È possibile aumentare il livello d’astrazione e, di conseguenza, aumentare la produttività. Questo perché è 
+    \item \textbf{Produttività}: Essendo il livello d’astrazione maggiore, di conseguenza, lo è anche la produttività. Questo perché è 
     possibile utilizzare direttamente i concetti propri del dominio applicativo, non essendo limitati dalla necessità di mantenere una 
     generalità atta ad ottenere un linguaggio applicabile in molteplici contesti  \cite{Kelly2008}. Come indicato da Paul Hudak 
     \cite{Hudak1997} ed illustrato nella \cref{fig:sw-dev-cost}, assumendo che il costo di sviluppo di un programma sia lineare, possiamo 
@@ -100,7 +100,7 @@ L’utilizzo di questa tipologia di linguaggi di programmazione comporta una ser
     l'offuscamento della reale complessità del problema, dovuto all'utilizzo di \ac{DSL}, consente ai nuovi sviluppatori di lavorare ad un 
     alto livello d'astrazione, senza dover conoscere tutti i dettagli inerenti all'implementazione del linguaggio \cite{EADS}. 
     \item \textbf{Migliore manutenibilità}: Sebbene l'uso di \ac{DSL} non renda l'implementazione necessariamente meno complessa di quanto 
-    si possa ottenere utilizzando un linguaggio \textit{general-purpose}, la manutenibilità del codice risulta essere accentuata 
+    si possa ottenere utilizzando un linguaggio \textit{general-purpose}, la manutenibilità del codice risulta essere accentuata %TODO: è corretto "accentuata"?
     \cite{Klint2010}.  Infatti, considerando il volume del codice, l'utilizzo di \ac{DSL} comporta una minor quantità di codice da comprendere, 
     facilitandone la modifica. Inoltre, è possibile  ignorare il problema di mantenere coerente ciò che è definito dalla grammatica con la 
     struttura gerarchica definita dall'\ac{AST} in quanto quest'ultimo si evolve con la prima \cite{Brabrand2010}.
@@ -121,8 +121,8 @@ dei linguaggi di programmazione. La \ac{CFG} è utilizzata principalmente per la
 costruzione di interpreti e compilatori \cite{Linz2022}.
 
 \section{Compilazione del codice}
-Il compilatore è un software fondamentale nel campo della programmazione e dell’informatica, il cui compito è tradurre il codice sorgente, 
-scritto in un linguaggio di alto livello, in un linguaggio di basso livello, tipicamente il linguaggio macchina o codice oggetto, che può 
+Il compilatore è un software fondamentale nel campo della programmazione e dell’informatica, il cui compito è tradurre il codice sorgente 
+(scritto in un linguaggio di alto livello) in un linguaggio di basso livello (tipicamente il linguaggio macchina o codice oggetto) che può 
 essere eseguito 
 dal calcolatore.
 
@@ -132,8 +132,8 @@ programma eseguibile. Le fasi principali sono di seguito elencate \cite{Aho2006}
     \item \textbf{Analisi lessicale}: Durante la fase dell'analisi lessicale, talvolta definita anche \textit{scanning}, la sequenza di 
     caratteri di input viene analizzata e divisa in porzioni significative, chiamate lessemi. Per ogni lessema viene prodotto come output un 
     token, definito come coppia di valori \texttt{<nome-token, valore-attributo>}, che viene processato dalla fase successiva.
-    \item \textbf{Analisi sintattica}: La fase dell'analisi sintattica, più comunemente indicata come \textit{parsing} o, in italiano, 
-    parsificazione (allo stesso modo, il programma che svolge queste operazioni è chiamato \textit{parser}), prevede che i token siano 
+    \item \textbf{Analisi sintattica}: La fase dell'analisi sintattica, più comunemente indicata come \textit{parsing} (allo stesso modo, 
+    il programma che svolge queste operazioni è chiamato \textit{parser}) o in italiano parsificazione, prevede che i token siano 
     utilizzati per creare una rappresentazione ad albero che descriva efficacemente la struttura grammaticale dell'input. Un esempio di 
     questo tipo di rappresentazione è costituito dall'albero sintattico. Al suo interno, ogni nodo rappresenta un'operazione e i nodi ad 
     esso discendenti, chiamati anche figli, rappresentano gli operandi dell'operazione definita dal primo. La parsificazione è svolta 
@@ -142,7 +142,7 @@ programma eseguibile. Le fasi principali sono di seguito elencate \cite{Aho2006}
         \item l’analisi \textbf{top-down} consiste nell'emulare il processo di produzione della frase. In questo modo, partendo dal simbolo 
         iniziale si procede per fasi ad evolvere l'output in modo da farlo corrispondere alla frase ottenuta come input. Il nome indica che 
         l'albero sintattico viene costruito partendo dall'alto, ossia dal nodo radice, proseguendo verso il basso;
-        \item l’analisi \textbf{bottom-up}, al contrario, prevede di invertire il processo di produzione della frase, ossia ha come obiettivo 
+        \item l’analisi \textbf{bottom-up}, al contrario, prevede di invertire il processo di produzione della frase, avendo come obiettivo 
         quello di ridurre la frase di input al simbolo iniziale.
     \end{itemize}
     \item \textbf{Analisi semantica}: In questo stadio della compilazione, il fine è analizzare la correttezza semantica del programma. Più 
@@ -152,9 +152,9 @@ programma eseguibile. Le fasi principali sono di seguito elencate \cite{Aho2006}
     variabile sia ammissibile con il tipo di tale variabile e, allo stesso modo, che gli operandi utilizzati in un’operazione siano 
     compatibili con l’operazione stessa. Talora, le specifiche del linguaggio permettono delle conversioni di tipo chiamate coercizioni.
     \item \textbf{Generazione di codice intermedio}: Durante la compilazione, il compilatore genera una o più rappresentazioni intermedie. 
-    L'albero sintattico prima descritto rappresenta una delle varie forme che tali rappresentazioni possono assumere. In particolare, devono 
-    essere rispettate due proprietà significative: le rappresentazioni devono essere facili da generare e facili da trasporre in codice 
-    target (spesso si tratta di linguaggio macchina).
+    L'albero sintattico precedentemente descritto rappresenta una delle varie forme che tali rappresentazioni possono assumere. In particolare, 
+    devono essere rispettate due proprietà significative: le rappresentazioni devono essere facili da generare e facili da trasporre in codice 
+    target (ossia il linguaggio di basso livello obiettivo della traduzione).
     \item \textbf{Ottimizzazione del codice}: Successivamente, si procede a perfezionare, per quanto possibile, il codice intermedio in modo 
     che si possa poi ottenere un codice finale migliore.
     \item \textbf{Generazione del codice}: Infine, il codice intermedio viene utilizzato per generare il codice target.
@@ -170,9 +170,9 @@ grado di personalizzazione.
 
 Le caratteristiche principali della \ac{FOP} sono le seguenti:
 \begin{itemize}
-    \item \textbf{Riusabilità}: Confrontando la \ac{FOP} con l’approccio più classico della \ac{OOP}, si nota come la prima offra una maggiore 
-    modularità e flessibilità del codice. Di conseguenza, la riusabilità è amplificata, poiché ogni funzionalità implementata separa il nucleo 
-    dalla parte relativa alle interazioni \cite{Prehofer1997}.
+    \item \textbf{Riusabilità}: Confrontando la \ac{FOP} con l’approccio più classico della \ac{OOP} si nota come la prima offra una maggiore 
+    modularità e flessibilità del codice. Di conseguenza, la riusabilità è amplificata poiché per ogni funzionalità implementata il nucleo 
+    funzionale e la parte relativa alle interazioni sono mantenute separate \cite{Prehofer1997}.
     \item \textbf{Gestione della complessità}: La \ac{FOP} permette di gestire progetti di considerevole complessità grazie allo sviluppo 
     modulare del codice in unità distinte. Queste unità possono essere sviluppate e mantenute in modo indipendente, riducendo significativamente 
     l’interdipendenza e la complessità del sistema complessivo. Inoltre, la separazione delle funzionalità semplifica l’evoluzione del software, 
@@ -199,9 +199,9 @@ reale sintassi. È essenzialmente una versione alternativa e semplificata che co
 All’interno di ogni modulo vengono definite due parti principali:
 \begin{itemize}
     \item la \textbf{sintassi}, utilizzando una grammatica formale non contestuale;
-    \item e la \textbf{semantica}, in funzione della sintassi e sfruttando i vari elementi non-terminali e i loro attributi. Inoltre, il 
+    \item la \textbf{semantica}, in funzione della sintassi e sfruttando i vari elementi non terminali e i loro attributi. Inoltre, il 
     comportamento del componente può essere suddiviso in diverse fasi, ciascuna definita da un ruolo specifico all'interno del modulo. Anche 
-    l'ordine d'esecuzione dei ruoli può essere definito, le tre tipologie di visite predefinite sono:
+    l'ordine d'esecuzione dei ruoli può essere specificato e le tre tipologie di visite predefinite sono:
     \begin{itemize}
         \item Semi-automatica: Tale strategia prevede che i nodi siano visitati partendo dal nodo radice e discendendo ai nodi figli finché non 
         viene individuata una definizione semantica. Una volta trovata, il controllo della visita viene trasferito all'esecuzione di tale azione.
@@ -214,16 +214,16 @@ All’interno di ogni modulo vengono definite due parti principali:
 \end{itemize}
 
 Successivamente, i componenti del linguaggio vengono definiti combinando definizioni di sintassi e semantica provenienti da diversi moduli 
-all’interno di costrutti denominati \textit{slice}, ognuno dei quali contiene la definizione di un singolo componente del linguaggio 
-\cite{Vacchi2015}. Infine, il linguaggio viene generando combinando i vari \textit{slice} insieme. 
+all’interno di costrutti denominati \textit{slice}, ognuno dei quali contiene la definizione di un singolo componente del linguaggio. 
+Infine, il linguaggio viene generato combinando i vari \textit{slice} insieme. \cite{Vacchi2015} 
 
 Tra i vantaggi principali di Neverlang troviamo \cite{Cazzola2012}:
 \begin{itemize}
     \item \textbf{Modularità}: Ognuno dei moduli che compongono il linguaggio viene compilato separatamente, permettendo di utilizzarne uno o 
     più di uno (in tal caso aggregandoli in uno \textit{slice}) all’interno di altri linguaggi.
     \item \textbf{Riutilizzo}: Neverlang offre la possibilità di riutilizzare frammenti di linguaggio in più di un contesto. Ad esempio, un 
-    frammento può utilizzare la sintassi di un altro frammento definito in precedenza e ridefinire la semantica, o viceversa. Inoltre, è 
-    possibile ridefinire l’ordine dei simboli non-terminali utilizzati nella sintassi o nella semantica importata.
+    frammento può utilizzare la sintassi di un altro frammento definito in precedenza e ridefinirne la semantica, o viceversa. Inoltre, è 
+    possibile ridefinire l’ordine dei simboli non terminali utilizzati nella sintassi o nella semantica importata.
     \item \textbf{Estensibilità}: L’architettura modulare utilizzata all’interno di Neverlang facilita l’estensione di linguaggi esistenti. 
     Per aggiungere nuove funzionalità non è necessario modificare il codice, ma è sufficiente integrare un nuovo \textit{slice}.
 \end{itemize}
@@ -239,25 +239,25 @@ indipendentemente dall'architettura del calcolatore \cite{IBMWebsite}.
 Java è stato utilizzato per la realizzazione del progetto in quanto Neverlang è progettato per essere completamente integrato con esso. Il suo 
 compilatore (nlgc) è stato sviluppato per poter convertire il codice scritto utilizzando il DSL di Neverlang in un nuovo codice supportato 
 dalla \ac{JVM}. Inoltre, Neverlang permette di utilizzare Java (ma non solo; anche Scala, ad esempio, è supportato) come linguaggio per la 
-definizione della semantica all'interno dei moduli del \ac{DSL}. Ciò è possibile in quanto gli accessi a variabili non-terminali, definiti 
+definizione della semantica all'interno dei moduli del \ac{DSL}. Ciò è possibile in quanto gli accessi a variabili non terminali, definiti 
 all'interno della sintassi, sono sostituiti dallo specifico plug-in con accessi alla reale rappresentazione interna del linguaggio. In 
 particolare, l'accesso alle variabili viene effettuato tramite una chiamata all'n-esimo figlio dell'\ac{AST} \cite{Cazzola2013}.
 
 %----------------------------------------------------------------------------------------
-%\chapter{Requisiti}
-%\label{chap:requisiti}
+\chapter{Analisi e Requisiti}
+\label{chap:requisiti}
 %----------------------------------------------------------------------------------------
 
 
 %----------------------------------------------------------------------------------------
-%\chapter{Design e Implementazione}
-%\label{chap:Imple}
+\chapter{Design e Implementazione}
+\label{chap:Imple}
 %----------------------------------------------------------------------------------------
 
 
 %----------------------------------------------------------------------------------------
-%\chapter{Validazione e Conclusioni}
-%\label{chap:conclusioni}
+\chapter{Validazione e Conclusioni}
+\label{chap:conclusioni}
 %----------------------------------------------------------------------------------------
 
 
