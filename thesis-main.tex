@@ -184,33 +184,45 @@ Le caratteristiche principali della \ac{FOP} sono le seguenti:
 \end{itemize}
 
 \section{Neverlang}
-Neverlang Language Workbench è un framework sviluppato presso l’Università di Milano dal professor Cazzola e dai suoi collaboratori, il cui 
-scopo è favorire lo sviluppo di linguaggi di programmazione, in particolare secondo il paradigma di programmazione feature-oriented.
+Neverlang Language Workbench è un framework sviluppato presso l’Università di Milano dal professor Cazzola e dai suoi collaboratori, il cui scopo 
+è favorire lo sviluppo di linguaggi di programmazione, in particolare seguendo il paradigma della \ac{FOP}.
 
 È basato sull’idea che i linguaggi di programmazione abbiano un’intrinseca divisione modulare in più caratteristiche, o \textit{features}, ciascuna 
-delle quali è implementata da un componente specifico. In accordo con tale visione, l’obiettivo del framework è definire i linguaggi tramite 
-una divisione in frammenti, chiamati moduli, ognuno dei quali si occupa di implementare una specifica caratteristica e, infine, tramite la 
-combinazione dei diversi moduli, ottenere un linguaggio di programmazione specifico per il contesto applicativo richiesto, ossia un  
-\ac{DSL} \cite{NeverlangWebsite}.
+delle quali è implementata da un componente specifico. In accordo con tale visione, l’obiettivo del framework è definire i linguaggi tramite una 
+divisione in frammenti, chiamati moduli, ognuno dei quali si occupa di implementare una specifica caratteristica e, infine, tramite la combinazione 
+dei diversi moduli, ottenere un linguaggio di programmazione specifico per il contesto applicativo richiesto, ossia un \ac{DSL} 
+\cite{NeverlangWebsite}.
 
-In particolare, all’interno di ogni modulo vengono definite due parti principali:
+Quando il codice viene compilato, ogni costrutto viene inserito in una rappresentazione chiamata \ac{AST}, o albero sintattico astratto. 
+L'\ac{AST} è simile all'albero sintattico descritto in precedenza ma con la fondamentale differenza che non rappresenta ogni dettaglio della 
+reale sintassi. È essenzialmente una versione alternativa e semplificata che consente di focalizzarsi sulla logica descritta dal linguaggio.
+
+All’interno di ogni modulo vengono definite due parti principali:
 \begin{itemize}
-    \item la \textbf{sintassi}, utilizzando una grammatica formale;
-    \item la \textbf{semantica}, in funzione della sintassi e sfruttando i vari elementi non-terminali e i loro attributi. Inoltre, il 
-    comportamento del componente può essere suddiviso in diverse fasi, ciascuna identificata da un ruolo specifico del componente.
+    \item la \textbf{sintassi}, utilizzando una grammatica formale non contestuale;
+    \item e la \textbf{semantica}, in funzione della sintassi e sfruttando i vari elementi non-terminali e i loro attributi. Inoltre, il 
+    comportamento del componente può essere suddiviso in diverse fasi, ciascuna definita da un ruolo specifico all'interno del modulo. Anche 
+    l'ordine d'esecuzione dei ruoli può essere definito, le tre tipologie di visite predefinite sono:
+    \begin{itemize}
+        \item Semi-automatica: Tale strategia prevede che i nodi siano visitati partendo dal nodo radice e discendendo ai nodi figli finché non 
+        viene individuata una definizione semantica. Una volta trovata, il controllo della visita viene trasferito all'esecuzione di tale azione.
+        \item \textit{Post-order}: In questo caso la visita dell'albero predilige la discesa in profondità, ciò significa che l'esecuzione delle 
+        azioni definite dalla semantica dei vari nodi è posticipata a dopo che tutti i nodi figli sono stati valutati.
+        \item Giustapposizione: Nei due metodi precedenti, ad ogni ruolo corrisponde una visita all'albero. Al contrario, quando due ruoli sono 
+        giustapposti, la loro esecuzione viene eseguita ``in una volta'' e cioè tutte le azioni corrispondenti a tali ruoli sono eseguite in 
+        sequenza in una singola visita all'albero.
+    \end{itemize}
 \end{itemize}
-Successivamente, i componenti del linguaggio vengono definiti combinando definizioni di sintassi e semantica provenienti da diversi moduli, 
-all’interno di elementi detti \textit{slice} \cite{Vacchi2015}.
+
+Successivamente, i componenti del linguaggio vengono definiti combinando definizioni di sintassi e semantica provenienti da diversi moduli 
+all’interno di costrutti denominati \textit{slice}, ognuno dei quali contiene la definizione di un singolo componente del linguaggio 
+\cite{Vacchi2015}. Infine, il linguaggio viene generando combinando i vari \textit{slice} insieme. 
 
 Tra i vantaggi principali di Neverlang troviamo \cite{Cazzola2012}:
 \begin{itemize}
-    \item \textbf{Modularità}: Ognuno dei moduli che compongono il linguaggio viene compilato separatamente, permettendo di utilizzarne uno o 
-    più di uno (in tal caso aggregandoli in uno \textit{slice}) all’interno di altri linguaggi.
-    \item \textbf{Riutilizzo}: Neverlang offre la possibilità di riutilizzare frammenti di linguaggio in più di un contesto. Ad esempio, un 
-    frammento può utilizzare la sintassi di un altro frammento definito in precedenza e ridefinire la semantica, o viceversa. Inoltre, è 
-    possibile ridefinire l’ordine dei simboli non-terminali utilizzati nella sintassi o nella semantica importata.
-    \item \textbf{Estensibilità}: L’architettura modulare utilizzata all’interno di Neverlang facilita l’estensione di linguaggi esistenti. 
-    Per aggiungere nuove funzionalità non è necessario modificare il codice, ma è sufficiente integrare un nuovo \textit{slice}.
+    \item \textbf{Modularità}: Ognuno dei moduli che compongono il linguaggio viene compilato separatamente, permettendo di utilizzarne uno o più di uno (in tal caso aggregandoli in uno \textit{slice}) all’interno di altri linguaggi.
+    \item \textbf{Riutilizzo}: Neverlang offre la possibilità di riutilizzare frammenti di linguaggio in più di un contesto. Ad esempio, un frammento può utilizzare la sintassi di un altro frammento definito in precedenza e ridefinire la semantica, o viceversa. Inoltre, è possibile ridefinire l’ordine dei simboli non-terminali utilizzati nella sintassi o nella semantica importata.
+    \item \textbf{Estensibilità}: L’architettura modulare utilizzata all’interno di Neverlang facilita l’estensione di linguaggi esistenti. Per aggiungere nuove funzionalità non è necessario modificare il codice, ma è sufficiente integrare un nuovo \textit{slice}.
 \end{itemize}
 
 
