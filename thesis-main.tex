@@ -25,6 +25,7 @@
 \acrodef{JVM}{Java Virtual Machine}
 \acrodef{AST}{Abstract Syntax Tree}
 \acrodef{CFG}{Context-Free Grammar}
+\acrodef{SQL}{Structured Query Language}
 
 
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
@@ -248,6 +249,72 @@ particolare, l'accesso alle variabili viene effettuato tramite una chiamata all'
 \label{chap:requisiti}
 %----------------------------------------------------------------------------------------
 
+\section{Obiettivi}
+Il progetto si propone di ricreare la sintassi e la logica di \ac{SQL} all’interno di un \ac{DSL} implementato utilizzando il framework 
+Neverlang Language Workbench. L’obiettivo principale è modellare il linguaggio seguendo un approccio incrementale ed implementando le varie 
+funzionalità in modo tale che possano essere aggiunte o rimosse dal progetto in modo indipendente.
+
+Il linguaggio deve semplificare la gestione di un ampio quantitativo di informazioni e favorirne la manipolazione tramite le operazioni 
+implementate al suo interno. Lo scopo è aiutare l’utente finale ad estrarre le informazioni di cui ha bisogno a partire dai dati già in suo 
+possesso. Per raggiungere questo obiettivo, il programma deve implementare le operazioni necessarie per la creazione, la modifica e 
+l’eliminazione di tabelle, all’interno delle quali sono memorizzati i dati. Inoltre, è necessario gestire l’inserimento di tali dati, nonché 
+la loro eventuale alterazione od eliminazione. Infine, il linguaggio dovrà fornire una serie di operazioni per selezionare, manipolare ed 
+aggregare l’insieme di informazioni presenti nel database.
+
+\section{Requisiti funzionali}
+Come introdotto in precedenza, il \ac{DSL} dovrà implementare un insieme di caratteristiche tipiche di \ac{SQL}. Di seguito vengono elencate 
+le principali:
+\begin{itemize}
+    \item \textbf{Gestione delle tabelle}: Per modellare la base di dati secondo le proprie esigenze, l’utente ha a disposizione una serie 
+    di operazioni per creare o modificare le tabelle all’interno del database:
+    \begin{itemize}
+        \item La funzione \textit{create table} permette di creare una nuova tabella e di specificare le colonne che la compongono. Ciascuna 
+        colonna può avere vincoli sui dati che conterrà. Ad esempio, il vincolo più comunemente espresso durante la fase di creazione della 
+        tabella riguarda il tipo di dato contenuto in ogni colonna. In aggiunta, è possibile indicare altre caratteristiche che il dato 
+        inserito dovrà rispettare, come l’unicità (ossia che non sia uguale a un altro dato già presente nella tabella), la non nullità 
+        (l’informazione non può essere omessa) oppure la definizione dell’attributo come chiave della tabella, comprendendo i vincoli di 
+        unicità e non nullità precedentemente descritti.
+        \item L’operazione \textit{alter table} permette di modificare le tabelle già presenti nel database. Quando tale costrutto viene 
+        utilizzato, è necessario specificare la natura della modifica, ossia indicare se si desidera aggiungere o rimuovere una colonna 
+        dalla tabella.
+        \item \textit{Delete table} permette di rimuovere una tabella dalla base dati, eliminando anche i dati in essa contenuti.
+    \end{itemize}
+    \item \textbf{Gestione dei dati}: Analogamente a quanto descritto per le tabelle, è importante fornire la possibilità di gestire i dati 
+    al loro interno. Le funzioni necessarie, da implementare nel progetto, sono l’esatta trasposizione di quelle descritte per la gestione 
+    delle tabelle. In particolare, il costrutto \textit{insert into} permette di inserire dati all’interno di una tabella, \textit{update} 
+    consente di modificare - tramite una precisa selezione - uno o più attributi di un sottoinsieme di dati e, infine, \textit{delete} 
+    permette di eliminare una o più tuple.
+    \item \textbf{Manipolazione dei dati}: Un aspetto fondamentale di un linguaggio di questo tipo è l’utilizzo dell’insieme di 
+    informazioni contenute nel database per estrarre nuovi dati. Questa operazione può essere eseguita grazie all’implementazione dei 
+    seguenti comandi nella sintassi del \ac{DSL}:
+    \begin{itemize}
+        \item Tra le istruzioni più importanti troviamo \textit{select} e \textit{from}. La prima permette di specificare un sottoinsieme 
+        di attributi da ottenere, mentre la seconda viene utilizzata per indicare la tabella sorgente dalla quale esportare gli attributi 
+        selezionati.
+        \item Il comando \textit{where} consente, utilizzandolo in combinazione con espressioni booleane o specifici selettori (ad esempio 
+        \textit{is null}), di filtrare le tuple della tabella dalla quale si stanno estraendo i dati.
+        \item Infine, \textit{order by} viene utilizzato per indicare come ordinare le tuple del risultato. È possibile specificare anche 
+        più attributi per determinare l’ordine in caso di uguaglianza dell’attributo precedente.
+    \end{itemize}
+    \item \textbf{Aggregazione di dati}: Quando si lavora con una quantità consistente di informazioni, la possibilità di aggregare più 
+    elementi del risultato in singole tuple è fondamentale. Tramite il comando \textit{group by} è possibile specificare gli attributi 
+    secondo i quali aggregare le informazioni di un sottoinsieme di dati. A tale scopo, vengono utilizzate funzioni predefinite, 
+    denominate funzioni di aggregazione, che specificano come unire le informazioni appartenenti agli intervalli generati dall’operazione 
+    di raggruppamento. Nello specifico, le funzioni di aggregazione permettono di calcolare la somma, la media o il conteggio degli 
+    elementi del sottogruppo (rispettivamente utilizzando \textit{sum}, \textit{avg} e \textit{count}), oppure di selezionare l’elemento 
+    con l’attributo di valore maggiore o minore in ogni collezione di tuple (tramite \textit{max} e \textit{min}).
+\end{itemize}
+
+\section{Requisiti non funzionali}
+Tra i requisiti essenziali, il progetto prevede un'implementazione dei comandi e delle operazioni descritte nella sezione precedente in 
+modo incrementale e secondo il paradigma di programmazione orientata alle funzionalità. Questo approccio consente di sviluppare ogni 
+caratteristica del linguaggio in modo quanto più indipendente possibile, evitando interdipendenze strette tra i vari moduli. In tal modo, 
+sarà possibile aggiungere, modificare o rimuovere specifiche \textit{features} senza dover intervenire in modo invasivo sull’intero 
+codice. Ciò garantisce una maggiore flessibilità nello sviluppo e nella manutenzione del progetto, oltre a facilitare eventuali 
+aggiornamenti futuri.
+
+Infine, il linguaggio modellato dovrà essere in grado di interpretare e processare query scritte utilizzando \ac{SQL}, permettendo 
+l’esecuzione delle operazioni desiderate in maniera efficiente e precisa, e in modo del tutto compatibile con gli standard esistenti.
 
 %----------------------------------------------------------------------------------------
 \chapter{Design e Implementazione}
