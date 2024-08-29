@@ -316,6 +316,30 @@ aggiornamenti futuri.
 Infine, il linguaggio modellato dovrà essere in grado di interpretare e processare query scritte utilizzando \ac{SQL}, permettendo 
 l’esecuzione delle operazioni desiderate in maniera efficiente e precisa, e in modo del tutto compatibile con gli standard esistenti.
 
+\section{Modellazione del dominio}
+Il dominio applicativo del progetto prevede la memorizzazione delle informazioni all’interno di strutture che ne facilitino la manipolazione 
+tramite le operazioni implementate nel linguaggio. La struttura chiave di Neverlang-SQL è il database, al cui interno sono memorizzate le 
+tabelle utilizzate dall’utente. Ciascuna tabella è identificata da un nome univoco, che deve essere diverso da quello delle altre tabelle, 
+per garantire una corretta distinzione all’interno del database. Ogni tabella contiene una o più colonne, ciascuna identificata tramite un 
+nome e potenzialmente soggetta a dei vincoli che dovranno essere rispettati dagli attributi dei dati inseriti. Un esempio di questi vincoli 
+è che il tipo dell’attributo inserito deve corrispondere a quello specificato nella dichiarazione della tabella (vincolo applicato di 
+default). Esistono inoltre altri vincoli più specifici, come quello di unicità o di non nullità (l’informazione non può essere omessa). 
+Infine, l’inserimento delle informazioni all’interno della tabella avviene tramite le tuple, ognuna delle quali rappresenta una ``riga'' 
+della tabella, e quindi un singolo dato. Gli attributi della tupla devono necessariamente corrispondere a quelli richiesti dalla 
+definizione della tabella in cui viene inserita. 
+
+Gli elementi appena descritti e le loro relazioni sono sintetizzati nella \cref{fig:model-diagram}. Le operazioni corrispondenti alla 
+semantica di ogni clausola del linguaggio utilizzano il modello appena descritto per poter modificare la struttura del database, delle 
+tabelle e dei dati, o per effettuare delle estrazioni di informazioni tramite le funzioni implementate.
+\sidenote{TODO: la parte di analisi della sintassi non è stata trattata in questo capitolo, ma verrà trattata in quello successivo (design e implementazione).}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\linewidth]{figures/model-diagram.pdf}
+    \caption{Schema UML dell'analisi del problema, al suo interno sono rappresentate le entità principali e le relazioni tra di esse.}
+    \label{fig:model-diagram}
+\end{figure}
+
 %----------------------------------------------------------------------------------------
 \chapter{Design e Implementazione}
 \label{chap:Imple}
