@@ -255,15 +255,15 @@ Il progetto si propone di ricreare la sintassi e la logica di \ac{SQL} all’int
 Neverlang Language Workbench. L’obiettivo principale è modellare il linguaggio seguendo un approccio incrementale ed implementando le varie 
 funzionalità in modo tale che possano essere aggiunte o rimosse dal progetto in modo indipendente.
 
-Il linguaggio deve semplificare la gestione di un ampio quantitativo di informazioni e favorirne la manipolazione tramite le operazioni 
-implementate al suo interno. Lo scopo è aiutare l’utente finale ad estrarre le informazioni di cui ha bisogno a partire dai dati già in suo 
-possesso. Per raggiungere questo obiettivo, il programma deve implementare le operazioni necessarie per la creazione, la modifica e 
+Il linguaggio deve semplificare la gestione di un ampio quantitativo di dati e favorirne la manipolazione tramite le operazioni 
+sviluppate al suo interno. Lo scopo è aiutare l’utente finale ad estrarre le informazioni di cui ha bisogno a partire dai dati già in suo 
+possesso. Per raggiungere questo obiettivo, il programma deve implementare una serie di procedimenti necessari per la creazione, la modifica e 
 l’eliminazione di tabelle, all’interno delle quali sono memorizzati i dati. Inoltre, è necessario gestire l’inserimento di tali dati, nonché 
-la loro eventuale alterazione od eliminazione. Infine, il linguaggio dovrà fornire una serie di operazioni per selezionare, manipolare ed 
+la loro eventuale alterazione od eliminazione. Infine, il linguaggio dovrà fornire le operazioni richieste per selezionare, manipolare ed 
 aggregare l’insieme di informazioni presenti nel database.
 
 \section{Requisiti funzionali}
-Come introdotto in precedenza, il \ac{DSL} dovrà implementare un insieme di caratteristiche tipiche di \ac{SQL}. Di seguito vengono elencate 
+Il \ac{DSL} dovrà implementare un insieme di caratteristiche tipiche di \ac{SQL}. Di seguito vengono elencate 
 le principali:
 \begin{itemize}
     \item \textbf{Gestione delle tabelle}: Per modellare la base di dati secondo le proprie esigenze, l’utente ha a disposizione una serie 
@@ -271,8 +271,8 @@ le principali:
     \begin{itemize}
         \item La funzione \textit{create table} permette di creare una nuova tabella e di specificare le colonne che la compongono. Ciascuna 
         colonna può avere vincoli sui dati che conterrà. Ad esempio, il vincolo espresso di default durante la fase di creazione della 
-        tabella riguarda il tipo dei dati inseriti in ogni colonna, il quale dovrà corrispondere con il dato indicato durante l'operazione 
-        di creazione. In aggiunta, è possibile indicare altre caratteristiche che il dato inserito dovrà rispettare, come l’unicità (ossia 
+        tabella riguarda il tipo dei dati inseriti in ogni colonna, il quale dovrà essere coerente con quanto specificato nella definizione 
+        della tabella. In aggiunta, è possibile indicare altre caratteristiche che il dato inserito dovrà rispettare, come l’unicità (ossia 
         che non sia uguale a un altro dato già presente nella tabella), la non nullità (l’informazione non può essere omessa) oppure la 
         definizione dell’attributo come chiave della tabella, comprendendo i vincoli di unicità e non nullità precedentemente descritti.
         \item L’operazione \textit{alter table} permette di modificare le tabelle già presenti nel database. Quando tale costrutto viene 
@@ -283,7 +283,7 @@ le principali:
     \item \textbf{Gestione dei dati}: Analogamente a quanto descritto per le tabelle, è importante fornire la possibilità di gestire i dati 
     al loro interno. Le funzioni necessarie da implementare nel progetto sono l’esatta trasposizione di quelle descritte per la gestione 
     delle tabelle. In particolare, il costrutto \textit{insert into} permette di inserire dati all’interno di una tabella, \textit{update} 
-    consente di modificare - tramite una precisa selezione - uno o più attributi di un sottoinsieme di dati e, infine, \textit{delete} 
+    consente di modificare uno o più attributi di un sottoinsieme di dati (ottenuto tramite una precisa selezione) e, infine, \textit{delete} 
     permette di eliminare una o più tuple.
     \item \textbf{Manipolazione dei dati}: Un aspetto fondamentale di un linguaggio di questo tipo è l’utilizzo dell’insieme di 
     informazioni contenute nel database per estrarre nuovi dati. Questa operazione può essere eseguita grazie all’implementazione dei 
@@ -297,13 +297,13 @@ le principali:
         \item Infine, \textit{order by} viene utilizzato per indicare come ordinare le tuple del risultato. È possibile specificare anche 
         più attributi per determinare l’ordine in caso di uguaglianza dell’attributo precedente.
     \end{itemize}
-    \item \textbf{Aggregazione di dati}: Quando si lavora con una quantità consistente di informazioni, la possibilità di aggregare più 
-    elementi del risultato in singole tuple è fondamentale. Tramite il comando \textit{group by} è possibile specificare gli attributi 
-    secondo i quali aggregare le informazioni di un sottoinsieme di dati. A tale scopo, vengono utilizzate funzioni predefinite, 
-    denominate funzioni di aggregazione, che specificano come unire le informazioni appartenenti agli intervalli generati dall’operazione 
-    di raggruppamento. Nello specifico, le funzioni di aggregazione permettono di calcolare la somma, la media o il conteggio degli 
-    elementi del sottogruppo (rispettivamente utilizzando \textit{sum}, \textit{avg} e \textit{count}), oppure di selezionare l’elemento 
-    con l’attributo di valore maggiore o minore in ogni collezione di tuple (tramite \textit{max} e \textit{min}).
+    \item \textbf{Aggregazione di dati}: L’aggregazione di dati è il processo di combinare più elementi di informazione per ottenere un unico 
+    risultato sintetico. Quando si lavora con una quantità consistente di informazioni, è spesso utile raggruppare questi dati in insiemi 
+    basati su uno o più attributi comuni. Il comando \textit{group by} consente di effettuare questa operazione, specificando gli attributi
+    in base ai quali raggruppare i dati. Una volta creati questi gruppi, si possono applicare delle funzioni predefinite, chiamate funzioni
+    di aggregazione, per combinare le informazioni all’interno di ogni gruppo in un’unica rappresentazione. Nello specifico si può calcolare 
+    la somma, la media o il conteggio degli elementi del sottogruppo (rispettivamente utilizzando \textit{sum}, \textit{avg} e \textit{count}), 
+    oppure la selezione dell’elemento con il valore massimo o minimo in ogni collezione di tuple (tramite \textit{max} e \textit{min}).
 \end{itemize}
 
 \section{Requisiti non funzionali}
@@ -311,7 +311,7 @@ Tra i requisiti essenziali, il progetto prevede un'implementazione dei comandi e
 modo incrementale e secondo il paradigma di programmazione orientata alle funzionalità. Questo approccio consente di sviluppare ogni 
 caratteristica del linguaggio in modo quanto più indipendente possibile, evitando interdipendenze strette tra i vari moduli. In tal modo, 
 sarà possibile aggiungere, modificare o rimuovere specifiche \textit{features} senza dover intervenire in modo invasivo sull’intero 
-codice. Ciò garantisce una maggiore flessibilità nello sviluppo e nella manutenzione del progetto, oltre a facilitare eventuali 
+codice. Ciò garantisce una maggiore flessibilità nello sviluppo e nella manutenzione del progetto, oltre a facilitare possibili 
 aggiornamenti futuri.
 
 Infine, il linguaggio modellato dovrà essere in grado di interpretare e processare query scritte utilizzando \ac{SQL}, permettendo 
@@ -323,11 +323,11 @@ tramite le operazioni implementate nel linguaggio. La struttura chiave di Neverl
 tabelle utilizzate dall’utente. Ciascuna tabella è identificata da un nome univoco che deve essere diverso da quello delle altre tabelle 
 per garantire una corretta distinzione all’interno del database. Ogni tabella contiene una o più colonne, ciascuna identificata tramite un 
 nome e potenzialmente soggetta a dei vincoli che dovranno essere rispettati dagli attributi dei dati inseriti. Un esempio di questi vincoli 
-è che il tipo dell’attributo inserito deve corrispondere a quello specificato nella dichiarazione della tabella (vincolo applicato di 
-default). Esistono inoltre altri vincoli più specifici, come quello di unicità o di non nullità (l’informazione non può essere omessa). 
-Infine, l’inserimento delle informazioni all’interno della tabella avviene tramite le tuple, ognuna delle quali rappresenta una ``riga'' 
-della tabella, e quindi un singolo dato. Gli attributi della tupla devono necessariamente corrispondere a quelli richiesti dalla 
-definizione della tabella in cui viene inserita. 
+è che il tipo dell’attributo inserito deve corrispondere a quello specificato nella dichiarazione della tabella, ma esistono inoltre altri 
+vincoli più specifici, come quello di unicità (il valore non può già esistere nella tabella) o quello di non nullità (il valore non può 
+essere omesso). Infine, l’inserimento delle informazioni all’interno della tabella avviene tramite le tuple, ognuna delle quali rappresenta 
+una ``riga'' della tabella, e quindi un singolo dato. Gli attributi della tupla devono necessariamente corrispondere a quelli richiesti 
+dalla definizione della tabella in cui viene inserita.
 
 Gli elementi appena descritti e le loro relazioni sono sintetizzati nella \cref{fig:model-diagram}. Le operazioni corrispondenti alla 
 semantica di ogni clausola del linguaggio utilizzano il modello appena descritto per poter modificare la struttura del database, delle 
