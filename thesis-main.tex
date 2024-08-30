@@ -270,18 +270,18 @@ le principali:
     di operazioni per creare o modificare le tabelle all’interno del database:
     \begin{itemize}
         \item La funzione \textit{create table} permette di creare una nuova tabella e di specificare le colonne che la compongono. Ciascuna 
-        colonna può avere vincoli sui dati che conterrà. Ad esempio, il vincolo più comunemente espresso durante la fase di creazione della 
-        tabella riguarda il tipo di dato contenuto in ogni colonna. In aggiunta, è possibile indicare altre caratteristiche che il dato 
-        inserito dovrà rispettare, come l’unicità (ossia che non sia uguale a un altro dato già presente nella tabella), la non nullità 
-        (l’informazione non può essere omessa) oppure la definizione dell’attributo come chiave della tabella, comprendendo i vincoli di 
-        unicità e non nullità precedentemente descritti.
+        colonna può avere vincoli sui dati che conterrà. Ad esempio, il vincolo espresso di default durante la fase di creazione della 
+        tabella riguarda il tipo dei dati inseriti in ogni colonna, il quale dovrà corrispondere con il dato indicato durante l'operazione 
+        di creazione. In aggiunta, è possibile indicare altre caratteristiche che il dato inserito dovrà rispettare, come l’unicità (ossia 
+        che non sia uguale a un altro dato già presente nella tabella), la non nullità (l’informazione non può essere omessa) oppure la 
+        definizione dell’attributo come chiave della tabella, comprendendo i vincoli di unicità e non nullità precedentemente descritti.
         \item L’operazione \textit{alter table} permette di modificare le tabelle già presenti nel database. Quando tale costrutto viene 
         utilizzato, è necessario specificare la natura della modifica, ossia indicare se si desidera aggiungere o rimuovere una colonna 
         dalla tabella.
         \item \textit{Delete table} permette di rimuovere una tabella dalla base dati, eliminando anche i dati in essa contenuti.
     \end{itemize}
     \item \textbf{Gestione dei dati}: Analogamente a quanto descritto per le tabelle, è importante fornire la possibilità di gestire i dati 
-    al loro interno. Le funzioni necessarie, da implementare nel progetto, sono l’esatta trasposizione di quelle descritte per la gestione 
+    al loro interno. Le funzioni necessarie da implementare nel progetto sono l’esatta trasposizione di quelle descritte per la gestione 
     delle tabelle. In particolare, il costrutto \textit{insert into} permette di inserire dati all’interno di una tabella, \textit{update} 
     consente di modificare - tramite una precisa selezione - uno o più attributi di un sottoinsieme di dati e, infine, \textit{delete} 
     permette di eliminare una o più tuple.
@@ -320,7 +320,7 @@ l’esecuzione delle operazioni desiderate in maniera efficiente e precisa, e in
 \section{Modellazione del dominio}
 Il dominio applicativo del progetto prevede la memorizzazione delle informazioni all’interno di strutture che ne facilitino la manipolazione 
 tramite le operazioni implementate nel linguaggio. La struttura chiave di Neverlang-SQL è il database, al cui interno sono memorizzate le 
-tabelle utilizzate dall’utente. Ciascuna tabella è identificata da un nome univoco, che deve essere diverso da quello delle altre tabelle, 
+tabelle utilizzate dall’utente. Ciascuna tabella è identificata da un nome univoco che deve essere diverso da quello delle altre tabelle 
 per garantire una corretta distinzione all’interno del database. Ogni tabella contiene una o più colonne, ciascuna identificata tramite un 
 nome e potenzialmente soggetta a dei vincoli che dovranno essere rispettati dagli attributi dei dati inseriti. Un esempio di questi vincoli 
 è che il tipo dell’attributo inserito deve corrispondere a quello specificato nella dichiarazione della tabella (vincolo applicato di 
@@ -331,13 +331,14 @@ definizione della tabella in cui viene inserita.
 
 Gli elementi appena descritti e le loro relazioni sono sintetizzati nella \cref{fig:model-diagram}. Le operazioni corrispondenti alla 
 semantica di ogni clausola del linguaggio utilizzano il modello appena descritto per poter modificare la struttura del database, delle 
-tabelle e dei dati, o per effettuare delle estrazioni di informazioni tramite le funzioni implementate.
+tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogando la base dati.
 \sidenote{TODO: la parte di analisi della sintassi non è stata trattata in questo capitolo, ma verrà trattata in quello successivo (design e implementazione).}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.8\linewidth]{figures/model-diagram.pdf}
-    \caption{Schema UML dell'analisi del problema, al suo interno sono rappresentate le entità principali e le relazioni tra di esse.}
+    \includegraphics[width=.6\linewidth]{figures/model-diagram.pdf}
+    \caption{Schema UML dell'analisi del problema, al suo interno sono rappresentate le entità principali coinvolte nella memorizzazione 
+            dei dati e le relazioni tra di esse.}
     \label{fig:model-diagram}
 \end{figure}
 
