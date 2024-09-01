@@ -32,7 +32,7 @@
 \begin{document}
 
 \frontmatter\frontispiece
-\begin{abstract}    
+\begin{abstract}
 %TODO
 \end{abstract}
 
@@ -61,7 +61,7 @@ soluzione molto più naturale rispetto a quella fornita dai primi \cite{Hudak199
 (utilizzato anche per la scrittura di questo documento) e CSS.
 
 Nonostante la definizione di \ac{DSL} sia chiara, non è altrettanto immediato definire se un linguaggio sia o meno un \ac{DSL}. In questo caso, 
-vi sono alcuni principi chiave da osservare \cite{Fowler2010}\sidenote{TODO: è corretto inserire qui il riferimento alla documentazione utilizzata per ciò che è scritto all'interno dell'elenco puntato?}:
+vi sono alcuni principi chiave da osservare \cite{Fowler2010}:
 \begin{itemize}
     \item Un \ac{DSL} è un linguaggio di programmazione e, come tale, la sua struttura dovrebbe essere progettata in modo da essere facile da 
     comprendere per gli esseri umani e, al tempo stesso, eseguibile da un calcolatore.
@@ -328,8 +328,6 @@ dalla definizione della tabella in cui viene inserita.
 Gli elementi appena descritti e le loro relazioni sono sintetizzati nella \cref{fig:model-diagram}. Le operazioni corrispondenti alla 
 semantica di ogni clausola del linguaggio utilizzano il modello appena descritto per poter modificare la struttura del database, delle 
 tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogando la base dati.
-\sidenote{TODO: la parte di analisi della sintassi non è stata trattata in questo capitolo, ma verrà trattata in quello successivo (design e implementazione).}
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=.6\linewidth]{figures/model-diagram.pdf}
@@ -343,6 +341,56 @@ tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogan
 \label{chap:Imple}
 %----------------------------------------------------------------------------------------
 
+\section{Architettura}
+Ad alto livello, l’architettura del progetto proposto è rappresentata nella \cref{fig:architecture}. Essa si suddivide in due sezioni 
+principali, ciascuna delle quali ricopre un ruolo fondamentale per l’implementazione del \ac{DSL}:
+
+\begin{itemize}
+\item Parte implementata in Neverlang: Questa sezione si occupa della definizione delle regole sintattiche di \ac{SQL}, descrivendo come 
+i vari simboli che compongono la grammatica del \ac{DSL} sono utilizzati e combinati, nonché prodotti. Oltre alla sintassi, Neverlang è 
+utilizzato per specificare la semantica del linguaggio, ovvero il comportamento di ciascun costrutto \ac{SQL} durante l’esecuzione. Ogni 
+elemento di Neverlang-SQL (ad esempio, CREATE TABLE, SELECT, WHERE, ecc.) è rappresentato utilizzando un modulo Neverlang dedicato, 
+all’interno del quale sono definite sia la grammatica che le azioni semantiche necessarie per la corretta interpretazione ed esecuzione 
+delle funzioni ad esso associate.
+\item Parte implementata in Java: Le classi implementate in questa sezione del progetto sono progettate principalmente per gestire i 
+dati memorizzati nelle strutture create appositamente per il dominio sul quale opera \ac{SQL}. Queste classi modellano entità come il 
+database, le tabelle, le colonne, le tuple, e i tipi di dati, fornendo metodi per manipolare ciascuna di esse in modo conforme alle 
+specifiche del linguaggio.
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[width=.8\linewidth]{figures/architecture.pdf}
+\caption{Diagramma dell’architettura del progetto, illustra le principali dipendenze tra i componenti e i vari moduli.}
+\label{fig:architecture}
+\end{figure}
+
+Come mostrato nel diagramma in \cref{fig:architecture}, ogni modulo di Neverlang (e le relative specifiche sintattiche e semantiche) 
+viene tradotto in file sorgenti compatibili con la \ac{JVM} tramite il compilatore del framework, chiamato \textit{nlgc}. I file così 
+generati sono successivamente utilizzati da \textit{javac}\footnote{Javac rappresenta il compilatore principale utilizzato dal 
+linguaggio di programmazione Java; si occupa di tradurre il codice sorgente in un formato eseguibile dalla JVM.} per produrre file 
+di classe, impiegati per rappresentare gli oggetti Java \cite[p. 19]{Vacchi2015}. In particolare, il codice generato si suddivide 
+principalmente in due categorie: sintattiche e semantiche. Infatti, per ogni modulo con annessa una specifica semantica, Neverlang 
+produce una classe chiamata convenzionalmente \texttt{<module-name>\$role\$syntax}. Allo stesso modo, per ogni ruolo indicato e per 
+ogni non terminale definito all'interno del modulo, viene prodotta una classe atta a descriverne il comportamento, denominata 
+\texttt{<module-name>\$role\$<role-name>\$<node-number>} \cite[pp. 21-22]{Vacchi2015}. Le classi di sintassi sono utilizzate per 
+verificare che le regole grammaticali siano rispettate nelle query \ac{SQL} fornite in input. Questo processo di validazione si 
+propone di controllare che la struttura delle query segua correttamente le specifiche di \ac{SQL}, prevenendo errori comuni di 
+sintassi. Di maggiore rilevanza per l’esecuzione del linguaggio è la parte riguardante il comportamento di ogni elemento, gestita 
+attraverso le classi di semantica. Ciascuna di queste classi è responsabile di una fase specifica dell’elaborazione ed esecuzione del 
+nodo dell’\ac{AST} al quale sono riferite. Queste classi contengono la logica che determina il comportamento esatto di Neverlang-SQL 
+durante l’esecuzione delle query, permettendo inoltre di interagire con la parte modellata in Java e che modella il dominio 
+all'interno del quale il DSL viene applicato.
+
+Le classi implementate tramite il linguaggio di programmazione Java, come Database, Table, Column, e Tuple, sono strettamente 
+integrate con le classi semantiche generate dal compilatore di Neverlang. Questa integrazione permette alle ultime di eseguire 
+operazioni dirette sul dominio modellato, quali la modifica della struttura delle tabelle, l’inserimento e la manipolazione dei dati, 
+e l’esecuzione di query complesse per ottenere informazioni specifiche richieste dall’utente.
+
+Inoltre, sia le classi Java che quelle generate da Neverlang sono progettate per gestire le eccezioni. Il design proposto in questa 
+sezione dell'elaborato include la generazione e la gestione di eccezioni personalizzate, ognuna delle quali rappresenta un errore 
+specifico che può verificarsi durante l’analisi o l’esecuzione delle query, come errori di sintassi, accessi non validi ai dati, 
+o operazioni non consentite.
 
 %----------------------------------------------------------------------------------------
 \chapter{Validazione e Conclusioni}
