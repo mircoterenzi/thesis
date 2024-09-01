@@ -7,6 +7,7 @@
 \usepackage{acronym}
 \usepackage{float}
 
+% Information used in the title page
 \school{\unibo}
 \programme{Corso di Laurea in Ingegneria e Scienze Informatiche}
 \title{Utilizzo di Neverlang per la modellazione di Domain Specific Languages\note{TODO: chiedere conferma titolo}}
@@ -15,7 +16,6 @@
 \subject{Programmazione ad Oggetti}
 \supervisor{Prof. Viroli Mirko}
 \cosupervisor{Prof. Aguzzi Gianluca}
-\session{II}
 \academicyear{2023-2024}
 
 % Definition of acronyms
@@ -27,25 +27,21 @@
 \acrodef{CFG}{Context-Free Grammar}
 \acrodef{SQL}{Structured Query Language}
 
-
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
 
 \begin{document}
 
 \frontmatter\frontispiece
-
 \begin{abstract}    
 %TODO
 \end{abstract}
 
-%----------------------------------------------------------------------------------------
+
 \tableofcontents   
-\listoffigures     % (optional) comment if empty
-%\lstlistoflistings % (optional) comment if empty
-%----------------------------------------------------------------------------------------
+\listoffigures
+%\lstlistoflistings
 
 \mainmatter
-
 %----------------------------------------------------------------------------------------
 \chapter{Introduzione} %TODO
 \label{chap:introduzione}
@@ -359,8 +355,7 @@ tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogan
 %----------------------------------------------------------------------------------------
 
 \backmatter
-
-\bibliographystyle{alpha}
+\bibliographystyle{plain}
 \bibliography{bibliography}
 
 %\begin{acknowledgements} % this is optional

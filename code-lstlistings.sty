@@ -5,9 +5,9 @@
 % LISTING CONFIGURATIONS
 %-----------------------------------------------------
 
-\crefname{lstlisting}{listing}{listing}	
-\Crefname{lstlisting}{Listing}{Listing}
-\renewcommand\lstlistlistingname{List of Listings}
+\crefname{lstlisting}{listato}{listato}	
+\Crefname{lstlisting}{Listato}{Listato}
+\renewcommand\lstlistlistingname{Elenco dei listati}
 
 \lstset{
 	showstringspaces=false,
@@ -24,8 +24,7 @@
 	numbersep=10pt,
 	tabsize=2,
 	extendedchars=true,
-	frame=trBL,
-	frameround=fttt,
+	frame=none
 }
 
 \lstdefinelanguage{Kotlin}{
@@ -37,4 +36,14 @@
 	morestring=[s]{"""*}{*"""},
 	ndkeywords={@Deprecated, @JvmField, @JvmName, @JvmOverloads, @JvmStatic, @JvmSynthetic, Array, Byte, Double, Float, Int, Integer, Iterable, Long, Runnable, Short, String, Unit, it},
 	sensitive=true
+}
+
+\lstdefinelanguage{BNF}{
+	morekeywords={::=,|},
+	sensitive=false,
+	morestring=[b]"
+	, keywordstyle=\color{blue}\bfseries
+	, stringstyle=\color{red}
+	, literate={->}{$\rightarrow$}{2}
+	, basicstyle=\small\ttfamily
 }
