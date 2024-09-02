@@ -265,41 +265,41 @@ le principali:
     \item \textbf{Gestione delle tabelle}: Per modellare la base di dati secondo le proprie esigenze, l’utente ha a disposizione una serie 
     di operazioni per creare o modificare le tabelle all’interno del database:
     \begin{itemize}
-        \item La funzione \textit{create table} permette di creare una nuova tabella e di specificare le colonne che la compongono. Ciascuna 
+        \item La funzione \texttt{CREATE TABLE} permette di creare una nuova tabella e di specificare le colonne che la compongono. Ciascuna 
         colonna può avere vincoli sui dati che conterrà. Ad esempio, il vincolo espresso di default durante la fase di creazione della 
         tabella riguarda il tipo dei dati inseriti in ogni colonna, il quale dovrà essere coerente con quanto specificato nella definizione 
         della tabella. In aggiunta, è possibile indicare altre caratteristiche che il dato inserito dovrà rispettare, come l’unicità (ossia 
         che non sia uguale a un altro dato già presente nella tabella), la non nullità (l’informazione non può essere omessa) oppure la 
         definizione dell’attributo come chiave della tabella, comprendendo i vincoli di unicità e non nullità precedentemente descritti.
-        \item L’operazione \textit{alter table} permette di modificare le tabelle già presenti nel database. Quando tale costrutto viene 
+        \item L’operazione \texttt{ALTER TABLE} permette di modificare le tabelle già presenti nel database. Quando tale costrutto viene 
         utilizzato, è necessario specificare la natura della modifica, ossia indicare se si desidera aggiungere o rimuovere una colonna 
         dalla tabella.
-        \item \textit{Delete table} permette di rimuovere una tabella dalla base dati, eliminando anche i dati in essa contenuti.
+        \item \texttt{DELETE} TABLE permette di rimuovere una tabella dalla base dati, eliminando anche i dati in essa contenuti.
     \end{itemize}
     \item \textbf{Gestione dei dati}: Analogamente a quanto descritto per le tabelle, è importante fornire la possibilità di gestire i dati 
     al loro interno. Le funzioni necessarie da implementare nel progetto sono l’esatta trasposizione di quelle descritte per la gestione 
-    delle tabelle. In particolare, il costrutto \textit{insert into} permette di inserire dati all’interno di una tabella, \textit{update} 
-    consente di modificare uno o più attributi di un sottoinsieme di dati (ottenuto tramite una precisa selezione) e, infine, \textit{delete} 
+    delle tabelle. In particolare, il costrutto \texttt{INSERT INTO} permette di inserire dati all’interno di una tabella, \texttt{UPDATE} 
+    consente di modificare uno o più attributi di un sottoinsieme di dati (ottenuto tramite una precisa selezione) e, infine, \texttt{DELETE} 
     permette di eliminare una o più tuple.
     \item \textbf{Manipolazione dei dati}: Un aspetto fondamentale di un linguaggio di questo tipo è l’utilizzo dell’insieme di 
     informazioni contenute nel database per estrarre nuovi dati. Questa operazione può essere eseguita grazie all’implementazione dei 
     seguenti comandi nella sintassi del \ac{DSL}:
     \begin{itemize}
-        \item Tra le istruzioni più importanti troviamo \textit{select} e \textit{from}. La prima permette di specificare un sottoinsieme 
+        \item Tra le istruzioni più importanti troviamo \texttt{SELECT} e \texttt{FROM}. La prima permette di specificare un sottoinsieme 
         di attributi da ottenere, mentre la seconda viene utilizzata per indicare la tabella sorgente dalla quale esportare gli attributi 
         selezionati.
-        \item Il comando \textit{where} consente, utilizzandolo in combinazione con espressioni booleane o specifici selettori (ad esempio 
-        \textit{is null}), di filtrare le tuple della tabella dalla quale si stanno estraendo i dati.
-        \item Infine, \textit{order by} viene utilizzato per indicare come ordinare le tuple del risultato. È possibile specificare anche 
+        \item Il comando \texttt{WHERE} consente, utilizzandolo in combinazione con espressioni booleane o specifici selettori (ad esempio 
+        \texttt{IS NULL}), di filtrare le tuple della tabella dalla quale si stanno estraendo i dati.
+        \item Infine, \texttt{ORDER BY} viene utilizzato per indicare come ordinare le tuple del risultato. È possibile specificare anche 
         più attributi per determinare l’ordine in caso di uguaglianza dell’attributo precedente.
     \end{itemize}
     \item \textbf{Aggregazione di dati}: L’aggregazione di dati è il processo di combinare più elementi di informazione per ottenere un unico 
     risultato sintetico. Quando si lavora con una quantità consistente di informazioni, è spesso utile raggruppare questi dati in insiemi 
-    basati su uno o più attributi comuni. Il comando \textit{group by} consente di effettuare questa operazione, specificando gli attributi
+    basati su uno o più attributi comuni. Il comando \texttt{GROUP BY} consente di effettuare questa operazione, specificando gli attributi
     in base ai quali raggruppare i dati. Una volta creati questi gruppi, si possono applicare delle funzioni predefinite, chiamate funzioni
     di aggregazione, per combinare le informazioni all’interno di ogni gruppo in un’unica rappresentazione. Nello specifico si può calcolare 
-    la somma, la media o il conteggio degli elementi del sottogruppo (rispettivamente utilizzando \textit{sum}, \textit{avg} e \textit{count}), 
-    oppure la selezione dell’elemento con il valore massimo o minimo in ogni collezione di tuple (tramite \textit{max} e \textit{min}).
+    la somma, la media o il conteggio degli elementi del sottogruppo (rispettivamente utilizzando \texttt{SUM}, \texttt{AVG} e \texttt{COUNT}), 
+    oppure la selezione dell’elemento con il valore massimo o minimo in ogni collezione di tuple (tramite \texttt{MAX} e \texttt{MIN}).
 \end{itemize}
 
 \section{Requisiti non funzionali}
@@ -349,7 +349,7 @@ principali, ciascuna delle quali ricopre un ruolo fondamentale per l’implement
 \item Parte implementata in Neverlang: Questa sezione si occupa della definizione delle regole sintattiche di \ac{SQL}, descrivendo come 
 i vari simboli che compongono la grammatica del \ac{DSL} sono utilizzati e combinati, nonché prodotti. Oltre alla sintassi, Neverlang è 
 utilizzato per specificare la semantica del linguaggio, ovvero il comportamento di ciascun costrutto \ac{SQL} durante l’esecuzione. Ogni 
-elemento di Neverlang-SQL (ad esempio, CREATE TABLE, SELECT, WHERE, ecc.) è rappresentato utilizzando un modulo Neverlang dedicato, 
+elemento di Neverlang-SQL (ad esempio, \texttt{CREATE TABLE}, \texttt{SELECT}, \texttt{WHERE}, ecc.) è rappresentato utilizzando un modulo Neverlang dedicato, 
 all’interno del quale sono definite sia la grammatica che le azioni semantiche necessarie per la corretta interpretazione ed esecuzione 
 delle funzioni ad esso associate.
 \item Parte implementata in Java: Le classi implementate in questa sezione del progetto sono progettate principalmente per gestire i 
@@ -451,8 +451,8 @@ i lessemi a tempo d’esecuzione \cite{Dexter2012, Vacchi2015}.}.
 
 
 \subsection{Gestione delle tabelle}
-Le operazioni necessarie per gestire efficacemente le tabelle all’interno del linguaggio Neverlang-SQL sono: CREATE TABLE, ALTER 
-TABLE e DROP TABLE. Queste operazioni forniscono agli utenti la capacità di definire nuove tabelle, modificare quelle esistenti o 
+Le operazioni necessarie per gestire efficacemente le tabelle all’interno del linguaggio Neverlang-SQL sono: \texttt{CREATE TABLE}, ALTER 
+TABLE e \texttt{DROP TABLE}. Queste operazioni forniscono agli utenti la capacità di definire nuove tabelle, modificare quelle esistenti o 
 rimuoverle dal database. La sintassi delle operazioni descritte è la seguente:
 \lstinputlisting[
 label={lst:table-grammar},
@@ -463,7 +463,7 @@ Ogni operazione rispetta il principio della modularità discusso nella \cref{sub
 \texttt{Operation} che rappresenta un’azione completa e indipendente all’interno del DSL. Questa indipendenza permette alle 
 operazioni di essere utilizzate singolarmente o concatenate con altre operazioni, offrendo flessibilità nella realizzazione delle 
 query.\\\\
-Considerando che CREATE TABLE è il costrutto con la sintassi più complessa tra quelli definiti, esso viene utilizzato come esempio 
+Considerando che \texttt{CREATE TABLE} è il costrutto con la sintassi più complessa tra quelli definiti, esso viene utilizzato come esempio 
 per illustrare il funzionamento di queste operazioni.
 
 \begin{figure}
@@ -502,16 +502,16 @@ tabella da inserire:
 \end{itemize}
 
 \subsection{Gestione dei dati}
-La gestione dei dati in Neverlang-SQL include le operazioni fondamentali per manipolare i dati all’interno delle tabelle del database. Le principali operazioni supportate in questa macro-area sono INSERT, UPDATE e DELETE. Queste operazioni permettono agli utenti di aggiungere nuove righe, modificare i dati esistenti e rimuovere righe dalle tabelle, rispettivamente. La sintassi di queste operazioni è:
+La gestione dei dati in Neverlang-SQL include le operazioni fondamentali per manipolare i dati all’interno delle tabelle del database. Le principali operazioni supportate in questa macro-area sono \texttt{INSERT}, \texttt{UPDATE} e \texttt{DELETE}. Queste operazioni permettono agli utenti di aggiungere nuove righe, modificare i dati esistenti e rimuovere righe dalle tabelle, rispettivamente. La sintassi di queste operazioni è:
 \lstinputlisting[
     label={lst:data-grammar},
     language=BNF
 ]{listings/data-grammar.bnf}
 
 Ogni operazione è progettata per essere intuitiva e riflettere le operazioni comunemente utilizzate nei sistemi SQL. L’operazione 
-INSERT permette di specificare una lista di colonne in cui inserire i valori e una lista di valori corrispondenti. L’operazione 
-UPDATE consente di modificare i valori esistenti in una o più colonne specificando una condizione per filtrare le righe da 
-aggiornare. Infine, l’operazione DELETE permette di rimuovere un sottoinsieme di righe da una tabella.
+\texttt{INSERT} permette di specificare una lista di colonne in cui inserire i valori e una lista di valori corrispondenti. L’operazione 
+\texttt{UPDATE} consente di modificare i valori esistenti in una o più colonne specificando una condizione per filtrare le righe da 
+aggiornare. Infine, l’operazione \texttt{DELETE} permette di rimuovere un sottoinsieme di righe da una tabella.
 
 L’inclusione di queste operazioni all’interno di Neverlang-SQL consente agli utenti di gestire i dati in modo flessibile e robusto, 
 garantendo al contempo che tutte le modifiche ai dati siano conformi alle regole di integrità definite all’interno del database. 
@@ -539,10 +539,10 @@ specifico che il linguaggio è in grado di riconoscere. I tipi di valori support
     positivo o negativo e supportano anche la notazione scientifica con un esponente (ad esempio ``1.23e-2'' rappresenta il numero 
     $1.23 \times 10^{-2}$, ossia $0.0123$ ). Questo consente di rappresentare una vasta gamma di valori numerici, inclusi numeri 
     molto piccoli o molto grandi con precisione.
-	\item \textbf{Booleani}: I valori booleani sono rappresentati dalle parole chiave \texttt{TRUE} o \texttt{FALSE}. Questi valori 
+	\item \textbf{Booleani}: I valori booleani sono rappresentati dalle parole chiave TRUE o FALSE. Questi valori 
     sono utilizzati per indicare stati di verità binari e vengono riconosciuti come tali solo quando corrispondono esattamente a 
     una delle due parole chiave, garantendo un’interpretazione corretta nelle operazioni logiche.
-	\item \textbf{Valori Nulli}: Il valore \texttt{NULL} indica l’assenza di un valore. È una parola chiave specifica che 
+	\item \textbf{Valori Nulli}: Il valore NULL indica l’assenza di un valore. È una parola chiave specifica che 
     Neverlang-SQL riconosce per rappresentare la mancanza di dati in un campo. Questo valore è trattato in modo distinto dagli 
     altri tipi, permettendo di gestire dati mancanti o opzionali all’interno del database.
 \end{itemize}
@@ -558,11 +558,11 @@ dal database, consentendo agli utenti di definire criteri di selezione precisi e
     dove un campo di testo corrisponde esattamente a una stringa specificata. Questa capacità di confronto diretto è essenziale per 
     operazioni di filtraggio di base, fornendo un controllo sui dati che vengono recuperati dal database.
 
-    \item La seconda tipologia si concentra sulle funzioni booleane native di SQL, come BETWEEN, IN e IS NULL. Queste funzioni sono 
+    \item La seconda tipologia si concentra sulle funzioni booleane native di SQL, come BETWEEN, IN e \texttt{IS NULL}. Queste funzioni sono 
     particolarmente utili per eseguire controlli più complessi e specifici. Ad esempio, la funzione BETWEEN permette di verificare 
     se un valore rientra all’interno di un determinato intervallo, mentre IN consente di verificare se un valore appartiene a un 
     insieme predefinito di valori. Queste funzioni forniscono un modo semplice e intuitivo per esprimere condizioni che coinvolgono 
-    intervalli o insiemi, rendendo le query più leggibili e facili da scrivere. Infine, la funzione IS NULL è utilizzata per 
+    intervalli o insiemi, rendendo le query più leggibili e facili da scrivere. Infine, la funzione \texttt{IS NULL} è utilizzata per 
     ricercare tuple con precisi attributi non dichiarati.
 
     \item La terza tipologia è rappresentata dalla capacità di combinare espressioni booleane pre-esistenti tramite operatori logici 
@@ -572,7 +572,7 @@ dal database, consentendo agli utenti di definire criteri di selezione precisi e
     le righe in cui un attributo non è uguale a un determinato valore o rientra in un intervallo specificato. L’uso di NOT permette 
     di escludere determinati risultati, invertendo la logica delle condizioni definite.
 \end{itemize}
-Queste operazioni sono particolarmente utili per la gestione della selezione dei dati da aggiornare nelle operazioni UPDATE, in cui 
+Queste operazioni sono particolarmente utili per la gestione della selezione dei dati da aggiornare nelle operazioni \texttt{UPDATE}, in cui 
 la precisione nella definizione dei criteri di modifica è fondamentale per garantire la modifica richiesta dall'utente finale. 
 Inoltre, le stesse funzioni booleane saranno utilizzate dagli operatori di selezione, di cui si parlerà nella 
 \cref{subsec:interrogazioni}, per selezionare le informazioni che l'utente vuole ottenere dal database.
@@ -580,8 +580,8 @@ Inoltre, le stesse funzioni booleane saranno utilizzate dagli operatori di selez
 \subsection{Interrogazioni al database}
 \label{subsec:interrogazioni}
 Le interrogazioni al database rappresentano una delle funzionalità essenziali di Neverlang-SQL, consentendo agli utenti di estrarre, 
-filtrare e ordinare dati in base a criteri specifici. Le operazioni di interrogazione implementate nel linguaggio includono SELECT, 
-FROM, WHERE e ORDER BY. Queste operazioni permettono di recuperare informazioni strutturate dalle tabelle, applicare filtri per 
+filtrare e ordinare dati in base a criteri specifici. Le operazioni di interrogazione implementate nel linguaggio includono \texttt{SELECT}, 
+\texttt{FROM}, \texttt{WHERE} e \texttt{ORDER BY}. Queste operazioni permettono di recuperare informazioni strutturate dalle tabelle, applicare filtri per 
 ottenere solo i dati rilevanti e ordinare i risultati secondo criteri definiti dall’utente. La combinazione di queste operazioni 
 permette di costruire query complesse e dettagliate, rispondendo a diverse esigenze di analisi dei dati.
 
@@ -597,27 +597,27 @@ flessibile. Un elemento chiave di questa progettazione è l’uso del simbolo \t
 le diverse operazioni. Questo approccio garantisce la coerenza nella sintassi delle query e permette di combinare le operazioni in 
 modo fluido, senza restrizioni rigide sulla loro sequenza. La scelta di strutturare le operazioni in modo che ogni operazione di 
 interrogazione utilizzi e restituisca il simbolo \texttt{SelectedData} è fondamentale per mantenere la flessibilità del linguaggio. 
-Tramite questa configurazione, l’output di una clausola come WHERE può essere utilizzato direttamente come input per un’altra 
-operazione, come ORDER BY o SELECT. Questo significa che le operazioni possono essere combinate in modo flessibile, senza che una 
+Tramite questa configurazione, l’output di una clausola come \texttt{WHERE} può essere utilizzato direttamente come input per un’altra 
+operazione, come \texttt{ORDER BY} o \texttt{SELECT}. Questo significa che le operazioni possono essere combinate in modo flessibile, senza che una 
 dipenda necessariamente dall’altra. Ad esempio, una query potrebbe iniziare con la selezione di tutte le colonne da una tabella 
-(SELECT * FROM Table), seguita da un filtro sui dati recuperati (WHERE condition) e, infine, ordinare i risultati secondo una 
-specifica colonna (ORDER BY column). In alternativa, potrebbe omettere l’operazione WHERE e includere solo ORDER BY. Grazie all’uso 
+(\texttt{SELECT}), seguita da un filtro sui dati recuperati (\texttt{WHERE}) e, infine, ordinare i risultati secondo una 
+specifica colonna (\texttt{ORDER BY}). In alternativa, potrebbe omettere l’operazione \texttt{WHERE} e includere solo \texttt{ORDER BY}. Grazie all’uso 
 ricorsivo di \texttt{SelectedData}, ogni operazione aggiunge una trasformazione sui dati senza la necessità di definire 
 esplicitamente tutte le altre operazioni all’interno della grammatica.
 
 Di seguito sono riassunti i principali vantaggi ottenuti dall’utilizzo di tale struttura:
 \begin{itemize}
-\item Modularità e coerenza: Utilizzando lo stesso simbolo \texttt{SelectedData} per rappresentare il risultato di qualsiasi 
-operazione di interrogazione, il linguaggio mantiene una coerenza sintattica che semplifica l’apprendimento e l’uso da parte degli 
-utenti. La modularità della grammatica permette di definire operazioni complesse senza introdurre ambiguità o conflitti sintattici.
-\item Estensibilità del linguaggio: La struttura progettuale facilita l’espansione del linguaggio. Poiché ogni nuova operazione di 
-interrogazione può essere definita come una trasformazione che prende in input \texttt{SelectedData} e restituisce un altro 
-\texttt{SelectedData}, è possibile aggiungere nuove operazioni seguendo lo stesso modello senza modificare la struttura di base del 
-linguaggio. Ad esempio, l’aggiunta della clausola GROUP BY, che verrà approfondita nella \cref{section:aggregazione}.
-\item Flessibilità nella costruzione delle query: Gli utenti possono combinare liberamente le operazioni di interrogazione, 
-utilizzandone un sottoinsieme a scelta, senza essere vincolati da una sequenza rigida di operazioni. Questo rende il linguaggio 
-particolarmente adatto per scenari complessi di analisi dei dati, dove le esigenze di interrogazione possono variare notevolmente.
-\item Facilità di manutenzione ed evoluzione: Grazie alla sua struttura modulare, il linguaggio è facile da mantenere e 
+    \item Modularità e coerenza: Utilizzando lo stesso simbolo \texttt{SelectedData} per rappresentare il risultato di qualsiasi 
+    operazione di interrogazione, il linguaggio mantiene una coerenza sintattica che semplifica l’apprendimento e l’uso da parte degli 
+    utenti. La modularità della grammatica permette di definire operazioni complesse senza introdurre ambiguità o conflitti sintattici.
+    \item Estensibilità del linguaggio: La struttura progettuale facilita l’espansione del linguaggio. Poiché ogni nuova operazione di 
+    interrogazione può essere definita come una trasformazione che prende in input \texttt{SelectedData} e restituisce un altro 
+    \texttt{SelectedData}, è possibile aggiungere nuove operazioni seguendo lo stesso modello senza modificare la struttura di base del 
+    linguaggio. Ad esempio, l’aggiunta della clausola \texttt{GROUP BY}, che verrà approfondita nella \cref{section:aggregazione}.
+    \item Flessibilità nella costruzione delle query: Gli utenti possono combinare liberamente le operazioni di interrogazione, 
+    utilizzandone un sottoinsieme a scelta, senza essere vincolati da una sequenza rigida di operazioni. Questo rende il linguaggio 
+    particolarmente adatto per scenari complessi di analisi dei dati, dove le esigenze di interrogazione possono variare notevolmente.
+    \item Facilità di manutenzione ed evoluzione: Grazie alla sua struttura modulare, il linguaggio è facile da mantenere e 
 aggiornare. Nuove funzionalità possono essere aggiunte senza richiedere significative riscritture del codice esistente. Questo 
 rende Neverlang-SQL non solo robusto ma anche sostenibile nel lungo termine.
 \end{itemize}
@@ -634,9 +634,9 @@ L’aggregazione di dati è una funzionalità avanzata di Neverlang-SQL che perm
 come conteggi, somme, medie, minimi e massimi. Queste operazioni sono essenziali per l’analisi dei dati, consentendo agli utenti di 
 ottenere informazioni riassuntive da collezioni di dati di grandi dimensioni e di esplorare pattern e tendenze al loro interno.
 
-Per supportare l’aggregazione di dati, è necessario adattare la clausola SELECT in modo che sia compatibile con i requisiti imposti 
-dalla clausola GROUP BY. Questa scelta è dovuta al fatto che, quando i due operatori sono utilizzati in combinazione, gli 
-\texttt{Id} specificati dalla SELECT non rappresentano più solamente gli attributi da estrarre ma anche quelli da generare tramite 
+Per supportare l’aggregazione di dati, è necessario adattare la clausola \texttt{SELECT} in modo che sia compatibile con i requisiti imposti 
+dalla clausola \texttt{GROUP BY}. Questa scelta è dovuta al fatto che, quando i due operatori sono utilizzati in combinazione, gli 
+\texttt{Id} specificati dalla \texttt{SELECT} non rappresentano più solamente gli attributi da estrarre ma anche quelli da generare tramite 
 l’aggregazione. Per questo motivo, la grammatica è definita come segue:
 \lstinputlisting[
 label={lst:aggregate-grammar},
