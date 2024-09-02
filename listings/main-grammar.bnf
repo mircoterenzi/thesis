@@ -1,0 +1,2 @@
+<Program> ::= <OperationList>
+<OperationList> ::= [<OperationList> ";"] <Operation>

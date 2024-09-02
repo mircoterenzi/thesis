@@ -1,0 +1,3 @@
+<Operation> ::= "INSERT" "INTO" <Id> "(" <IdList> ")" "VALUES" "(" <ValueList> ")"
+<Operation> ::= "DELETE" <SelectedData>
+<Operation> ::= "UPDATE" <Id> "SET" <SetList> "WHERE" <BoolExpression>

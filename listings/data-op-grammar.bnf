@@ -1,0 +1,5 @@
+<Operation> ::= <SelectedData
+<SelectedData> ::= "FROM" <Id>
+<SelectedData> ::= "SELECT" ("*"|<IdList>) <SelectedData>
+<SelectedData> ::= <SelectedData> "WHERE" <BoolExpr>
+<SelectedData> ::= <SelectedData> "ORDER" "BY" <OrderList>

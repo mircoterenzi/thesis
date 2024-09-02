@@ -1,0 +1,3 @@
+<Operation> ::= "CREATE" "TABLE" <Id> "(" <ColumnList> ")"
+<Operation> ::= "ALTER" "TABLE" <Id> ("ADD" <Column> |"DROP" <Id>)
+<Operation> ::= "DROP" "TABLE" <Id>

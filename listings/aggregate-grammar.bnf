@@ -1,0 +1,1 @@
+<SelectedData> ::= "SELECT" <IdList> <SelectedData> "GROUP" "BY" <IdList>;
