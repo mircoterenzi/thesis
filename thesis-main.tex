@@ -688,6 +688,106 @@ parte degli identificatori nella clausola \texttt{SELECT}. Questo approccio semp
 linguaggio, consentendo agli utenti di includere funzioni di aggregazione insieme ad altri identificatori nella stessa lista di 
 selezione.
 
+\section{Semantica}
+La semantica del DSL ricopre il ruolo di definire il comportamento operativo che le diverse costruzioni sintattiche del linguaggio dovranno 
+rispettare durante l’esecuzione. Mentre la sintassi stabilisce le regole su come devono essere strutturate le query per essere considerate 
+valide, la semantica si concentra su cosa tali query effettivamente fanno quando vengono eseguite. In particolare, l’implementazione della 
+sintassi è realizzata utilizzando il linguaggio di programmazione Java e le sue librerie, nonché le classi modellate ad-hoc per il dominio 
+applicativo del progetto\footnote{Questo comportamento è necessario perché Neverlang include solo una piccola libreria di funzioni di 
+utilità. In generale, viene incoraggiato l’utilizzo delle librerie standard appartenenti all’ecosistema Java \cite{Vacchi2015}.}.
+
+All’interno del capitolo corrente sono esplorate le diverse fasi del processo semantico, che comprendono il controllo della struttura, la 
+valutazione e la gestione dell’output.
+
+\subsection{Fase di controllo della struttura}
+A causa dell’alto grado di libertà concesso dalla sintassi delle operazioni utilizzate nelle interrogazioni del database\footnote{Il 
+riferimento è alla scelta implementativa delle operazioni utilizzate nell’interrogazione del database, che utilizzano, sia come input che 
+come output, un elemento \texttt{SelectedData} (\cref{subsec:interrogazioni}).}, Neverlang-SQL include una fase preliminare di 
+controllo della struttura. In questa fase, il linguaggio verifica che la struttura complessiva della query sia accettabile e coerente con le 
+regole semantiche definite. Ad esempio, non è permesso includere una clausola \texttt{ORDER BY} senza prima specificare una tabella da cui 
+selezionare i dati, né è possibile filtrare una tabella tramite l’operazione \texttt{WHERE} senza specificare come utilizzarne l’output, ad 
+esempio, tramite \texttt{SELECT} o \texttt{DELETE}.
+
+Il controllo della struttura assicura che le query rispettino una logica operativa sequenziale appropriata, impedendo che vengano eseguite 
+operazioni che non abbiano un contesto di riferimento valido o che manchino di informazioni essenziali per l’elaborazione. Questa fase è 
+fondamentale per evitare errori comuni e garantire che le query siano costruite in modo da poter essere valutate correttamente nelle fasi 
+successive.
+
+\subsection{Fase di valutazione}
+La fase di valutazione rappresenta il nucleo del processo semantico di Neverlang-SQL. In questa fase, la maggior parte delle regole 
+sintattiche del linguaggio vengono analizzate per determinare l’azione esatta che ciascun elemento della query deve eseguire. Durante la 
+valutazione, vengono interpretati i vari componenti della query, come selezioni, filtraggi, ordinamenti e aggregazioni, per determinare come 
+interagiscono tra loro e quali operazioni specifiche devono essere eseguite sul database. Questa fase traduce essenzialmente le istruzioni 
+della query da una rappresentazione sintattica a un insieme di operazioni concrete che manipolano i dati o le tabelle nel database.
+
+\subsection{Fase di output}
+Dopo che tutte le operazioni definite nella fase di valutazione sono state eseguite, si passa alla fase di output. In questa fase, viene 
+fornito all’utente il risultato finale della query, se presente. L’output può includere l’elenco dei dati selezionati, i risultati delle 
+funzioni di aggregazione o altre informazioni richieste dalla query.
+
+La presentazione dei risultati all’utente è considerata una fase indipendente perché la clausola che specifica l’output da fornire non 
+rappresenta necessariamente l’ultima operazione eseguita. Per questo motivo, l’esecuzione delle operazioni di ogni elemento del linguaggio 
+avviene prima, e solo successivamente il risultato ottenuto viene fornito. Ad esempio, la clausola \texttt{SELECT} indica l’inizio di una 
+query di interrogazione e al tempo stesso precisa quali sono gli attributi da fornire come output, ma potrebbe non rappresentare l’ultima 
+operazione da eseguire. In caso fosse presente un’operazione di \texttt{ORDER BY}, infatti, sarebbe quest’ultima l’operazione terminale 
+eseguita sui dati.
+
+\section{Tecnologie utilizzate}
+
+\subsection{Gradle}
+Gradle\footnote{Documentazione di Gradle: https://docs.gradle.org/current/userguide/userguide.html} è un sistema di automazione della 
+compilazione del codice, open source, ampiamente utilizzato per progetti in Java, ma supporta anche linguaggi come Scala e JavaScript, ed è 
+lo standard per la programmazione in Kotlin e per lo sviluppo di applicazioni per dispositivi Android. Supporta la gestione delle dipendenze, 
+la compilazione del codice, l’esecuzione di test e la creazione di pacchetti eseguibili. È estremamente configurabile ed estendibile, 
+consentendo di personalizzare il processo di build in base alle specifiche esigenze del singolo progetto.
+
+All’interno di Neverlang-SQL, l’utilizzo di Gradle ha contribuito ad agevolare il processo di compilazione del codice scritto in Neverlang, a 
+velocizzare il testing del linguaggio ottenuto ed ha ricoperto un ruolo fondamentale per la gestione delle dipendenze, in particolare con le 
+librerie di Neverlang.
+
+\subsection{JUnit5}
+JUnit\footnote{Documentazione di JUnit5: https://junit.org/junit5/docs/current/user-guide/} è uno dei framework di unit testing più diffusi 
+per il linguaggio di programmazione Java e fornisce un ambiente di test sistematico e automatizzato che aiuta a verificare la correttezza del 
+codice.
+
+In particolare, all’interno del progetto è stato utilizzato JUnit Jupyter per testare se il linguaggio generato con Neverlang funzionasse 
+correttamente. Questo approccio ha consentito di risparmiare una notevole quantità di tempo in quanto, tramite dei test significativi, è stato 
+possibile comprendere rapidamente se le soluzioni implementate fossero corrette oppure no. L’integrazione di JUnit con Gradle ha permesso di 
+eseguire i test in modo continuo e di generare report di test dettagliati, agevolando l’individuazione e la risoluzione dei \textit{bug}.
+
+\subsection{Git}
+Git\footnote{Documentazione di Git: https://git-scm.com/doc} è un software per il controllo di versione distribuito. Viene ampiamente 
+utilizzato per la sua efficienza e flessibilità e permette a uno o più sviluppatori di lavorare ad un progetto gestendone multiple versioni e 
+facilitando la collaborazione con terzi.
+
+Durante lo sviluppo del linguaggio, Git (in particolare tramite la piattaforma GitHub) ha permesso di gestire efficacemente le versioni del 
+codice e di tracciare ogni singola modifica apportata al progetto. Git ha dunque permesso di sperimentare nuove funzionalità e di correggere 
+i bug generati durante lo sviluppo senza il rischio di compromettere il codice stabile. Inoltre, sfruttando gli strumenti per la gestione dei 
+branch, è stato possibile sviluppare e testare nuove funzionalità in un ambiente isolato, per poi integrarle nel progetto principale solamente 
+dopo essere state testate.
+
+\subsection{CheckStyle}
+CheckStyle\footnote{Documentazione di CheckStyle: https://checkstyle.sourceforge.io} è uno strumento di analisi del codice open source, 
+progettato per aiutare gli sviluppatori a scrivere codice Java seguendo le convenzioni di stile. CheckStyle verifica che il codice rispetti 
+un insieme di regole predefinite, come quelle riguardanti la formattazione, la nomenclatura, la gestione delle eccezioni, ecc. Utilizzando 
+questo strumento, è possibile rilevare automaticamente le violazioni dello stile di codice durante il processo di build, riducendo così la 
+probabilità di errori e migliorando la leggibilità del codice.
+
+Nel progetto Neverlang-SQL, CheckStyle è stato utilizzato per garantire che il codice Java (escluso quello generato dal compilatore di 
+Neverlang, nlgc) rispettasse le convenzioni di stile standard. Questo ha contribuito a mantenere un codice pulito e leggibile, migliorando 
+la qualità del codice prodotto.
+
+\subsection{SpotBugs}
+SpotBugs\footnote{Documentazione di SpotBugs: https://spotbugs.readthedocs.io/en/stable/} è uno strumento di analisi del codice per il 
+linguaggio Java che rileva bug e vulnerabilità potenziali. SpotBugs si concentra sull’identificazione di possibili errori nel codice, come 
+dereferenziazioni di nulli, errori logici, problemi di sicurezza e altre pratiche di programmazione sconsigliate che potrebbero causare 
+malfunzionamenti o vulnerabilità del software.
+
+Nel contesto del progetto Neverlang-SQL, SpotBugs è stato utilizzato per esaminare il codice Java associato ai moduli di Neverlang e alle 
+classi Java, e per identificare eventuali difetti o punti deboli nel codice del linguaggio. Questo strumento ha permesso di migliorare la 
+robustezza e la sicurezza del progetto, identificando rapidamente potenziali problemi prima che potessero causare malfunzionamenti nel 
+progetto.
+
 %----------------------------------------------------------------------------------------
 \chapter{Validazione e Conclusioni}
 \label{chap:conclusioni}
