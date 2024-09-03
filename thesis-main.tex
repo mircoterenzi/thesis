@@ -264,6 +264,7 @@ le principali:
 \begin{itemize}
     \item \textbf{Gestione delle tabelle}: Per modellare la base di dati secondo le proprie esigenze, l’utente ha a disposizione una serie 
     di operazioni per creare o modificare le tabelle all’interno del database:
+
     \begin{itemize}
         \item La funzione \texttt{CREATE TABLE} permette di creare una nuova tabella e di specificare le colonne che la compongono. Ciascuna 
         colonna può avere vincoli sui dati che conterrà. Ad esempio, il vincolo espresso di default durante la fase di creazione della 
@@ -276,14 +277,17 @@ le principali:
         dalla tabella.
         \item \texttt{DELETE} TABLE permette di rimuovere una tabella dalla base dati, eliminando anche i dati in essa contenuti.
     \end{itemize}
+
     \item \textbf{Gestione dei dati}: Analogamente a quanto descritto per le tabelle, è importante fornire la possibilità di gestire i dati 
     al loro interno. Le funzioni necessarie da implementare nel progetto sono l’esatta trasposizione di quelle descritte per la gestione 
     delle tabelle. In particolare, il costrutto \texttt{INSERT INTO} permette di inserire dati all’interno di una tabella, \texttt{UPDATE} 
     consente di modificare uno o più attributi di un sottoinsieme di dati (ottenuto tramite una precisa selezione) e, infine, \texttt{DELETE} 
     permette di eliminare una o più tuple.
+
     \item \textbf{Manipolazione dei dati}: Un aspetto fondamentale di un linguaggio di questo tipo è l’utilizzo dell’insieme di 
     informazioni contenute nel database per estrarre nuovi dati. Questa operazione può essere eseguita grazie all’implementazione dei 
     seguenti comandi nella sintassi del \ac{DSL}:
+
     \begin{itemize}
         \item Tra le istruzioni più importanti troviamo \texttt{SELECT} e \texttt{FROM}. La prima permette di specificare un sottoinsieme 
         di attributi da ottenere, mentre la seconda viene utilizzata per indicare la tabella sorgente dalla quale esportare gli attributi 
@@ -293,6 +297,7 @@ le principali:
         \item Infine, \texttt{ORDER BY} viene utilizzato per indicare come ordinare le tuple del risultato. È possibile specificare anche 
         più attributi per determinare l’ordine in caso di uguaglianza dell’attributo precedente.
     \end{itemize}
+
     \item \textbf{Aggregazione di dati}: L’aggregazione di dati è il processo di combinare più elementi di informazione per ottenere un unico 
     risultato sintetico. Quando si lavora con una quantità consistente di informazioni, è spesso utile raggruppare questi dati in insiemi 
     basati su uno o più attributi comuni. Il comando \texttt{GROUP BY} consente di effettuare questa operazione, specificando gli attributi
@@ -301,6 +306,18 @@ le principali:
     la somma, la media o il conteggio degli elementi del sottogruppo (rispettivamente utilizzando \texttt{SUM}, \texttt{AVG} e \texttt{COUNT}), 
     oppure la selezione dell’elemento con il valore massimo o minimo in ogni collezione di tuple (tramite \texttt{MAX} e \texttt{MIN}).
 \end{itemize}
+
+Al \cref{lst:query}, sono forniti esempi di codice SQL utilizzati per le operazioni descritte all'interno della sezione corrente. Tali esempi 
+rappresentano in modo chiaro le funzionalità e la sintassi che il linguaggio dovrà implementare.
+
+\lstinputlisting[
+    float,
+    label={lst:query},
+    language=SQL,
+    numbers=none,
+    frame=none,
+    caption={Esempio di codice scritto in SQL, che illustra un caso di utilizzo per ciascuna operazione richiesta nel progetto.}
+]{listings/query-example.sql}
 
 \section{Requisiti non funzionali}
 Tra i requisiti essenziali, il progetto prevede un'implementazione dei comandi e delle operazioni descritte nella sezione precedente in 
@@ -328,7 +345,8 @@ dalla definizione della tabella in cui viene inserita.
 Gli elementi appena descritti e le loro relazioni sono sintetizzati nella \cref{fig:model-diagram}. Le operazioni corrispondenti alla 
 semantica di ogni clausola del linguaggio utilizzano il modello appena descritto per poter modificare la struttura del database, delle 
 tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogando la base dati.
-\begin{figure}[H]
+
+\begin{figure}
     \centering
     \includegraphics[width=.6\linewidth]{figures/model-diagram.pdf}
     \caption{Schema UML dell'analisi del problema, al suo interno sono rappresentate le entità principali coinvolte nella memorizzazione 
