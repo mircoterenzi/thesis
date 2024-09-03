@@ -275,7 +275,7 @@ le principali:
         \item L’operazione \texttt{ALTER TABLE} permette di modificare le tabelle già presenti nel database. Quando tale costrutto viene 
         utilizzato, è necessario specificare la natura della modifica, ossia indicare se si desidera aggiungere o rimuovere una colonna 
         dalla tabella.
-        \item \texttt{DELETE} TABLE permette di rimuovere una tabella dalla base dati, eliminando anche i dati in essa contenuti.
+        \item \texttt{DELETE TABLE} permette di rimuovere una tabella dalla base dati, eliminando anche i dati in essa contenuti.
     \end{itemize}
 
     \item \textbf{Gestione dei dati}: Analogamente a quanto descritto per le tabelle, è importante fornire la possibilità di gestire i dati 
@@ -329,6 +329,8 @@ aggiornamenti futuri.
 
 Infine, il linguaggio modellato dovrà essere in grado di interpretare e processare query scritte utilizzando \ac{SQL}, permettendo 
 l’esecuzione delle operazioni desiderate in maniera efficiente e precisa, e in modo del tutto compatibile con gli standard esistenti.
+
+\note{TODO: In 3.3 potremmo anche dire qualcosa su quello che ci aspettiamo da Nerlang, vista le sue "promesse" di agilità nell'evoluzione della specifica di un linguaggio}
 
 \section{Modellazione del dominio}
 Il dominio applicativo del progetto prevede la memorizzazione delle informazioni all’interno di strutture che ne facilitino la manipolazione 
@@ -400,15 +402,15 @@ nodo dell’\ac{AST} al quale sono riferite. Queste classi contengono la logica 
 durante l’esecuzione delle query, permettendo inoltre di interagire con la parte modellata in Java e che modella il dominio 
 all'interno del quale il DSL viene applicato.
 
-Le classi implementate tramite il linguaggio di programmazione Java, come Database, Table, Column, e Tuple, sono strettamente 
+Le classi implementate tramite il linguaggio di programmazione Java, come \texttt{Database}, \texttt{Table}, \texttt{Column}, e \texttt{Tuple}, sono strettamente 
 integrate con le classi semantiche generate dal compilatore di Neverlang. Questa integrazione permette alle ultime di eseguire 
 operazioni dirette sul dominio modellato, quali la modifica della struttura delle tabelle, l’inserimento e la manipolazione dei dati, 
 e l’esecuzione di query complesse per ottenere informazioni specifiche richieste dall’utente.
 
 Inoltre, sia le classi Java che quelle generate da Neverlang sono progettate per gestire le eccezioni. Il design proposto in questa 
 sezione dell'elaborato include la generazione e la gestione di eccezioni personalizzate, ognuna delle quali rappresenta un errore 
-specifico che può verificarsi durante l’analisi o l’esecuzione delle query, come errori di sintassi, accessi non validi ai dati, 
-o operazioni non consentite.
+specifico che può verificarsi durante l’analisi o l’esecuzione delle query, come errori di sintassi, accessi non validi ai dati 
+od operazioni non consentite.
 
 
 \section{Sintassi}
@@ -419,7 +421,7 @@ database e l'aggregazione di dati. Ciascuna delle sezioni elencate è definita p
 
 \subsection{Fondamenti del linguaggio}
 \label{subsec:fondamenti-linguaggio}
-Il design del linguaggio è fondato sull’interpretazione di ogni \textit{query} ricevuta in input come una sequenza di operazioni 
+Il design del linguaggio è fondato sull’interpretazione di ogni query ricevuta in input come una sequenza di operazioni 
 indipendenti l’una dall’altra, le quali possono essere eseguite in modo sequenziale. Questa struttura sintattica modulare consente 
 di ottenere una grande flessibilità nell’esecuzione di operazioni complesse e nella combinazione di più comandi SQL in un’unica 
 istruzione. All'interno di questa rappresentazione, il ruolo fondamentale è ricoperto dal simbolo non terminale \texttt{Operation}, 
@@ -428,14 +430,14 @@ il quale rappresenta una singola operazione da eseguire, come la creazione di un
 \paragraph{Unione di più operazioni}
 Per supportare la concatenazione di più operazioni in una singola query, viene utilizzato il non terminale \texttt{OperationList}. 
 Questo simbolo può rappresentare una singola operazione o una sequenza di operazioni, ognuna delle quali è separata dall’operatore 
-\texttt{;}. Inoltre, \texttt{OperationList} è anche l'elemento utilizzato per definire l'assioma\footnote{Definito anche ``simbolo 
-di partenza'', convenzionalmente rappresenta il punto di partenza di ogni linguaggio definito utilizzando Neverlang.} del 
-linguaggio: \texttt{Program}.
+punto e virgola (\texttt{;}). Inoltre, \texttt{OperationList} è anche l'elemento utilizzato per definire l'assioma\footnote{Definito 
+anche ``simbolo di partenza'', convenzionalmente rappresenta il punto di partenza di ogni linguaggio definito utilizzando Neverlang.} 
+del linguaggio: \texttt{Program}.
 
 La definizione ricorsiva della lista, illustrata in \cref{fig:list-ast}, permette di definire sequenze di operazioni di lunghezza 
-arbitraria, offrendo agli utenti un discreta flessibilità per la scrittura delle query. Tale struttura non solo facilita 
-l’esecuzione di operazioni multiple ma agevola anche l'estensione delle regole grammaticali del DSL, nuovi tipi di operazioni 
-potranno essere aggiunte a quelle già esistenti senza dover modificare la sintassi di base proposta nel paragrafo corrente. 
+arbitraria, offrendo agli utenti una discreta flessibilità per la scrittura delle query. Tale struttura non solo facilita 
+l’esecuzione di operazioni multiple ma agevola anche l'estensione delle regole grammaticali del DSL: nuovi tipi di operazioni 
+potranno essere aggiunti a quelle già esistenti senza dover modificare la sintassi di base proposta nel paragrafo corrente. 
 Concludendo, l'approccio modulare proposto non solo migliora la chiarezza del codice ma aumenta anche la manutenibilità del 
 linguaggio, permettendo l’aggiornamento o la modifica di singole operazioni senza influire sull’intero sistema.
 
@@ -469,8 +471,8 @@ i lessemi a tempo d’esecuzione \cite{Dexter2012, Vacchi2015}.}.
 
 
 \subsection{Gestione delle tabelle}
-Le operazioni necessarie per gestire efficacemente le tabelle all’interno del linguaggio Neverlang-SQL sono: \texttt{CREATE TABLE}, ALTER 
-TABLE e \texttt{DROP TABLE}. Queste operazioni forniscono agli utenti la capacità di definire nuove tabelle, modificare quelle esistenti o 
+Le operazioni necessarie per gestire efficacemente le tabelle all’interno del linguaggio Neverlang-SQL sono: \texttt{CREATE TABLE}, \texttt{ALTER 
+TABLE} e \texttt{DROP TABLE}. Queste operazioni forniscono agli utenti la capacità di definire nuove tabelle, modificare quelle esistenti o 
 rimuoverle dal database. La sintassi delle operazioni descritte è la seguente:
 \lstinputlisting[
 label={lst:table-grammar},
@@ -497,9 +499,9 @@ simboli non terminali. La struttura dell’albero riflette la gerarchia e le dip
 mostrando come ciascun elemento della sintassi viene interpretato dal linguaggio. In particolare, l’operazione d’esempio richiede 
 la creazione di una tabella chiamata Customer, contenente due attributi. Il primo attributo, definito come chiave primaria (che non 
 può essere nullo e deve essere unico per ogni tupla inserita nella tabella), rappresenta il numero intero identificativo di ogni 
-cliente ed è chiamato CustomerID. Questo attributo è progettato per garantire l’unicità di ogni cliente all’interno del database, 
+cliente ed è chiamato ``CustomerID''. Questo attributo è progettato per garantire l’unicità di ogni cliente all’interno del database, 
 essendo un elemento essenziale per mantenere l’integrità dei dati. Il secondo attributo previsto per la tabella Customer è la 
-colonna Email, che è destinata a contenere l’indirizzo email di ogni cliente. Questa colonna è definita come una stringa con una 
+colonna ``Email'', che è destinata a contenere l’indirizzo email di ogni cliente. Questa colonna è definita come una stringa con una 
 lunghezza massima di 100 caratteri, garantendo così che tutti gli indirizzi email inseriti rispettino un formato standardizzato e 
 un limite di lunghezza specificato.
 
@@ -520,7 +522,10 @@ tabella da inserire:
 \end{itemize}
 
 \subsection{Gestione dei dati}
-La gestione dei dati in Neverlang-SQL include le operazioni fondamentali per manipolare i dati all’interno delle tabelle del database. Le principali operazioni supportate in questa macro-area sono \texttt{INSERT}, \texttt{UPDATE} e \texttt{DELETE}. Queste operazioni permettono agli utenti di aggiungere nuove righe, modificare i dati esistenti e rimuovere righe dalle tabelle, rispettivamente. La sintassi di queste operazioni è:
+La gestione dei dati in Neverlang-SQL include le operazioni fondamentali per manipolare i dati all’interno delle tabelle del database. 
+Le principali operazioni supportate in questa macro-area sono \texttt{INSERT}, \texttt{UPDATE} e \texttt{DELETE}. Rispettivamente, queste 
+operazioni permettono agli utenti di aggiungere nuove righe, modificare i dati esistenti e rimuovere righe dalle tabelle. La 
+sintassi di queste operazioni è:
 \lstinputlisting[
     label={lst:data-grammar},
     language=BNF
@@ -538,7 +543,7 @@ utilizzata singolarmente o combinata con altre operazioni in una singola query.
 
 \paragraph{Liste di oggetti}
 Le liste \texttt{IdList}, \texttt{ValueList} e \texttt{SetList} sono progettate in modo analogo alla lista di operazioni 
-\texttt{OperationList} descritta nel \cref{subsec:fondamenti-linguaggio}. Questa progettazione consente di rappresentare sequenze 
+\texttt{OperationList} descritta nella \cref{subsec:fondamenti-linguaggio}. Questa progettazione consente di rappresentare sequenze 
 flessibili di identificatori, valori e assegnazioni nelle query SQL, permettendo di specificare un numero variabile di elementi 
 secondo le necessità dell’utente. Ogni lista può contenere uno o più elementi, utilizzando una struttura ricorsiva che facilita la 
 costruzione di query articolate e complesse.
@@ -557,10 +562,10 @@ specifico che il linguaggio è in grado di riconoscere. I tipi di valori support
     positivo o negativo e supportano anche la notazione scientifica con un esponente (ad esempio ``1.23e-2'' rappresenta il numero 
     $1.23 \times 10^{-2}$, ossia $0.0123$ ). Questo consente di rappresentare una vasta gamma di valori numerici, inclusi numeri 
     molto piccoli o molto grandi con precisione.
-	\item \textbf{Booleani}: I valori booleani sono rappresentati dalle parole chiave TRUE o FALSE. Questi valori 
+	\item \textbf{Booleani}: I valori booleani sono rappresentati dalle parole chiave \texttt{TRUE} o \texttt{FALSE}. Questi valori 
     sono utilizzati per indicare stati di verità binari e vengono riconosciuti come tali solo quando corrispondono esattamente a 
     una delle due parole chiave, garantendo un’interpretazione corretta nelle operazioni logiche.
-	\item \textbf{Valori Nulli}: Il valore NULL indica l’assenza di un valore. È una parola chiave specifica che 
+	\item \textbf{Valori Nulli}: Il valore \texttt{NULL} indica l’assenza di un valore. È una parola chiave specifica che 
     Neverlang-SQL riconosce per rappresentare la mancanza di dati in un campo. Questo valore è trattato in modo distinto dagli 
     altri tipi, permettendo di gestire dati mancanti o opzionali all’interno del database.
 \end{itemize}
@@ -571,23 +576,23 @@ potenza espressiva nella costruzione di query complesse. Queste funzioni sono fo
 dal database, consentendo agli utenti di definire criteri di selezione precisi e ottimizzati.
 \begin{itemize}
     \item La prima tipologia di funzioni booleane riguarda i confronti diretti tra attributi di una colonna e un valore specificato 
-    dall’utente. Queste funzioni permettono di eseguire confronti utilizzando operatori come =, !=, <, >, <=, e >=. Ad esempio, è 
+    dall’utente. Queste funzioni permettono di eseguire confronti utilizzando operatori come \texttt{=}, \texttt{<>}, \texttt{<}, \texttt{>}, \texttt{<=}, e \texttt{>=}. Ad esempio, è 
     possibile selezionare tutte le righe di una tabella in cui il valore di una colonna specifica è maggiore di un certo numero, o 
     dove un campo di testo corrisponde esattamente a una stringa specificata. Questa capacità di confronto diretto è essenziale per 
     operazioni di filtraggio di base, fornendo un controllo sui dati che vengono recuperati dal database.
 
-    \item La seconda tipologia si concentra sulle funzioni booleane native di SQL, come BETWEEN, IN e \texttt{IS NULL}. Queste funzioni sono 
-    particolarmente utili per eseguire controlli più complessi e specifici. Ad esempio, la funzione BETWEEN permette di verificare 
-    se un valore rientra all’interno di un determinato intervallo, mentre IN consente di verificare se un valore appartiene a un 
+    \item La seconda tipologia si concentra sulle funzioni booleane native di SQL, come \texttt{BETWEEN}, \texttt{IN} e \texttt{IS NULL}. Queste funzioni sono 
+    particolarmente utili per eseguire controlli più complessi e specifici. Ad esempio, la funzione \texttt{BETWEEN} permette di verificare 
+    se un valore rientra all’interno di un determinato intervallo, mentre \texttt{IN} consente di verificare se un valore appartiene a un 
     insieme predefinito di valori. Queste funzioni forniscono un modo semplice e intuitivo per esprimere condizioni che coinvolgono 
     intervalli o insiemi, rendendo le query più leggibili e facili da scrivere. Infine, la funzione \texttt{IS NULL} è utilizzata per 
     ricercare tuple con precisi attributi non dichiarati.
 
     \item La terza tipologia è rappresentata dalla capacità di combinare espressioni booleane pre-esistenti tramite operatori logici 
-    come AND, OR, e NOT. Questa funzionalità consente agli utenti di creare condizioni più complesse ed articolate, combinando più 
+    come \texttt{AND}, \texttt{OR} e \texttt{NOT}. Questa funzionalità consente agli utenti di creare condizioni più complesse ed articolate, combinando più 
     criteri di selezione in una singola operazione. Ad esempio, è possibile costruire una query che seleziona tutte le righe in cui 
     un attributo è maggiore di un certo valore e un altro attributo corrisponde a una stringa specifica, oppure che recupera tutte 
-    le righe in cui un attributo non è uguale a un determinato valore o rientra in un intervallo specificato. L’uso di NOT permette 
+    le righe in cui un attributo non è uguale a un determinato valore o rientra in un intervallo specificato. L’uso di \texttt{NOT} permette 
     di escludere determinati risultati, invertendo la logica delle condizioni definite.
 \end{itemize}
 Queste operazioni sono particolarmente utili per la gestione della selezione dei dati da aggiornare nelle operazioni \texttt{UPDATE}, in cui 
