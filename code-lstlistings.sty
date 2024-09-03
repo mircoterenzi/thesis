@@ -8,23 +8,25 @@
 \crefname{lstlisting}{listato}{listato}	
 \Crefname{lstlisting}{Listato}{Listato}
 \renewcommand\lstlistlistingname{Elenco dei listati}
+\renewcommand{\lstlistingname}{Listato}
 
 \lstset{
 	showstringspaces=false,
 	basicstyle=\scriptsize\ttfamily,
-	commentstyle={\color{olive}},
+	commentstyle={\color{myGreen}},
 	identifierstyle=\color{black},
 	ndkeywordstyle={\color{blue}},
-	stringstyle={\color{magenta}},
+	stringstyle={\color{myGreen}},
 	emphstyle={},
 	keywordstyle={\color{blue}},
 	breaklines=true,
-	numbers=left,
+	numbers=none,
 	numberstyle=\tiny\color{gray},
 	numbersep=10pt,
 	tabsize=2,
 	extendedchars=true,
-	frame=none
+	frame=none,
+	captionpos=b
 }
 
 \lstdefinelanguage{Kotlin}{
@@ -39,12 +41,29 @@
 }
 
 \definecolor{myPink}{HTML}{F04265}
+\definecolor{myPurple}{HTML}{714FCF}
+\definecolor{myGreen}{HTML}{5E9785}
+
 \lstdefinelanguage{BNF}{
 	morekeywords={::=,|},
 	sensitive=false,
-	morestring=[b]"
-	, keywordstyle=\color{blue}\bfseries
-	, stringstyle=\color{myPink}
-	, literate={->}{$\rightarrow$}{2}
-	, basicstyle=\small\ttfamily
+	morestring=[b]",
+	literate={->}{$\rightarrow$}{2}
+}
+
+\lstdefinelanguage{SQL}{
+	keywords={SELECT, FROM, WHERE, INSERT, INTO, VALUES, UPDATE, SET, DELETE, CREATE, TABLE, ALTER, 
+			ADD, DROP, JOIN, INNER, LEFT, RIGHT, FULL, ON, GROUP, BY, ORDER, ASC, DESC, COUNT, SUM, AVG, MIN, 
+			MAX, AS, DISTINCT, IN, AND, OR, NOT, NULL, LIKE, IS, BETWEEN, UNION, ALL, EXISTS, ANY, HAVING, LIMIT,
+			PRIMARY, KEY},
+	keywordstyle=\color{myPurple}\bfseries,
+	ndkeywords={int, varchar, char, date, float, boolean},
+	ndkeywordstyle=\color{myPink}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{--},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]',
+	morestring=[b]",
+	stringstyle=\color{myGreen}
 }
