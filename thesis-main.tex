@@ -10,7 +10,7 @@
 % Information used in the title page
 \school{\unibo}
 \programme{Corso di Laurea in Ingegneria e Scienze Informatiche}
-\title{Utilizzo di Neverlang per la modellazione di Domain Specific Languages\note{TODO: chiedere conferma titolo}}
+\title{Utilizzo di Neverlang per la modellazione di Domain Specific Languages\note{TODO: chiedere conferma titolo}} %Utilizzo di Neverlang per l'implementazione di un DSL SQL-like
 \author{Terenzi Mirco}
 \date{\today}
 \subject{Programmazione ad Oggetti}
@@ -259,6 +259,7 @@ la loro eventuale alterazione od eliminazione. Infine, il linguaggio dovrà forn
 aggregare l’insieme di informazioni presenti nel database.
 
 \section{Requisiti funzionali}
+\label{sec:requisiti-funzionali}
 Il \ac{DSL} dovrà implementare un insieme di caratteristiche tipiche di \ac{SQL}. Di seguito vengono elencate 
 le principali:
 \begin{itemize}
@@ -320,17 +321,23 @@ rappresentano in modo chiaro le funzionalità e la sintassi che il linguaggio do
 ]{listings/query-example.sql}
 
 \section{Requisiti non funzionali}
-Tra i requisiti essenziali, il progetto prevede un'implementazione dei comandi e delle operazioni descritte nella sezione precedente in 
-modo incrementale e secondo il paradigma di programmazione orientata alle funzionalità. Questo approccio consente di sviluppare ogni 
-caratteristica del linguaggio in modo quanto più indipendente possibile, evitando interdipendenze strette tra i vari moduli. In tal modo, 
-sarà possibile aggiungere, modificare o rimuovere specifiche \textit{features} senza dover intervenire in modo invasivo sull’intero 
-codice. Ciò garantisce una maggiore flessibilità nello sviluppo e nella manutenzione del progetto, oltre a facilitare possibili 
-aggiornamenti futuri.
-
-Infine, il linguaggio modellato dovrà essere in grado di interpretare e processare query scritte utilizzando \ac{SQL}, permettendo 
-l’esecuzione delle operazioni desiderate in maniera efficiente e precisa, e in modo del tutto compatibile con gli standard esistenti.
-
-\note{TODO: In 3.3 potremmo anche dire qualcosa su quello che ci aspettiamo da Nerlang, vista le sue "promesse" di agilità nell'evoluzione della specifica di un linguaggio}
+Nel contesto del progetto, vengono considerati i seguenti requisiti non funzionali:
+\begin{itemize}
+    \item \textbf{Modularità e riutilizzabilità}: Tra i requisiti essenziali, il progetto prevede un’implementazione dei comandi descritti 
+    nella \cref{sec:requisiti-funzionali} in modo incrementale, modulare e riutilizzabile. In questo modo, ogni caratteristica del 
+    linguaggio sarà definita per incrementare l’indipendenza e limitare, quindi, le dipendenze da moduli esterni. Tale approccio favorisce 
+    non solo l’aggiunta e la rimozione di funzionalità al suo interno, ma anche il riutilizzo di componenti in altri progetti.
+    \item \textbf{Facilità di evoluzione e manutenzione}: Un ulteriore requisito riguarda l’eventuale evoluzione e manutenzione del 
+    linguaggio. Neverlang supporta un’evoluzione agile delle specifiche del linguaggio, rendendo possibile la modifica di sintassi e 
+    semantica senza dover rifattorizzare l’intero progetto. Questa caratteristica è particolarmente utile per adattare il progetto 
+    rapidamente alle nuove esigenze o integrazioni.
+    \item \textbf{Facilità di sviluppo}: Le API del framework Neverlang sono progettate per rendere la definizione del linguaggio più 
+    intuitiva e meno soggetta a errori. Per tale motivo, è ragionevole attendersi non solo un processo di sviluppo più veloce, ma anche una 
+    maggiore qualità del linguaggio prodotto.
+    \item \textbf{Compatibilità con SQL}: Trattandosi di un linguaggio modellato ispirandosi ad SQL, il progetto dovrà essere in grado di 
+    interpretare e processare query SQL, permettendo l’esecuzione delle operazioni desiderate in modo efficiente e preciso, in modo 
+    compatibile con gli standard del linguaggio esistente.
+\end{itemize}
 
 \section{Modellazione del dominio}
 Il dominio applicativo del progetto prevede la memorizzazione delle informazioni all’interno di strutture che ne facilitino la manipolazione 
@@ -636,7 +643,7 @@ Di seguito sono riassunti i principali vantaggi ottenuti dall’utilizzo di tale
     \item Estensibilità del linguaggio: La struttura progettuale facilita l’espansione del linguaggio. Poiché ogni nuova operazione di 
     interrogazione può essere definita come una trasformazione che prende in input \texttt{SelectedData} e restituisce un altro 
     \texttt{SelectedData}, è possibile aggiungere nuove operazioni seguendo lo stesso modello senza modificare la struttura di base del 
-    linguaggio. Ad esempio, l’aggiunta della clausola \texttt{GROUP BY}, che verrà approfondita nella \cref{section:aggregazione}.
+    linguaggio. Ad esempio, l’aggiunta della clausola \texttt{GROUP BY}, che verrà approfondita nella \cref{sec:aggregazione}.
     \item Flessibilità nella costruzione delle query: Gli utenti possono combinare liberamente le operazioni di interrogazione, 
     utilizzandone un sottoinsieme a scelta, senza essere vincolati da una sequenza rigida di operazioni. Questo rende il linguaggio 
     particolarmente adatto per scenari complessi di analisi dei dati, dove le esigenze di interrogazione possono variare notevolmente.
@@ -652,7 +659,7 @@ avanzati. La capacità di combinare operazioni senza restrizioni rigide rende il
 l’interrogazione del database.
 
 \subsection{Aggregazione di dati}
-\label{section:aggregazione}
+\label{sec:aggregazione}
 L’aggregazione di dati è una funzionalità avanzata di Neverlang-SQL che permette di raggruppare i dati e calcolare valori aggregati 
 come conteggi, somme, medie, minimi e massimi. Queste operazioni sono essenziali per l’analisi dei dati, consentendo agli utenti di 
 ottenere informazioni riassuntive da collezioni di dati di grandi dimensioni e di esplorare pattern e tendenze al loro interno.
