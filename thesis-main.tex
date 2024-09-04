@@ -797,8 +797,75 @@ progetto.
 \chapter{Validazione e Conclusioni}
 \label{chap:conclusioni}
 %----------------------------------------------------------------------------------------
+\section{Validazione}
+\label{chap:validazione}
+La validazione del progetto realizzato ha interessato principalmente due tipi di controlli: il test sulla struttura dati creata 
+e il test sull’output fornito. L’obiettivo del controllo è stato quello di determinare se l’implementazione realizzata 
+corrispondesse a ciò che era ragionevolmente atteso che il software facesse.
 
+\subsection{Test della struttura}
+\label{section:test-strutt}
+Il controllo della base di dati realizzata è stato eseguito sul database creato durante l’esecuzione, costruito usando il file 
+utilizzato come sorgente o lo script fornito al test dall’assioma del linguaggio Neverlang, ossia il simbolo \texttt{Program}. In 
+questo modo, nei test implementati nel progetto, è stato sufficiente utilizzare l’attributo \texttt{db} del nodo radice dell’AST 
+per verificare che la struttura ottenuta corrispondesse a quella attesa dai comandi oggetto di testing.
 
+Nel \cref{lst:simple-test} viene fornito un esempio introduttivo di come i controlli della struttura del database e delle tabelle 
+siano stati realizzati. Il punto fondamentale è quello riportato alla riga 12, che corrisponde all’ottenimento dell’attributo 
+contenente il database creato dal codice utilizzato come input. In modo del tutto analogo, all’interno dei test “strutturali” del 
+progetto, contenuti nella classe \texttt{TableTests.java}, sono eseguiti dei codici d’esempio per verificare se l’output ottenuto 
+è quello desiderato.
+
+\lstinputlisting[
+float,
+label={lst:simple-test},
+language=Java,
+numbers=left,
+frame=none,
+caption={Metodo utilizzato per il test del codice prodotto. In particolare, verifica se il nodo radice restituisce un database e se 
+al suo interno contiene la tabella creata.}
+]{listings/simple-test.txt}
+
+Per poter eseguire i test descritti, è stato fondamentale l’utilizzo della libreria di Neverlang progettata per interagire con 
+JUnit\footnote{Repository dell’estensione neverlang-junit: \href{https://maven.adapt-lab.di.unimi.it/\#/neverlang/releases/it/unimi/di/adaptlab/neverlang-junit-extension}{https://maven.adapt-lab.di.unimi.it}}, 
+che è stata aggiunta come dipendenza del progetto tramite Gradle. Grazie all’utilizzo di questa estensione e delle annotazioni 
+\texttt{@ExtendWith}, \texttt{@NeverlangUnit} e \texttt{@NeverlangUnitParam} definite al suo interno, è stato possibile effettuare 
+i test generando in modo automatizzato l’albero sintattico prodotto da Neverlang.
+
+\subsection{Test dell’output fornito}
+Il controllo dell’output fornito è stato più complesso, poiché le operazioni di output non modificano la struttura effettiva del 
+database, ma ne creano una temporanea utilizzata per generare l’output secondo le richieste dell’utente. Prendendo come esempio la 
+query di selezione \texttt{SELECT Nome, Cognome FROM Customers} e assumendo che la tabella sorgente contenga più attributi 
+rispetto ai due richiesti, il controllo della struttura della tabella non sarebbe sufficiente, in quanto includerebbe anche altri 
+attributi non pertinenti.
+
+\paragraph{Prima implementazione}
+Per risolvere il problema descritto, inizialmente è stato aggiunto nel progetto un attributo al nodo radice chiamato “output”, 
+utilizzato per salvare la tabella temporanea generata dalla query di input, con un funzionamento simile a quello descritto nella 
+\cref{section:test-strutt} riguardo al test della struttura della tabella. Tuttavia, questo approccio si è rivelato poco flessibile, 
+poiché richiedeva di mantenere un secondo database fittizio, che poteva generare errori se l’utente avesse voluto creare un database 
+con lo stesso nome. Inoltre, obbligava la parte semantica a gestire un aspetto non richiesto dal progetto e introduceva delle 
+problematiche riguardo alla memorizzazione dell’output di più query contemporaneamente.
+
+\paragraph{Seconda implementazione}
+L’implementazione utilizzata nei test sfrutta un metodo presente nell'estensioni per JUnit fornita da Neverlang, chiamato\\
+\texttt{getASTNodeFromResourceFile}. Questo metodo è stato utilizzato per generare l’albero sintattico all’interno del test, anziché 
+ottenere il nodo radice come parametro tramite l’annotazione \texttt{@NeverlangUnitParam}. Al \cref{lst:methods-test} viene mostrato 
+come l’implementazione del metodo \texttt{testOutput} utilizzi il percorso del file contenente il test e la stringa corrispondente 
+all’output atteso, ottenuti come parametri, per verificare che l’output generato corrisponda a quello atteso. In particolare, alla 
+riga 43, tramite la libreria JUnit, viene verificato che il nodo radice dell’albero sintattico esista e non abbia un valore nullo. 
+Per quanto riguarda l’output, questo viene reindirizzato dall’output standard di sistema a un nuovo \textit{output stream} utilizzato 
+dal metodo. Successivamente, l’output catturato viene confrontato con quello atteso e infine l’output viene ripristinato alla 
+destinazione originale.
+
+\lstinputlisting[
+float,
+label={lst:methods-test},
+language=Java,
+numbers=left,
+frame=none,
+caption={Porzione di codice implementata per poter confrontare l'output generato con quello atteso all'interno dei test.}
+]{listings/test-methods.txt}
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
