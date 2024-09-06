@@ -34,7 +34,9 @@
 
 \frontmatter\frontispiece
 \begin{abstract}
-%TODO
+Nel campo informatico, la riusabilità del codice è un aspetto fondamentale, associato a numerosi vantaggi come la riduzione dei tempi di sviluppo e una maggiore affidabilità, poiché è sufficiente che il codice sia testato una sola volta. Neverlang è un framework progettato per lo sviluppo di linguaggi di programmazione che adotta questa filosofia come elemento chiave, favorendo una modellazione \textit{feature-oriented} volta a promuovere il riutilizzo del codice e, in particolare, dei componenti linguistici. Lo scopo di Neverlang è scomporre gli aspetti funzionali di un linguaggio in una serie di funzionalità, chiamate \textit{features}, per poi creare Domain-Specific Languages (DSL) che implementano solamente le caratteristiche necessarie.
+
+L’obiettivo di questo progetto di tesi è ricreare le funzionalità caratteristiche di SQL in modo modulare e indipendente, rendendo possibile la costruzione di un DSL selezionando soltanto le caratteristiche richieste dal contesto. In questo documento viene illustrato l’intero processo di progettazione e sviluppo del progetto, spiegando e motivando le scelte progettuali adottate. Infine, vengono descritte le possibili estensioni future del progetto, evidenziando i potenziali scenari di utilizzo del linguaggio sviluppato.
 \end{abstract}
 
 
@@ -44,11 +46,24 @@
 
 \mainmatter
 %----------------------------------------------------------------------------------------
-\chapter{Introduzione} %TODO
+\chapter{Introduzione}
 \label{chap:introduzione}
 %----------------------------------------------------------------------------------------
+Il presente lavoro di tesi si concentra sull’utilizzo di Neverlang, un framework per la creazione di linguaggi di programmazione modulari, applicato alla modellazione di Domain-Specific Languages (DSL). I DSL sono linguaggi specializzati, progettati per rispondere a specifiche esigenze di un dominio applicativo, offrendo un approccio più naturale e ottimizzato rispetto ai linguaggi di programmazione \textit{general-purpose}. Attraverso Neverlang è possibile costruire DSL componendo moduli che rappresentano le varie caratteristiche del linguaggio, favorendo la riusabilità e l’estendibilità dei componenti.
 
-\paragraph{Struttura della Tesi} %TODO
+Il progetto sviluppato in questa tesi mira a ricreare le funzionalità di SQL utilizzando Neverlang, con un focus particolare sulla modularità. Questo approccio è necessario per rispondere alle esigenze didattiche del progetto: l’obiettivo è creare un insieme di \textit{features} che incapsulino singole caratteristiche di SQL, in modo da poter costruire una famiglia di linguaggi SQL che soddisfi le necessità poste a lezione, mostrando solo una sottoparte del linguaggio complessivo. L’elaborato affronta l’intero processo di sviluppo del DSL, dalla progettazione alla validazione.
+
+\paragraph{Struttura della Tesi}
+Di seguito viene brevemente descritta la struttura dei capitoli che compongono la tesi. Nel \Cref{chap:contesto} è illustrato il 
+contesto in cui è stato sviluppato il progetto, introducendo i principali strumenti utilizzati, come Neverlang e Java, e le informazioni 
+necessarie per comprendere il lavoro svolto. Nel \Cref{chap:requisiti} sono elencati gli obiettivi del progetto insieme ad un’analisi 
+dei requisiti funzionali e non funzionali. Qui viene spiegato come deve funzionare il linguaggio, quali operazioni deve supportare e 
+come deve essere strutturato. Nel \Cref{chap:design} è descritta l’architettura del progetto, illustrando come è stato modellato il 
+linguaggio e come le varie componenti interagiscono tra loro. Viene approfondita l’implementazione delle funzionalità richieste, 
+descrivendo come sono state realizzate ed integrate all’interno del DSL, e fornendo dettagli sulle principali tecnologie utilizzate 
+durante lo sviluppo. Infine, nel \Cref{chap:conclusioni} viene esaminata la valutazione del progetto, analizzando i risultati ottenuti 
+e le tecniche utilizzate per garantire la qualità del codice prodotto. Nella parte conclusiva, si discute il lavoro svolto e si 
+propongono possibili sviluppi futuri del progetto.
 
 %----------------------------------------------------------------------------------------
 \chapter{Contesto}
@@ -414,7 +429,7 @@ tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogan
 
 %----------------------------------------------------------------------------------------
 \chapter{Design e Implementazione}
-\label{chap:Imple}
+\label{chap:design}
 %----------------------------------------------------------------------------------------
 
 \section{Architettura}
@@ -958,8 +973,10 @@ vengono riassunti i principali sviluppi futuri:
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
-%\begin{acknowledgements}
-%Optional. Max 1 page.
-%\end{acknowledgements}
-
+\begin{acknowledgements}
+A conclusione di questa tesi, vorrei ringraziare il mio relatore, professor Mirko Viroli, e il mio correlatore, professor Gianluca Aguzzi, per il tempo che mi è stato dedicato durante la realizzazione del progetto e dell'elaborato.\\
+Successivamente, vorrei ringraziare la mia famiglia per avermi supportato e per avermi reso la persona che sono oggi. In particolare, ringrazio Viola per essermi sempre stata vicina in questi anni, incoraggiandomi a dare il meglio e aiutandomi a superare i momenti più difficili.\\
+Vorrei ringraziare anche tutti i miei amici, quelli di sempre e quelli che ho conosciuto durante questa avventura, per tutti i bei momenti trascorsi.\\
+Infine, vorrei ringraziare anche me, per averci creduto fino alla fine.
+\end{acknowledgements}
 \end{document}
