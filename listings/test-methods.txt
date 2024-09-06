@@ -1,53 +1,52 @@
 /**
-     * Get the AST node from a resource file.
-     *
-     * @param file the file path
-     * @return the AST node
-     */
-    private ASTNode getASTNodeFromResourceFile(String file) {
-        try {
-            File resourceFile = this.getResourceFile(file);
-            String testFile = resourceFile.getAbsolutePath();
-            String source = FileUtils.fileToString(testFile);
-            return DataTests.lang.exec(source, resourceFile);
-        } catch (Exception e) {
-            Assertions.fail("Loading resource raised Exception " + e);
-            return null;
-        }
+ * Get the AST node from a resource file.
+ * @param file the file path
+ * @return the AST node
+ */
+private ASTNode getASTNodeFromResourceFile(String file) {
+    try {
+        File resourceFile = this.getResourceFile(file);
+        String testFile = resourceFile.getAbsolutePath();
+        String source = FileUtils.fileToString(testFile);
+        return DataTests.lang.exec(source, resourceFile);
+    } catch (Exception e) {
+        Assertions.fail("Loading resource raised Exception " + e);
+        return null;
     }
+}
 
-    /**
-     * Get the file from the resources' folder.
-     * @param file the file path
-     * @return the file
-     * @throws URISyntaxException if the URI is invalid
-     */
-    private File getResourceFile(String file) throws URISyntaxException {
-        URL url = Thread.currentThread()
-                .getContextClassLoader()
-                .getResource(file);
-        return new File(Objects.requireNonNull(url).toURI());
+/**
+ * Get the file from the resources' folder.
+ * @param file the file path
+ * @return the file
+ * @throws URISyntaxException if the URI is invalid
+ */
+private File getResourceFile(String file) throws URISyntaxException {
+    URL url = Thread.currentThread()
+            .getContextClassLoader()
+            .getResource(file);
+    return new File(Objects.requireNonNull(url).toURI());
+}
+
+/**
+ * Test the output of a file.
+ * @param file the file path
+ * @param expectedOutput the expected output
+ */
+private void testOutput(String file, String expectedOutput) {
+    PrintStream originalOut = System.out;
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(outContent, true, StandardCharsets.UTF_8);
+    System.setOut(printStream);
+
+    try {
+        ASTNode node = getASTNodeFromResourceFile(file);
+        assertNotNull(node);
+        assertEquals(
+                expectedOutput + "\n",
+                outContent.toString(StandardCharsets.UTF_8)
+        );
+    } finally {
+        System.setOut(originalOut);
     }
-
-    /**
-     * Test the output of a file.
-     * @param file the file path
-     * @param expectedOutput the expected output
-     */
-    private void testOutput(String file, String expectedOutput) {
-        PrintStream originalOut = System.out;
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(outContent, true, StandardCharsets.UTF_8);
-        System.setOut(printStream);
-
-        try {
-            ASTNode node = getASTNodeFromResourceFile(file);
-            assertNotNull(node);
-            assertEquals(
-                    expectedOutput + "\n",
-                    outContent.toString(StandardCharsets.UTF_8)
-            );
-        } finally {
-            System.setOut(originalOut);
-        }
-    }
+}

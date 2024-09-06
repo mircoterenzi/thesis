@@ -70,20 +70,31 @@
 }
 
 \lstdefinelanguage{Java}{
-  keywords={abstract, assert, boolean, break, byte, case, catch, char, class, const, continue, default, do, 
-  		double, else, enum, extends, final, finally, float, for, goto, if, implements, import, instanceof, 
-		int, interface, long, native, new, null, package, private, protected, public, return, short, static, 
-		strictfp, super, switch, synchronized, this, throw, throws, transient, try, void, volatile, while, 
-		true, false},
-  keywordstyle=\color{myPurple}\bfseries,
-  ndkeywords={String, Integer, Double, Boolean, Character, Long, Short, Byte, Exception, System, println,
-  		ASTNode, File, FileUtils, DataTests, Exception, Assertions, URISyntaxException, URL, Thread, Objects,
-		PrintStream, ByteArrayOutputStream, StandardCharsets},
-  ndkeywordstyle=\color{myPink}\bfseries,
-  comment=[l]{//},
-  morecomment=[s]{/*}{*/},
-  commentstyle=\color{myGreen}\ttfamily,
-  stringstyle=\color{myGreen}\ttfamily,
-  sensitive=true,
-  morestring=[b]",
+	keywords={abstract, assert, boolean, break, byte, case, catch, char, class, const, continue, default, do, 
+			double, else, enum, extends, final, finally, float, for, goto, if, implements, import, instanceof, 
+			int, interface, long, native, new, null, package, private, protected, public, return, short, static, 
+			strictfp, super, switch, synchronized, this, throw, throws, transient, try, void, volatile, while, 
+			true, false},
+	keywordstyle=\color{myPurple}\bfseries,
+	ndkeywords={String, Integer, Double, Boolean, Character, Long, Short, Byte, Exception, System, println,
+			ASTNode, File, FileUtils, DataTests, Exception, Assertions, URISyntaxException, URL, Thread, Objects,
+			PrintStream, ByteArrayOutputStream, StandardCharsets},
+	ndkeywordstyle=\color{myPink}\bfseries,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{myGreen}\ttfamily,
+	stringstyle=\color{myGreen}\ttfamily,
+	sensitive=true,
+	morestring=[b]",
+}
+
+\lstdefinelanguage{Neverlang}{
+	keywords={module, slice, with, role},
+	keywordstyle=\color{myPurple}\bfseries,
+	ndkeywords={\$1, \$5, \$2, \$3, \$6, \$4},
+	ndkeywordstyle=\color{myPink}\bfseries,
+	stringstyle=\color{myPink}\ttfamily,
+	sensitive=true,
+	morestring=[b]',
+	literate={<--}{{$\leftarrow$}}1
 }

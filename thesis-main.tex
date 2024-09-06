@@ -70,20 +70,26 @@ vi sono alcuni principi chiave da osservare \cite{Fowler2010}:
     individuale, ma anche dalla combinazione di più istruzioni.
     \item Coerentemente alla definizione, un \ac{DSL} dovrebbe implementare l'insieme minimo di caratteristiche necessarie per poter supportare 
     il dominio applicativo di interesse ed evitare funzioni non fondamentali che potrebbero rendere il linguaggio più difficile, 
-    sia da utilizzare sia da comprendere.
+    sia da utilizzare sia da comprendere. L'obiettivo è quello di ridurre al minimo la complessità e, di conseguenza, la curva d'apprendimento 
+    del linguaggio.
 \end{itemize}
 
 L’utilizzo di questa tipologia di linguaggi di programmazione comporta una serie di vantaggi:
 \begin{itemize}
     \item \textbf{Produttività}: Essendo il livello d’astrazione maggiore, di conseguenza, lo è anche la produttività. Questo perché è 
     possibile utilizzare direttamente i concetti propri del dominio applicativo, non essendo limitati dalla necessità di mantenere una 
-    generalità atta ad ottenere un linguaggio applicabile in molteplici contesti  \cite{Kelly2008}. Come indicato da Paul Hudak 
-    \cite{Hudak1997} ed illustrato nella \cref{fig:sw-dev-cost}, assumendo che il costo di sviluppo di un programma sia lineare, possiamo 
+    generalità atta ad ottenere un linguaggio applicabile in molteplici contesti  \cite{Kelly2008}. In particolare, viene ridotto 
+    l'\textit{abstraction gap} e cioè la ``distanza'' tra lo spazio concettuale del problema e il linguaggio di programmazione utilizzato per 
+    codificare tale problema\footnote{In linguaggi di basso livello tale differenza è notevole. Ad esempio, nel linguaggio C, 
+    concetti astratti come quello di ``magazzino'' devono essere modellati tramite gli strumenti messi a disposizione (potrebbe essere modellato
+    tramite un array di elementi ``prodotto''). Con l'utilizzo di DSL tale distanza viene ridotta in modo rilevante permettendo di ``scrivere 
+    negli stessi termini'' con i quali si pensa al probelama da risolvere.}. Come indicato da Paul Hudak 
+    \cite{Hudak1997} ed illustrato nella \Cref{fig:sw-dev-cost}, assumendo che il costo di sviluppo di un programma sia lineare, possiamo 
     ipotizzare che il costo iniziale richiesto sia maggiore nel caso si utilizzasse un \ac{DSL} rispetto a metodologie più convenzionali 
     (considerando il caso in cui il linguaggio andasse sviluppato, se ne venisse utilizzato uno esistente tale costo sarebbe significativamente 
     minore). Ciò nonostante, la pendenza della curva è considerevolmente più bassa e quindi, da un determinato punto in poi, l’utilizzo di 
     \ac{DSL} porterebbe un risparmio significativo.
-    \begin{figure}[H]
+    \begin{figure}
         \centering
         \includegraphics[width=.8\linewidth]{figures/sw-dev-cost.pdf}
         \caption{Grafico rappresentante il costo di sviluppo di un software in funzione del tempo, confrontando l'utilizzo di un DSL con 
@@ -99,7 +105,7 @@ L’utilizzo di questa tipologia di linguaggi di programmazione comporta una ser
     l'offuscamento della reale complessità del problema, dovuto all'utilizzo di \ac{DSL}, consente ai nuovi sviluppatori di lavorare ad un 
     alto livello d'astrazione, senza dover conoscere tutti i dettagli inerenti all'implementazione del linguaggio \cite{EADS}. 
     \item \textbf{Migliore manutenibilità}: Sebbene l'uso di \ac{DSL} non renda l'implementazione necessariamente meno complessa di quanto 
-    si possa ottenere utilizzando un linguaggio \textit{general-purpose}, la manutenibilità del codice risulta essere accentuata %TODO: è corretto "accentuata"?
+    si possa ottenere utilizzando un linguaggio \textit{general-purpose}, la manutenibilità del codice risulta essere accentuata 
     \cite{Klint2010}.  Infatti, considerando il volume del codice, l'utilizzo di \ac{DSL} comporta una minor quantità di codice da comprendere, 
     facilitandone la modifica. Inoltre, è possibile  ignorare il problema di mantenere coerente ciò che è definito dalla grammatica con la 
     struttura gerarchica definita dall'\ac{AST} in quanto quest'ultimo si evolve con la prima \cite{Brabrand2010}.
@@ -115,9 +121,20 @@ le regole sintattiche mantengono la loro validità indipendentemente dai simboli
 applicano. Questa caratteristica è dovuta al fatto che le regole sintattiche di una grammatica non contestuale ammettono soltanto una variabile 
 non terminale sul lato sinistro della regola \cite{Linz2022}.
 
-Le grammatiche non contestuali assumono un ruolo fondamentale nella teoria dei linguaggi formali, in particolare nella definizione e nell’analisi 
-dei linguaggi di programmazione. La \ac{CFG} è utilizzata principalmente per la modellazione della sintassi, ma viene impiegata anche nella 
-costruzione di interpreti e compilatori \cite{Linz2022}.
+Una grammatica libera dal contesto viene definita da una quadrupla 
+$G = (N, T, P, S)$, dove $N$ è l’insieme dei simboli non terminali, $T$ è l’insieme dei simboli terminali, $P$ è l’insieme delle regole di 
+produzione e $S$ è il simbolo iniziale. Per illustrare meglio il funzionamento di una CFG, viene proposto l’esempio di 
+$G = (\{S\}, \{0, 1\}, P, S)$, dove $P$ è definito come segue:
+\begin{equation*}
+S \rightarrow \epsilon \mid S0 \mid S1
+\end{equation*}
+Le tre regole definite all’interno della grammatica $G$ proposta consentono a $S$ di generare una stringa vuota o di concatenare un simbolo 
+binario ($0$ o $1$) ad una stringa già generata. In questo modo, partendo dal simbolo iniziale $S$ e applicando le regole definite, è possibile 
+generare tutte le stringhe binarie.
+
+In conclusione, le grammatiche non contestuali assumono un ruolo fondamentale nella teoria dei linguaggi formali, in particolare nella 
+definizione e nell’analisi dei linguaggi di programmazione. La \ac{CFG} è utilizzata principalmente per la modellazione della sintassi, ma 
+viene impiegata anche nella costruzione di interpreti e compilatori \cite{Linz2022}.
 
 \section{Compilazione del codice}
 Il compilatore è un software fondamentale nel campo della programmazione e dell’informatica, il cui compito è tradurre il codice sorgente 
@@ -126,38 +143,49 @@ essere eseguito
 dal calcolatore.
 
 Il processo di compilazione è suddiviso in diverse fasi, ognuna delle quali ha un ruolo specifico nel convertire il codice sorgente in un 
-programma eseguibile. Le fasi principali sono di seguito elencate \cite{Aho2006}:
+programma eseguibile. Le fasi principali sono di seguito descritte \cite{Aho2006}:
+
+\paragraph{Analisi lessicale}
+Durante la fase dell'analisi lessicale, talvolta definita anche \textit{scanning}, la sequenza di 
+caratteri di input viene analizzata e divisa in porzioni significative, chiamate lessemi. Per ogni lessema viene prodotto come output un 
+token, definito come coppia di valori \texttt{<nome-token, valore-attributo>}, che viene processato dalla fase successiva.
+
+\paragraph{Analisi sintattica}
+La fase dell'analisi sintattica, più comunemente indicata come \textit{parsing} (allo stesso modo, 
+il programma che svolge queste operazioni è chiamato \textit{parser}) o in italiano parsificazione, prevede che i token siano 
+utilizzati per creare una rappresentazione ad albero che descriva efficacemente la struttura grammaticale dell'input. Un esempio di 
+questo tipo di rappresentazione è costituito dall'albero sintattico. Al suo interno, ogni nodo rappresenta un'operazione e i nodi ad 
+esso discendenti, chiamati anche figli, rappresentano gli operandi dell'operazione definita dal primo. La parsificazione è svolta 
+principalmente secondo due metodologie \cite{Grune2006}:
+
 \begin{itemize}
-    \item \textbf{Analisi lessicale}: Durante la fase dell'analisi lessicale, talvolta definita anche \textit{scanning}, la sequenza di 
-    caratteri di input viene analizzata e divisa in porzioni significative, chiamate lessemi. Per ogni lessema viene prodotto come output un 
-    token, definito come coppia di valori \texttt{<nome-token, valore-attributo>}, che viene processato dalla fase successiva.
-    \item \textbf{Analisi sintattica}: La fase dell'analisi sintattica, più comunemente indicata come \textit{parsing} (allo stesso modo, 
-    il programma che svolge queste operazioni è chiamato \textit{parser}) o in italiano parsificazione, prevede che i token siano 
-    utilizzati per creare una rappresentazione ad albero che descriva efficacemente la struttura grammaticale dell'input. Un esempio di 
-    questo tipo di rappresentazione è costituito dall'albero sintattico. Al suo interno, ogni nodo rappresenta un'operazione e i nodi ad 
-    esso discendenti, chiamati anche figli, rappresentano gli operandi dell'operazione definita dal primo. La parsificazione è svolta 
-    principalmente secondo due metodologie \cite{Grune2006}:
-    \begin{itemize}
-        \item l’analisi \textbf{top-down} consiste nell'emulare il processo di produzione della frase. In questo modo, partendo dal simbolo 
-        iniziale si procede per fasi ad evolvere l'output in modo da farlo corrispondere alla frase ottenuta come input. Il nome indica che 
-        l'albero sintattico viene costruito partendo dall'alto, ossia dal nodo radice, proseguendo verso il basso;
-        \item l’analisi \textbf{bottom-up}, al contrario, prevede di invertire il processo di produzione della frase, avendo come obiettivo 
-        quello di ridurre la frase di input al simbolo iniziale.
-    \end{itemize}
-    \item \textbf{Analisi semantica}: In questo stadio della compilazione, il fine è analizzare la correttezza semantica del programma. Più 
-    nello specifico, vengono utilizzati l'albero sintattico ottenuto dalla fase precedente e la tabella dei simboli per controllare che 
-    l'input sia semanticamente coerente con quanto è definito dal linguaggio. Una parte fondamentale dell'analisi semantica è quella del 
-    controllo del tipo (in inglese \textit{type-checking}), durante la quale il compilatore si accerta che il valore assegnato ad una 
-    variabile sia ammissibile con il tipo di tale variabile e, allo stesso modo, che gli operandi utilizzati in un’operazione siano 
-    compatibili con l’operazione stessa. Talora, le specifiche del linguaggio permettono delle conversioni di tipo chiamate coercizioni.
-    \item \textbf{Generazione di codice intermedio}: Durante la compilazione, il compilatore genera una o più rappresentazioni intermedie. 
-    L'albero sintattico precedentemente descritto rappresenta una delle varie forme che tali rappresentazioni possono assumere. In particolare, 
-    devono essere rispettate due proprietà significative: le rappresentazioni devono essere facili da generare e facili da trasporre in codice 
-    target (ossia il linguaggio di basso livello obiettivo della traduzione).
-    \item \textbf{Ottimizzazione del codice}: Successivamente, si procede a perfezionare, per quanto possibile, il codice intermedio in modo 
-    che si possa poi ottenere un codice finale migliore.
-    \item \textbf{Generazione del codice}: Infine, il codice intermedio viene utilizzato per generare il codice target.
+    \item l’analisi \textbf{top-down} consiste nell'emulare il processo di produzione della frase. In questo modo, partendo dal simbolo 
+    iniziale si procede per fasi ad evolvere l'output in modo da farlo corrispondere alla frase ottenuta come input. Il nome indica che 
+    l'albero sintattico viene costruito partendo dall'alto, ossia dal nodo radice, proseguendo verso il basso;
+    \item l’analisi \textbf{bottom-up}, al contrario, prevede di invertire il processo di produzione della frase, avendo come obiettivo 
+    quello di ridurre la frase di input al simbolo iniziale.
 \end{itemize}
+
+\paragraph{Analisi semantica}
+In questo stadio della compilazione, il fine è analizzare la correttezza semantica del programma. Più 
+nello specifico, vengono utilizzati l'albero sintattico ottenuto dalla fase precedente e la tabella dei simboli per controllare che 
+l'input sia semanticamente coerente con quanto è definito dal linguaggio. Una parte fondamentale dell'analisi semantica è quella del 
+controllo del tipo (in inglese \textit{type-checking}), durante la quale il compilatore si accerta che il valore assegnato ad una 
+variabile sia ammissibile con il tipo di tale variabile e, allo stesso modo, che gli operandi utilizzati in un’operazione siano 
+compatibili con l’operazione stessa. Talora, le specifiche del linguaggio permettono delle conversioni di tipo chiamate coercizioni.
+
+\paragraph{Generazione di codice intermedio}
+Durante la compilazione, il compilatore genera una o più rappresentazioni intermedie. 
+L'albero sintattico precedentemente descritto rappresenta una delle varie forme che tali rappresentazioni possono assumere. In particolare, 
+devono essere rispettate due proprietà significative: le rappresentazioni devono essere facili da generare e facili da trasporre in codice 
+target (ossia il linguaggio di basso livello obiettivo della traduzione).
+
+\paragraph{Ottimizzazione del codice}
+Successivamente, si procede a perfezionare, per quanto possibile, il codice intermedio in modo 
+che si possa poi ottenere un codice finale migliore.
+
+\paragraph{Generazione del codice}
+Infine, il codice intermedio viene utilizzato per generare il codice target.
 
 \section{Programmazione feature-oriented}
 La programmazione orientata alle funzionalità, comunemente nota come \ac{FOP}, è un paradigma di programmazione focalizzato sulla modularizzazione 
@@ -170,8 +198,10 @@ grado di personalizzazione.
 Le caratteristiche principali della \ac{FOP} sono le seguenti:
 \begin{itemize}
     \item \textbf{Riusabilità}: Confrontando la \ac{FOP} con l’approccio più classico della \ac{OOP} si nota come la prima offra una maggiore 
-    modularità e flessibilità del codice. Di conseguenza, la riusabilità è amplificata poiché per ogni funzionalità implementata il nucleo 
-    funzionale e la parte relativa alle interazioni sono mantenute separate \cite{Prehofer1997}.
+    modularità e flessibilità del codice\footnote{Come discusso da Christian Prehofer, una delle differenze principali risiede nella composizione 
+    di più varianti di un componente software: la OOP prevede una gerarchia di classi, ognuna delle quali estende un’altra classe, mentre la FOP
+    prevede l’implementazione di singole \textit{features} per poi integrarle dove richiesto \cite[pp. 466-468]{Prehofer1997}.}. Di conseguenza, 
+    la riusabilità è amplificata poiché per ogni funzionalità implementata il nucleo funzionale e la parte relativa alle interazioni sono mantenute separate \cite{Prehofer1997}.
     \item \textbf{Gestione della complessità}: La \ac{FOP} permette di gestire progetti di considerevole complessità grazie allo sviluppo 
     modulare del codice in unità distinte. Queste unità possono essere sviluppate e mantenute in modo indipendente, riducendo significativamente 
     l’interdipendenza e la complessità del sistema complessivo. Inoltre, la separazione delle funzionalità semplifica l’evoluzione del software, 
@@ -187,7 +217,7 @@ Neverlang Language Workbench è un framework sviluppato presso l’Università d
 
 È basato sull’idea che i linguaggi di programmazione abbiano un’intrinseca divisione modulare in più caratteristiche, o \textit{features}, ciascuna 
 delle quali è implementata da un componente specifico. In accordo con tale visione, l’obiettivo del framework è definire i linguaggi tramite una 
-divisione in frammenti, chiamati moduli, ognuno dei quali si occupa di implementare una specifica caratteristica e, infine, tramite la combinazione 
+divisione in frammenti, chiamati \textit{modules}, ognuno dei quali si occupa di implementare una specifica caratteristica e, infine, tramite la combinazione 
 dei diversi moduli, ottenere un linguaggio di programmazione specifico per il contesto applicativo richiesto, ossia un \ac{DSL} 
 \cite{NeverlangWebsite}.
 
@@ -214,7 +244,25 @@ All’interno di ogni modulo vengono definite due parti principali:
 
 Successivamente, i componenti del linguaggio vengono definiti combinando definizioni di sintassi e semantica provenienti da diversi moduli 
 all’interno di costrutti denominati \textit{slice}, ognuno dei quali contiene la definizione di un singolo componente del linguaggio. 
-Infine, il linguaggio viene generato combinando i vari \textit{slice} insieme. \cite{Vacchi2015} 
+Infine, il linguaggio viene generato combinando i vari \textit{slice} insieme \cite{Vacchi2015}.
+
+\lstinputlisting[
+    float,
+    label={lst:neverlang-example},
+    language=Neverlang,
+    numbers=none,
+    frame=none,
+    caption={Esempio di implementazione introduttiva del costrutto \textit{if-else}.}
+]{listings/neverlang.txt}
+
+Al \Cref{lst:neverlang-example} è illustrato un esempio di implementazione del costrutto condizionale \textit{if-else} in Neverlang. Sono definiti 
+tre ruoli: \texttt{syntax}, \texttt{type-checking} ed \texttt{evaluation}, ognuno dei quali è definito in un modulo separato (ma potrebbe anche 
+essere definito in file diversi) e, successivamente, unito agli altri all’interno dello \textit{slice} \texttt{If}. Nell’esempio, il costrutto è 
+definito sia in forma contratta (omettendo la parte di \textit{else}) sia in forma estesa. I terminali sono rappresentati dagli elementi racchiusi 
+tra apici, mentre i restanti elementi sono non terminali. I riferimenti ai non terminali sono indicati tramite una notazione numerica, partendo 
+dall’alto verso il basso e da sinistra a destra. Ad esempio, lo \texttt{0} presente all’interno del ruolo di \texttt{type-checking} indica che 
+la semantica descritta è riferita al primo non terminale (ossia \texttt{Statement}). Analogamente, all’interno della definizione della parte 
+semantica, \texttt{\$i} si riferisce all’\textit{i}-esimo non terminale.
 
 Tra i vantaggi principali di Neverlang troviamo \cite{Cazzola2012}:
 \begin{itemize}
@@ -229,7 +277,7 @@ Tra i vantaggi principali di Neverlang troviamo \cite{Cazzola2012}:
 
 
 \section{Java}
-In aggiunta a Neverlang, per la realizzazione del progetto è stato utilizzato Java. Java è un linguaggio di programmazione ad alto livello, 
+In aggiunta a Neverlang, per la realizzazione del progetto è stato utilizzato Java: un linguaggio di programmazione ad alto livello, 
 orientato agli oggetti e a tipizzazione statica, sviluppato da Sun Microsystems nel 1991. È molto diffuso e ben supportato, con una vasta 
 comunità di sviluppatori e una grande quantità di librerie. Uno degli obiettivi principali di Java è quello di essere il più possibile 
 autonomo rispetto alla piattaforma di esecuzione, permettendo di scrivere una volta il codice e farlo eseguire su qualsiasi \ac{JVM}, 
@@ -309,7 +357,7 @@ le principali:
     oppure la selezione dell’elemento con il valore massimo o minimo in ogni collezione di tuple (tramite \texttt{MAX} e \texttt{MIN}).
 \end{itemize}
 
-Al \cref{lst:query}, sono forniti esempi di codice SQL utilizzati per le operazioni descritte all'interno della sezione corrente. Tali esempi 
+Al \Cref{lst:query}, sono forniti esempi di codice SQL utilizzati per le operazioni descritte all'interno della sezione corrente. Tali esempi 
 rappresentano in modo chiaro le funzionalità e la sintassi che il linguaggio dovrà implementare.
 
 \lstinputlisting[
@@ -325,7 +373,7 @@ rappresentano in modo chiaro le funzionalità e la sintassi che il linguaggio do
 Nel contesto del progetto, vengono considerati i seguenti requisiti non funzionali:
 \begin{itemize}
     \item \textbf{Modularità e riutilizzabilità}: Tra i requisiti essenziali, il progetto prevede un’implementazione dei comandi descritti 
-    nella \cref{sec:requisiti-funzionali} in modo incrementale, modulare e riutilizzabile. In questo modo, ogni caratteristica del 
+    nella \Cref{sec:requisiti-funzionali} in modo incrementale, modulare e riutilizzabile. In questo modo, ogni caratteristica del 
     linguaggio sarà definita per incrementare l’indipendenza e limitare, quindi, le dipendenze da moduli esterni. Tale approccio favorisce 
     non solo l’aggiunta e la rimozione di funzionalità al suo interno, ma anche il riutilizzo di componenti in altri progetti.
     \item \textbf{Facilità di evoluzione e manutenzione}: Un ulteriore requisito riguarda l’eventuale evoluzione e manutenzione del 
@@ -352,7 +400,7 @@ essere omesso). Infine, l’inserimento delle informazioni all’interno della t
 una ``riga'' della tabella, e quindi un singolo dato. Gli attributi della tupla devono necessariamente corrispondere a quelli richiesti 
 dalla definizione della tabella in cui viene inserita.
 
-Gli elementi appena descritti e le loro relazioni sono sintetizzati nella \cref{fig:model-diagram}. Le operazioni corrispondenti alla 
+Gli elementi appena descritti e le loro relazioni sono sintetizzati nella \Cref{fig:model-diagram}. Le operazioni corrispondenti alla 
 semantica di ogni clausola del linguaggio utilizzano il modello appena descritto per poter modificare la struttura del database, delle 
 tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogando la base dati.
 
@@ -370,7 +418,7 @@ tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogan
 %----------------------------------------------------------------------------------------
 
 \section{Architettura}
-Ad alto livello, l’architettura del progetto proposto è rappresentata nella \cref{fig:architecture}. Essa si suddivide in due sezioni 
+Ad alto livello, l’architettura del progetto proposto è rappresentata nella \Cref{fig:architecture}. Essa si suddivide in due sezioni 
 principali, ciascuna delle quali ricopre un ruolo fondamentale per l’implementazione del \ac{DSL}:
 
 \begin{itemize}
@@ -393,7 +441,7 @@ specifiche del linguaggio.
 \label{fig:architecture}
 \end{figure}
 
-Come mostrato nel diagramma in \cref{fig:architecture}, ogni modulo di Neverlang (e le relative specifiche sintattiche e semantiche) 
+Come mostrato nel diagramma in \Cref{fig:architecture}, ogni modulo di Neverlang (e le relative specifiche sintattiche e semantiche) 
 viene tradotto in file sorgenti compatibili con la \ac{JVM} tramite il compilatore del framework, chiamato \textit{nlgc}. I file così 
 generati sono successivamente utilizzati da \textit{javac}\footnote{Javac rappresenta il compilatore principale utilizzato dal 
 linguaggio di programmazione Java; si occupa di tradurre il codice sorgente in un formato eseguibile dalla JVM.} per produrre file 
@@ -442,7 +490,7 @@ punto e virgola (\texttt{;}). Inoltre, \texttt{OperationList} è anche l'element
 anche ``simbolo di partenza'', convenzionalmente rappresenta il punto di partenza di ogni linguaggio definito utilizzando Neverlang.} 
 del linguaggio: \texttt{Program}.
 
-La definizione ricorsiva della lista, illustrata in \cref{fig:list-ast}, permette di definire sequenze di operazioni di lunghezza 
+La definizione ricorsiva della lista, illustrata in \Cref{fig:list-ast}, permette di definire sequenze di operazioni di lunghezza 
 arbitraria, offrendo agli utenti una discreta flessibilità per la scrittura delle query. Tale struttura non solo facilita 
 l’esecuzione di operazioni multiple ma agevola anche l'estensione delle regole grammaticali del DSL: nuovi tipi di operazioni 
 potranno essere aggiunti a quelle già esistenti senza dover modificare la sintassi di base proposta nel paragrafo corrente. 
@@ -487,7 +535,7 @@ label={lst:table-grammar},
 language=BNF
 ]{listings/table-grammar.bnf}
 
-Ogni operazione rispetta il principio della modularità discusso nella \cref{subsec:fondamenti-linguaggio}, producendo un elemento 
+Ogni operazione rispetta il principio della modularità discusso nella \Cref{subsec:fondamenti-linguaggio}, producendo un elemento 
 \texttt{Operation} che rappresenta un’azione completa e indipendente all’interno del DSL. Questa indipendenza permette alle 
 operazioni di essere utilizzate singolarmente o concatenate con altre operazioni, offrendo flessibilità nella realizzazione delle 
 query.\\\\
@@ -501,7 +549,7 @@ per illustrare il funzionamento di queste operazioni.
 \label{fig:create-table-ast}
 \end{figure}
 
-Nella \cref{fig:create-table-ast} viene presentato un AST generato dall’esecuzione di una query, la quale ha come obiettivo la 
+Nella \Cref{fig:create-table-ast} viene presentato un AST generato dall’esecuzione di una query, la quale ha come obiettivo la 
 creazione di una nuova tabella all’interno del database. In rosso sono indicati i simboli terminali, mentre in blu sono indicati i 
 simboli non terminali. La struttura dell’albero riflette la gerarchia e le dipendenze tra i diversi componenti della query, 
 mostrando come ciascun elemento della sintassi viene interpretato dal linguaggio. In particolare, l’operazione d’esempio richiede 
@@ -551,7 +599,7 @@ utilizzata singolarmente o combinata con altre operazioni in una singola query.
 
 \paragraph{Liste di oggetti}
 Le liste \texttt{IdList}, \texttt{ValueList} e \texttt{SetList} sono progettate in modo analogo alla lista di operazioni 
-\texttt{OperationList} descritta nella \cref{subsec:fondamenti-linguaggio}. Questa progettazione consente di rappresentare sequenze 
+\texttt{OperationList} descritta nella \Cref{subsec:fondamenti-linguaggio}. Questa progettazione consente di rappresentare sequenze 
 flessibili di identificatori, valori e assegnazioni nelle query SQL, permettendo di specificare un numero variabile di elementi 
 secondo le necessità dell’utente. Ogni lista può contenere uno o più elementi, utilizzando una struttura ricorsiva che facilita la 
 costruzione di query articolate e complesse.
@@ -606,7 +654,7 @@ dal database, consentendo agli utenti di definire criteri di selezione precisi e
 Queste operazioni sono particolarmente utili per la gestione della selezione dei dati da aggiornare nelle operazioni \texttt{UPDATE}, in cui 
 la precisione nella definizione dei criteri di modifica è fondamentale per garantire la modifica richiesta dall'utente finale. 
 Inoltre, le stesse funzioni booleane saranno utilizzate dagli operatori di selezione, di cui si parlerà nella 
-\cref{subsec:interrogazioni}, per selezionare le informazioni che l'utente vuole ottenere dal database.
+\Cref{subsec:interrogazioni}, per selezionare le informazioni che l'utente vuole ottenere dal database.
 
 \subsection{Interrogazioni al database}
 \label{subsec:interrogazioni}
@@ -638,17 +686,17 @@ esplicitamente tutte le altre operazioni all’interno della grammatica.
 
 Di seguito sono riassunti i principali vantaggi ottenuti dall’utilizzo di tale struttura:
 \begin{itemize}
-    \item Modularità e coerenza: Utilizzando lo stesso simbolo \texttt{SelectedData} per rappresentare il risultato di qualsiasi 
+    \item \textbf{Modularità} e coerenza: Utilizzando lo stesso simbolo \texttt{SelectedData} per rappresentare il risultato di qualsiasi 
     operazione di interrogazione, il linguaggio mantiene una coerenza sintattica che semplifica l’apprendimento e l’uso da parte degli 
     utenti. La modularità della grammatica permette di definire operazioni complesse senza introdurre ambiguità o conflitti sintattici.
-    \item Estensibilità del linguaggio: La struttura progettuale facilita l’espansione del linguaggio. Poiché ogni nuova operazione di 
+    \item \textbf{Estensibilità del linguaggio}: La struttura progettuale facilita l’espansione del linguaggio. Poiché ogni nuova operazione di 
     interrogazione può essere definita come una trasformazione che prende in input \texttt{SelectedData} e restituisce un altro 
     \texttt{SelectedData}, è possibile aggiungere nuove operazioni seguendo lo stesso modello senza modificare la struttura di base del 
-    linguaggio. Ad esempio, l’aggiunta della clausola \texttt{GROUP BY}, che verrà approfondita nella \cref{sec:aggregazione}.
-    \item Flessibilità nella costruzione delle query: Gli utenti possono combinare liberamente le operazioni di interrogazione, 
+    linguaggio. Ad esempio, l’aggiunta della clausola \texttt{GROUP BY}, che verrà approfondita nella \Cref{sec:aggregazione}.
+    \item \textbf{Flessibilità nella costruzione delle query}: Gli utenti possono combinare liberamente le operazioni di interrogazione, 
     utilizzandone un sottoinsieme a scelta, senza essere vincolati da una sequenza rigida di operazioni. Questo rende il linguaggio 
     particolarmente adatto per scenari complessi di analisi dei dati, dove le esigenze di interrogazione possono variare notevolmente.
-    \item Facilità di manutenzione ed evoluzione: Grazie alla sua struttura modulare, il linguaggio è facile da mantenere e 
+    \item \textbf{Facilità di manutenzione ed evoluzione}: Grazie alla sua struttura modulare, il linguaggio è facile da mantenere e 
 aggiornare. Nuove funzionalità possono essere aggiunte senza richiedere significative riscritture del codice esistente. Questo 
 rende Neverlang-SQL non solo robusto ma anche sostenibile nel lungo termine.
 \end{itemize}
@@ -715,7 +763,7 @@ la valutazione del nodo corrente.
 \subsection{Fase di controllo della struttura}
 A causa dell’alto grado di libertà concesso dalla sintassi delle operazioni utilizzate nelle interrogazioni del database\footnote{Il 
 riferimento è alla scelta implementativa delle operazioni utilizzate nell’interrogazione del database, che utilizzano, sia come input che 
-come output, un elemento \texttt{SelectedData} (\cref{subsec:interrogazioni}).}, Neverlang-SQL include una fase preliminare di 
+come output, un elemento \texttt{SelectedData} (\Cref{subsec:interrogazioni}).}, Neverlang-SQL include una fase preliminare di 
 controllo della struttura. In questa fase, il linguaggio verifica che la struttura complessiva della query sia accettabile e coerente con le 
 regole semantiche definite. Ad esempio, non è permesso includere una clausola \texttt{ORDER BY} senza prima specificare una tabella da cui 
 selezionare i dati, né è possibile filtrare una tabella tramite l’operazione \texttt{WHERE} senza specificare come utilizzarne l’output, ad 
@@ -732,6 +780,8 @@ sintattiche del linguaggio vengono analizzate per determinare l’azione esatta 
 valutazione, vengono interpretati i vari componenti della query, come selezioni, filtraggi, ordinamenti e aggregazioni, per determinare come 
 interagiscono tra loro e quali operazioni specifiche devono essere eseguite sul database. Questa fase traduce essenzialmente le istruzioni 
 della query da una rappresentazione sintattica a un insieme di operazioni concrete che manipolano i dati o le tabelle nel database.
+
+\note{TODO: aggiungere alcuni esempi}
 
 \section{Tecnologie utilizzate}
 
@@ -806,7 +856,7 @@ utilizzato come sorgente o lo script fornito al test dall’assioma del linguagg
 questo modo, nei test implementati nel progetto, è stato sufficiente utilizzare l’attributo \texttt{db} del nodo radice dell’AST 
 per verificare che la struttura ottenuta corrispondesse a quella attesa dai comandi oggetto di testing.
 
-Nel \cref{lst:simple-test} viene fornito un esempio introduttivo di come i controlli della struttura del database e delle tabelle 
+Nel \Cref{lst:simple-test} viene fornito un esempio introduttivo di come i controlli della struttura del database e delle tabelle 
 siano stati realizzati. Il punto fondamentale è quello riportato alla riga 12, che corrisponde all’ottenimento dell’attributo 
 contenente il database creato dal codice utilizzato come input. In modo del tutto analogo, all’interno dei test “strutturali” del 
 progetto, contenuti nella classe \texttt{TableTests.java}, sono eseguiti dei codici d’esempio per verificare se l’output ottenuto 
@@ -838,20 +888,20 @@ attributi non pertinenti.
 \paragraph{Prima implementazione}
 Per risolvere il problema descritto, inizialmente è stato aggiunto nel progetto un attributo al nodo radice chiamato “output”, 
 utilizzato per salvare la tabella temporanea generata dalla query di input, con un funzionamento simile a quello descritto nella 
-\cref{section:test-strutt} riguardo al test della struttura della tabella. Tuttavia, questo approccio si è rivelato poco flessibile, 
+\Cref{section:test-strutt} riguardo al test della struttura della tabella. Tuttavia, questo approccio si è rivelato poco flessibile, 
 poiché richiedeva di mantenere un secondo database fittizio, che poteva generare errori se l’utente avesse voluto creare un database 
 con lo stesso nome. Inoltre, obbligava la parte semantica a gestire un aspetto non richiesto dal progetto e introduceva delle 
 problematiche riguardo alla memorizzazione dell’output di più query contemporaneamente.
 
 \paragraph{Seconda implementazione}
-L’implementazione utilizzata nei test sfrutta un metodo presente nell'estensioni per JUnit fornita da Neverlang, chiamato\\
+L’implementazione utilizzata nei test sfrutta un metodo presente nell'estensione per JUnit fornita da Neverlang, chiamato\\
 \texttt{getASTNodeFromResourceFile}. Questo metodo è stato utilizzato per generare l’albero sintattico all’interno del test, anziché 
-ottenere il nodo radice come parametro tramite l’annotazione \texttt{@NeverlangUnitParam}. Al \cref{lst:methods-test} viene mostrato 
+ottenere il nodo radice come parametro tramite l’annotazione \texttt{@NeverlangUnitParam}. Al \Cref{lst:methods-test} viene mostrato 
 come l’implementazione del metodo \texttt{testOutput} utilizzi il percorso del file contenente il test e la stringa corrispondente 
 all’output atteso, ottenuti come parametri, per verificare che l’output generato corrisponda a quello atteso. In particolare, alla 
 riga 43, tramite la libreria JUnit, viene verificato che il nodo radice dell’albero sintattico esista e non abbia un valore nullo. 
 Per quanto riguarda l’output, questo viene reindirizzato dall’output standard di sistema a un nuovo \textit{output stream} utilizzato 
-dal metodo. Successivamente, l’output catturato viene confrontato con quello atteso e infine l’output viene ripristinato alla 
+dal metodo. Successivamente, l’output catturato viene confrontato con quello atteso ed infine viene ripristinato alla 
 destinazione originale.
 
 \lstinputlisting[
@@ -865,7 +915,7 @@ caption={Porzione di codice implementata per poter confrontare l'output generato
 
 \newpage
 \section{Conclusioni}
-In questo lavoro di tesi, è stato esplorato l’utilizzo del framework Neverlang per la modellazione di Domain-Specific Languages, 
+In questo lavoro di tesi è stato esplorato l’utilizzo del framework Neverlang per la modellazione di Domain-Specific Languages, 
 principalmente integrando funzionalità tipiche di SQL per la gestione e manipolazione di database. L’approccio modulare offerto 
 da Neverlang ha consentito di costruire un linguaggio altamente flessibile, all’interno del quale le singole funzionalità possono 
 essere aggiunte o modificate in modo incrementale. È stato evidenziato come modularità, riusabilità e flessibilità siano stati 
@@ -908,7 +958,7 @@ vengono riassunti i principali sviluppi futuri:
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
-%\begin{acknowledgements} % this is optional
+%\begin{acknowledgements}
 %Optional. Max 1 page.
 %\end{acknowledgements}
 

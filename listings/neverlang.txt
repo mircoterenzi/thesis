@@ -1,0 +1,26 @@
+module if_syntax {
+    role(sytax) {
+        Statement <-- 'if' '(' Expression ')' '{' Statement '}' 'else' '{' Statement '}';
+        Statement <-- 'if' '(' Expression ')' '{' Statement '}';
+    }
+}
+
+module if_typechecking {
+    role(type-checking) {
+        0 { if (!$1.type.equals("Boolean")) System.err.println("ERROR: Expression must be a boolean"); }
+        4 { if (!$5.type.equals("Boolean")) System.err.println("ERROR: Expression must be a boolean"); }
+    }
+}
+
+module if_eval {
+    role(evaluation) {
+        0 { if (new Boolean($1.eval)) $4.eval else $3.eval; }
+        4 { if (new Boolean($5.eval)) $6.eval }
+    }
+}
+
+slice if {
+    module if_syntax with role syntax
+    module if_typechecking with role type-checking
+    module if_eval with role evaluation
+}
