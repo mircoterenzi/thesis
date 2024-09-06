@@ -26,6 +26,7 @@
 \acrodef{AST}{Abstract Syntax Tree}
 \acrodef{CFG}{Context-Free Grammar}
 \acrodef{SQL}{Structured Query Language}
+\acrodef{GUI}{Graphical User Interface}
 
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
 
@@ -861,6 +862,44 @@ numbers=left,
 frame=none,
 caption={Porzione di codice implementata per poter confrontare l'output generato con quello atteso all'interno dei test.}
 ]{listings/test-methods.txt}
+
+\newpage
+\section{Conclusioni}
+In questo lavoro di tesi, è stato esplorato l’utilizzo del framework Neverlang per la modellazione di Domain-Specific Languages, 
+principalmente integrando funzionalità tipiche di SQL per la gestione e manipolazione di database. L’approccio modulare offerto 
+da Neverlang ha consentito di costruire un linguaggio altamente flessibile, all’interno del quale le singole funzionalità possono 
+essere aggiunte o modificate in modo incrementale. È stato evidenziato come modularità, riusabilità e flessibilità siano stati 
+elementi chiave per la corretta realizzazione del progetto.
+
+L’obiettivo principale del progetto era creare un linguaggio che permettesse agli utenti di interagire con i database in modo più 
+naturale rispetto all’approccio offerto da linguaggi general-purpose, riducendo il gap di astrazione tra il linguaggio ed il 
+dominio applicativo. Il DSL sviluppato rispecchia questa filosofia ed offre un approccio specifico e ottimizzato per la gestione 
+di tabelle, dati e interrogazioni, mantenendo al contempo una struttura facilmente modificabile.
+
+Attraverso l’analisi e la progettazione proposte in questa tesi, è stato evidenziato come le caratteristiche di Neverlang permettano 
+di creare linguaggi altamente flessibili e adattabili. I test effettuati hanno confermato l’efficacia delle scelte progettuali, 
+dimostrando che il linguaggio implementato non solo soddisfa i requisiti definiti nella parte iniziale dell’elaborato, ma offre 
+anche margini di miglioramento futuri grazie all’implementazione modulare.
+
+\paragraph{Sviluppi futuri}
+Allo stato attuale, il progetto mira a fornire una base solida che incapsula le caratteristiche principali di SQL. Partendo dal 
+progetto così definito, è possibile operare su di esso effettuando miglioramenti ed aggiungendo nuove \textit{features}. Di seguito 
+vengono riassunti i principali sviluppi futuri:
+\begin{itemize}
+    \item \textbf{Integrazione di funzionalità avanzate}: Attualmente, il progetto propone un set di operazioni limitato che può 
+    essere esteso con l’aggiunta di nuove funzionalità. L’introduzione della clausola \texttt{JOIN} tra più tabelle, la gestione 
+    degli indici, la possibilità di auto-incrementare i dati, ecc., sono esempi di implementazioni che aumenterebbero le capacità 
+    del DSL e ne incrementerebbero l’applicabilità anche in contesti di database più complessi.
+    \item \textbf{Implementazione di viste e gestione della coerenza dei dati}: Estendere il DSL per includere il supporto alla 
+    creazione e gestione delle viste, consentendo agli utenti di definire tabelle virtuali sui dati, semplificando così le query. 
+    Al tempo stesso, è necessario gestire la coerenza dei dati, garantendo che le viste siano sempre aggiornate e coerenti con i 
+    dati sottostanti, soprattutto in scenari di modifica od eliminazione di dati.
+    \item \textbf{Sviluppo di un’interfaccia grafica}: Enfatizzando l’aspetto didattico del linguaggio sviluppato, un possibile 
+    sviluppo potrebbe essere l’implementazione di una \ac{GUI} che permetta agli utenti di utilizzare il DSL senza dover scrivere 
+    direttamente codice, rendendo il linguaggio accessibile a un pubblico più ampio, inclusi coloro che hanno un’esperienza 
+    limitata nel campo della programmazione.
+\end{itemize}
+
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
