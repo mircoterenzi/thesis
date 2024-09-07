@@ -1,0 +1,36 @@
+module FromStructChecking {
+    role(struct-checking) {
+        0 {
+            $0.isTerminal = false;
+        }
+    }
+}
+
+module WhereStructChecking {
+    role(struct-checking) {
+        0 {
+            $0.isTerminal = $1:isTerminal;
+        }
+    }
+}
+
+module SelectStructChecking {
+    role(struct-checking) {
+        0 {
+            $0.isTerminal = true;
+        }
+    }
+}
+
+module DataOperationStructChecking {
+    role(struct-checking) {
+        0 {
+            if (!(Boolean) $1:isTerminal) {
+                throw new SyntaxError(
+                    "Invalid SQL statement; "
+                    + "expected DELETE, INSERT, SELECT or UPDATE"
+                );
+            }
+        }
+    }
+}

@@ -1,0 +1,45 @@
+module FromEvaluation {
+    role(evaluation) {
+        0 {
+            eval $1;
+            if (!$$DatabaseMap.containsKey($1.value)) {
+                throw new EntityNotFound(
+                    "Cannot find the table \"" + $1.value + "\". "
+                    + "Make sure it exists and that its name 
+                    is spelled correctly."
+                );
+            }
+            $0.table = $$DatabaseMap.get($1.value).copy();
+            $0.ref = $1.value;
+        }
+    }
+}
+
+module WhereEvaluation {
+    role(evaluation) {
+        0 {
+            Table table = $1.table;
+            table.filterTuple((Predicate<Tuple>) $2.relation);
+            $0.table = table;
+            $0.ref = $1.ref;
+        }
+    }
+}
+
+module SelectEvaluation {
+    role(evaluation) {
+        0 {
+            eval $1;
+            $0.table = $1.table;
+            $0.ref = $1.ref;
+        }
+    }
+}
+
+module DataOperationEvaluation {
+    role(evaluation) {
+        0 {
+            System.out.println($1:table.toString());
+        }
+    }
+}

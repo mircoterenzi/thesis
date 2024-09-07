@@ -811,8 +811,69 @@ sintattiche del linguaggio vengono analizzate per determinare l’azione esatta 
 valutazione, vengono interpretati i vari componenti della query, come selezioni, filtraggi, ordinamenti e aggregazioni, per determinare come 
 interagiscono tra loro e quali operazioni specifiche devono essere eseguite sul database. Questa fase traduce essenzialmente le istruzioni 
 della query da una rappresentazione sintattica a un insieme di operazioni concrete che manipolano i dati o le tabelle nel database.
+\newline
+\newline
+Di seguito viene proposto un esempio per illustrare come le query vengono tradotte in codice Java. La query di partenza utilizzata è:
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Book
+WHERE Price > 12 AND Available = TRUE;
+\end{lstlisting}
+Inizialmente, le condizioni definite tramite operatori relazionali vengono tradotte in predicati Java, poi aggregati utilizzando l’operatore logico \texttt{AND}. Di seguito viene riportata l’implementazione di questi due 
+elementi\footnote{Per brevità, vengono mostrate solo le parti di codice rilevanti per l’esempio. In particolare, come operatore relazionale viene utilizzato \texttt{>}, mentre come operatore logico viene utilizzato \texttt{AND}.}:
+\begin{lstlisting}[language=Neverlang]
+module RelationalExpression {
+    reference syntax {
+        BoolExpr <-- Id ">" Value;
+    }
+    role(evaluation) {
+        0 {
+            $0.scope = $1.value;
+            Predicate<Tuple> relation = tuple -> {
+                SQLType value = tuple.get($1.value);
+                return value != null && value.compareTo($GT[2].value) > 0;
+            };
+            $0.relation = relation;
+        }
+    }
+}
 
-\note{TODO: aggiungere alcuni esempi}
+module BoolConcatenation {
+    reference syntax:
+        BoolExpr <-- BoolExpr "AND" BoolExpr;
+    role(evaluation) {
+        0 {
+            Predicate<Tuple> expr1 = $1:relation;
+            Predicate<Tuple> expr2 = $2:relation;
+            Predicate<Tuple> filter = obj -> expr1.test(obj) && expr2.test(obj);
+            $0.relation = filter;
+        }
+    }
+}
+\end{lstlisting}
+
+Successivamente, la prima operazione eseguita è \texttt{FROM}. Questa clausola consente di ottenere una copia della tabella identificata dall’\texttt{Id} fornito dall’utente. Dopo aver ottenuto la tabella iniziale, l’ordine d'esecuzione delle altre clausole presenti non è predefinito. Nell’esempio analizzato sono presenti le clausole \texttt{SELECT} e \texttt{WHERE}. La prima viene utilizzata per selezionare gli attributi richiesti dall’utente. In questo caso, significa specificare quali attributi mantenere e quali rimuovere dalla tabella ottenuta come input\footnote{Nel caso illustrato, l’operazione \texttt{SELECT *} richiede la visualizzazione di tutte le colonne della tabella, quindi non viene effettuata alcuna modifica alla tabella ottenuta.}. L’altra operazione, \texttt{WHERE}, consente di filtrare le tuple della tabella utilizzando il predicato costruito dalla valutazione delle condizioni booleane espresse dall’utente. Infine, dopo un numero non definito a priori di manipolazioni dei dati, il risultato ottenuto viene restituito all’utente. Al \Cref{lst:evaluation} sono mostrate le implementazioni dei vari elementi utilizzati.
+
+\lstinputlisting[
+    float,
+    label={lst:evaluation},
+    language=Neverlang,
+    numbers=none,
+    frame=none,
+    caption={Implementazione dei ruoli di \textit{evaluation} delle operazioni utilizzate all'interno dell'esempio.}
+]{listings/evaluation.txt}
+
+Per garantire che la query sia eseguibile correttamente, il progetto implementa anche un controllo sulla struttura del codice fornito. Questo controllo è necessario poiché le regole sintattiche definite nella \Cref{subsec:interrogazioni}, riguardanti le operazioni di manipolazione dei dati, sono poco restrittive e consentono l’utilizzo delle varie clausole SQL senza obblighi precisi riguardo al loro ordine o alla loro combinazione. Ciò potrebbe portare alla scrittura ed esecuzione di query che, pur essendo sintatticamente corrette, risultano semanticamente errate. Un esempio di tale scenario è la query \texttt{FROM Book WHERE Available = TRUE}. Questa query rispetta tutte le regole sintattiche, ma non ha un significato logico corretto, poiché non specifica chiaramente come utilizzare la sottotabella ottenuta selezionando le tuple della tabella \texttt{Book} con l'attributo booleano \texttt{Available} di valore \texttt{TRUE}.
+
+Per risolvere questo problema, è stata implementata una fase di controllo della struttura, la cui implementazione è presente al \Cref{lst:struct}. In questa fase, l’elemento iniziale \texttt{FROM} definisce la query come ``non terminale’’, mentre le operazioni di manipolazione si limitano a copiare tale valore booleano dall’operazione precedente. Quando, in una concatenazione di operazioni, viene utilizzata una clausola terminale, questo parametro viene aggiornato per garantire che la query possa essere riconosciuta come valida. Nell’esempio, l’operazione terminale è rappresentata da \texttt{SELECT}, che specifica che il risultato deve essere restituito all’utente.
+
+\lstinputlisting[
+    float,
+    label={lst:struct},
+    language=Neverlang,
+    numbers=none,
+    frame=none,
+    caption={Implementazione dei ruoli di \textit{struct-checking} delle operazioni utilizzate all'interno dell'esempio.}
+]{listings/check-struct.txt}
 
 \section{Tecnologie utilizzate}
 
