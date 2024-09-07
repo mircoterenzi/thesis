@@ -34,9 +34,17 @@
 
 \frontmatter\frontispiece
 \begin{abstract}
-Nel campo informatico, la riusabilità del codice è un aspetto fondamentale, associato a numerosi vantaggi come la riduzione dei tempi di sviluppo e una maggiore affidabilità, poiché è sufficiente che il codice sia testato una sola volta. Neverlang è un framework progettato per lo sviluppo di linguaggi di programmazione che adotta questa filosofia come elemento chiave, favorendo una modellazione \textit{feature-oriented} volta a promuovere il riutilizzo del codice e, in particolare, dei componenti linguistici. Lo scopo di Neverlang è scomporre gli aspetti funzionali di un linguaggio in una serie di funzionalità, chiamate \textit{features}, per poi creare Domain-Specific Languages (DSL) che implementano solamente le caratteristiche necessarie.
+Nel campo informatico, la riusabilità del codice è un aspetto fondamentale, associato a numerosi vantaggi come la riduzione dei 
+tempi di sviluppo e una maggiore affidabilità, poiché è sufficiente che il codice sia testato una sola volta. Neverlang è un 
+framework progettato per lo sviluppo di linguaggi di programmazione che adotta questa filosofia come elemento chiave, favorendo una 
+modellazione \textit{feature-oriented} volta a promuovere il riutilizzo del codice e, in particolare, dei componenti linguistici. 
+Lo scopo di Neverlang è scomporre gli aspetti funzionali di un linguaggio in una serie di funzionalità, chiamate \textit{features}, 
+per poi creare Domain-Specific Languages (DSL) che implementano solamente le caratteristiche necessarie.
 
-L’obiettivo di questo progetto di tesi è ricreare le funzionalità caratteristiche di SQL in modo modulare e indipendente, rendendo possibile la costruzione di un DSL selezionando soltanto le caratteristiche richieste dal contesto. In questo documento viene illustrato l’intero processo di progettazione e sviluppo del progetto, spiegando e motivando le scelte progettuali adottate. Infine, vengono descritte le possibili estensioni future del progetto, evidenziando i potenziali scenari di utilizzo del linguaggio sviluppato.
+L’obiettivo di questo progetto di tesi è ricreare le funzionalità di SQL in modo modulare e indipendente, rendendo possibile la 
+costruzione di un DSL selezionando soltanto le caratteristiche richieste dal contesto. In questo documento viene illustrato l’intero 
+processo di progettazione e sviluppo del progetto, spiegando e motivando le scelte progettuali adottate. Infine, vengono descritte 
+le possibili estensioni future del progetto, evidenziando i potenziali scenari di utilizzo del linguaggio sviluppato.
 \end{abstract}
 
 
@@ -49,9 +57,17 @@ L’obiettivo di questo progetto di tesi è ricreare le funzionalità caratteris
 \chapter{Introduzione}
 \label{chap:introduzione}
 %----------------------------------------------------------------------------------------
-Il presente lavoro di tesi si concentra sull’utilizzo di Neverlang, un framework per la creazione di linguaggi di programmazione modulari, applicato alla modellazione di Domain-Specific Languages (DSL). I DSL sono linguaggi specializzati, progettati per rispondere a specifiche esigenze di un dominio applicativo, offrendo un approccio più naturale e ottimizzato rispetto ai linguaggi di programmazione \textit{general-purpose}. Attraverso Neverlang è possibile costruire DSL componendo moduli che rappresentano le varie caratteristiche del linguaggio, favorendo la riusabilità e l’estendibilità dei componenti.
+Il presente lavoro di tesi si concentra sull’utilizzo di Neverlang, un framework per la creazione di linguaggi di programmazione 
+modulari, applicato alla modellazione di Domain-Specific Languages (DSL). I DSL sono linguaggi specializzati, progettati per 
+rispondere a specifiche esigenze di un dominio applicativo, offrendo un approccio più naturale e ottimizzato rispetto ai linguaggi 
+di programmazione \textit{general-purpose}. Attraverso Neverlang è possibile costruire DSL componendo moduli che rappresentano le 
+varie caratteristiche del linguaggio, favorendo la riusabilità e l’estendibilità dei componenti.
 
-Il progetto sviluppato in questa tesi mira a ricreare le funzionalità di SQL utilizzando Neverlang, con un focus particolare sulla modularità. Questo approccio è necessario per rispondere alle esigenze didattiche del progetto: l’obiettivo è creare un insieme di \textit{features} che incapsulino singole caratteristiche di SQL, in modo da poter costruire una famiglia di linguaggi SQL che soddisfi le necessità poste a lezione, mostrando solo una sottoparte del linguaggio complessivo. L’elaborato affronta l’intero processo di sviluppo del DSL, dalla progettazione alla validazione.
+Il progetto sviluppato in questa tesi mira a ricreare le funzionalità di SQL utilizzando Neverlang, con un focus particolare sulla 
+modularità. Questo approccio è necessario per rispondere alle esigenze didattiche del progetto: l’obiettivo è creare un insieme di 
+\textit{features} che implementino singole caratteristiche di SQL, in modo da poter costruire una famiglia di linguaggi SQL che 
+soddisfi le necessità poste a lezione, mostrando solo una sottoparte del linguaggio complessivo. L’elaborato affronta l’intero 
+processo di sviluppo del DSL, dalla progettazione alla validazione.
 
 \paragraph{Struttura della Tesi}
 Di seguito viene brevemente descritta la struttura dei capitoli che compongono la tesi. Nel \Cref{chap:contesto} è illustrato il 
@@ -532,7 +548,7 @@ errore.
 \paragraph{Identificare gli elementi}
 Un altro componente fondamentale del linguaggio è il simbolo \texttt{Id}, che rappresenta un identificatore univoco per gli 
 elementi del database, come tabelle e colonne. \texttt{Id} è modellato tramite un’espressione regolare (\textit{regex}) che consente 
-di incapsulare stringhe composte da almeno un carattere alfabetico, seguito opzionalmente da ulteriori caratteri, numeri o un 
+di selezionare stringhe composte da almeno un carattere alfabetico, seguito opzionalmente da ulteriori caratteri, numeri o un 
 carattere di sottolineatura. Questa flessibilità permette a \texttt{Id} di adattarsi a un ampio insieme di convenzioni di 
 denominazione, garantendo che gli identificatori siano sempre validi all’interno del contesto del database. L’utilizzo di una 
 \textit{regex} permette di validare gli identificatori in modo efficiente durante l’esecuzione, tramite l’uso di pattern o parole 
@@ -947,7 +963,7 @@ dimostrando che il linguaggio implementato non solo soddisfa i requisiti definit
 anche margini di miglioramento futuri grazie all’implementazione modulare.
 
 \paragraph{Sviluppi futuri}
-Allo stato attuale, il progetto mira a fornire una base solida che incapsula le caratteristiche principali di SQL. Partendo dal 
+Allo stato attuale, il progetto mira a fornire una base solida che racchiuda le caratteristiche principali di SQL. Partendo dal 
 progetto così definito, è possibile operare su di esso effettuando miglioramenti ed aggiungendo nuove \textit{features}. Di seguito 
 vengono riassunti i principali sviluppi futuri:
 \begin{itemize}
@@ -974,9 +990,11 @@ vengono riassunti i principali sviluppi futuri:
 \bibliography{bibliography}
 
 \begin{acknowledgements}
-A conclusione di questa tesi, vorrei ringraziare il mio relatore, professor Mirko Viroli, e il mio correlatore, professor Gianluca Aguzzi, per il tempo che mi è stato dedicato durante la realizzazione del progetto e dell'elaborato.\\
-Successivamente, vorrei ringraziare la mia famiglia per avermi supportato e per avermi reso la persona che sono oggi. In particolare, ringrazio Viola per essermi sempre stata vicina in questi anni, incoraggiandomi a dare il meglio e aiutandomi a superare i momenti più difficili.\\
-Vorrei ringraziare anche tutti i miei amici, quelli di sempre e quelli che ho conosciuto durante questa avventura, per tutti i bei momenti trascorsi.\\
+A conclusione di questa tesi, vorrei ringraziare il mio relatore, professor Mirko Viroli, e il mio correlatore, professor Gianluca 
+Aguzzi, per il tempo che mi è stato dedicato durante la realizzazione del progetto e dell'elaborato.\\ Successivamente, vorrei ringraziare 
+la mia famiglia per avermi supportato. In particolare, ringrazio Viola per essermi sempre stata vicina in questi anni, incoraggiandomi 
+ed aiutandomi a superare i momenti più difficili.\\ Vorrei ringraziare anche tutti i miei amici, quelli di sempre e quelli 
+che ho conosciuto durante questa esperienza, per tutti i bei momenti trascorsi insieme.\\
 Infine, vorrei ringraziare anche me, per averci creduto fino alla fine.
 \end{acknowledgements}
 \end{document}
