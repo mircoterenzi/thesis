@@ -10,7 +10,7 @@
 % Information used in the title page
 \school{\unibo}
 \programme{Corso di Laurea in Ingegneria e Scienze Informatiche}
-\title{Utilizzo di Neverlang per la modellazione di Domain Specific Languages\note{TODO: chiedere conferma titolo}} %Utilizzo di Neverlang per l'implementazione di un DSL SQL-like
+\title{Utilizzo di Neverlang per la modellazione di Domain Specific Languages}
 \author{Terenzi Mirco}
 \date{\today}
 \subject{Programmazione ad Oggetti}
@@ -34,12 +34,14 @@
 
 \frontmatter\frontispiece
 \begin{abstract}
-Nel campo informatico, la riusabilità del codice è un aspetto fondamentale, associato a numerosi vantaggi come la riduzione dei 
-tempi di sviluppo e una maggiore affidabilità, poiché è sufficiente che il codice sia testato una sola volta. Neverlang è un 
-framework progettato per lo sviluppo di linguaggi di programmazione che adotta questa filosofia come elemento chiave, favorendo una 
-modellazione \textit{feature-oriented} volta a promuovere il riutilizzo del codice e, in particolare, dei componenti linguistici. 
-Lo scopo di Neverlang è scomporre gli aspetti funzionali di un linguaggio in una serie di funzionalità, chiamate \textit{features}, 
-per poi creare Domain-Specific Languages (DSL) che implementano solamente le caratteristiche necessarie.
+    Nel campo informatico, la riusabilità del codice è un aspetto fondamentale, associato a numerosi vantaggi come la riduzione dei 
+    tempi di sviluppo e una maggiore affidabilità, poiché è sufficiente che il codice sia testato una sola volta. Neverlang è un 
+    framework progettato per lo sviluppo di linguaggi di programmazione che adotta questa filosofia come elemento chiave, favorendo 
+    una modellazione \textit{feature-oriented} volta a promuovere il riutilizzo del codice e, in particolare, dei componenti linguistici. 
+    Lo scopo di Neverlang è scomporre gli aspetti funzionali di un linguaggio in una serie di funzionalità, chiamate \textit{features}, 
+    per poi creare Domain-Specific Languages (DSL) che implementano solamente le caratteristiche necessarie. Inoltre, l'utilizzo di 
+    DSL permette di diminuire l'\textit{abstraction gap}, ossia la ``distanza'' tra lo spazio concettuale del problema e il linguaggio 
+    utilizzato per codificarlo, ed il ``carico cognitivo'' necessario per imparare tale linguaggio.
 
 L’obiettivo di questo progetto di tesi è ricreare le funzionalità di SQL in modo modulare e indipendente, rendendo possibile la 
 costruzione di un DSL selezionando soltanto le caratteristiche richieste dal contesto. In questo documento viene illustrato l’intero 
@@ -59,7 +61,7 @@ le possibili estensioni future del progetto, evidenziando i potenziali scenari d
 %----------------------------------------------------------------------------------------
 Il presente lavoro di tesi si concentra sull’utilizzo di Neverlang, un framework per la creazione di linguaggi di programmazione 
 modulari, applicato alla modellazione di Domain-Specific Languages (DSL). I DSL sono linguaggi specializzati, progettati per 
-rispondere a specifiche esigenze di un dominio applicativo, offrendo un approccio più naturale e ottimizzato rispetto ai linguaggi 
+rispondere a specifiche esigenze di un dominio applicativo, offrendo un approccio più naturale rispetto ai linguaggi 
 di programmazione \textit{general-purpose}. Attraverso Neverlang è possibile costruire DSL componendo moduli che rappresentano le 
 varie caratteristiche del linguaggio, favorendo la riusabilità e l’estendibilità dei componenti.
 
@@ -211,12 +213,9 @@ L'albero sintattico precedentemente descritto rappresenta una delle varie forme 
 devono essere rispettate due proprietà significative: le rappresentazioni devono essere facili da generare e facili da trasporre in codice 
 target (ossia il linguaggio di basso livello obiettivo della traduzione).
 
-\paragraph{Ottimizzazione del codice}
+\paragraph{Ottimizzazione e generazione del codice}
 Successivamente, si procede a perfezionare, per quanto possibile, il codice intermedio in modo 
-che si possa poi ottenere un codice finale migliore.
-
-\paragraph{Generazione del codice}
-Infine, il codice intermedio viene utilizzato per generare il codice target.
+che si possa poi ottenere un codice finale migliore. Infine, il codice intermedio viene utilizzato per generare il codice target.
 
 \section{Programmazione feature-oriented}
 La programmazione orientata alle funzionalità, comunemente nota come \ac{FOP}, è un paradigma di programmazione focalizzato sulla modularizzazione 
@@ -437,7 +436,7 @@ tabelle e dei dati, o per effettuare delle estrazioni di informazioni interrogan
 
 \begin{figure}
     \centering
-    \includegraphics[width=.6\linewidth]{figures/model-diagram.pdf}
+    \includegraphics[width=.8\linewidth]{figures/model-diagram.pdf}
     \caption{Schema UML dell'analisi del problema, al suo interno sono rappresentate le entità principali coinvolte nella memorizzazione 
             dei dati e le relazioni tra di esse.}
     \label{fig:model-diagram}
@@ -528,9 +527,9 @@ potranno essere aggiunti a quelle già esistenti senza dover modificare la sinta
 Concludendo, l'approccio modulare proposto non solo migliora la chiarezza del codice ma aumenta anche la manutenibilità del 
 linguaggio, permettendo l’aggiornamento o la modifica di singole operazioni senza influire sull’intero sistema.
 
-\begin{figure}[H]
+\begin{figure}
     \centering
-    \includegraphics[width=.8\linewidth]{figures/list-ast.pdf}
+    \includegraphics[width=.6\linewidth]{figures/list-ast.pdf}
     \caption{Esempio di albero sintattico di una lista di operazioni}
     \label{fig:list-ast}
 \end{figure}
@@ -811,15 +810,16 @@ sintattiche del linguaggio vengono analizzate per determinare l’azione esatta 
 valutazione, vengono interpretati i vari componenti della query, come selezioni, filtraggi, ordinamenti e aggregazioni, per determinare come 
 interagiscono tra loro e quali operazioni specifiche devono essere eseguite sul database. Questa fase traduce essenzialmente le istruzioni 
 della query da una rappresentazione sintattica a un insieme di operazioni concrete che manipolano i dati o le tabelle nel database.
-\newline
-\newline
+
 Di seguito viene proposto un esempio per illustrare come le query vengono tradotte in codice Java. La query di partenza utilizzata è:
 \begin{lstlisting}[language=SQL]
 SELECT * FROM Book
 WHERE Price > 12 AND Available = TRUE;
 \end{lstlisting}
-Inizialmente, le condizioni definite tramite operatori relazionali vengono tradotte in predicati Java, poi aggregati utilizzando l’operatore logico \texttt{AND}. Di seguito viene riportata l’implementazione di questi due 
-elementi\footnote{Per brevità, vengono mostrate solo le parti di codice rilevanti per l’esempio. In particolare, come operatore relazionale viene utilizzato \texttt{>}, mentre come operatore logico viene utilizzato \texttt{AND}.}:
+Inizialmente, le condizioni definite tramite operatori relazionali vengono tradotte in predicati Java, poi aggregati utilizzando l’operatore 
+logico \texttt{AND}. Di seguito viene riportata l’implementazione di questi due elementi\footnote{Per brevità, vengono mostrate solo le parti 
+di codice rilevanti per l’esempio. In particolare, come operatore relazionale viene utilizzato \texttt{>}, mentre come operatore logico viene 
+utilizzato \texttt{AND}.}:
 \begin{lstlisting}[language=Neverlang]
 module RelationalExpression {
     reference syntax {
@@ -1007,7 +1007,8 @@ caption={Porzione di codice implementata per poter confrontare l'output generato
 
 \newpage
 \section{Conclusioni}
-In questo lavoro di tesi è stato esplorato l’utilizzo del framework Neverlang per la modellazione di Domain-Specific Languages, 
+In questo lavoro di tesi\footnote{Repository del progetto: https://github.com/mircoterenzi/neverlang-sql} è stato esplorato 
+l’utilizzo del framework Neverlang per la modellazione di Domain-Specific Languages, 
 principalmente integrando funzionalità tipiche di SQL per la gestione e manipolazione di database. L’approccio modulare offerto 
 da Neverlang ha consentito di costruire un linguaggio altamente flessibile, all’interno del quale le singole funzionalità possono 
 essere aggiunte o modificate in modo incrementale. È stato evidenziato come modularità, riusabilità e flessibilità siano stati 
@@ -1050,12 +1051,4 @@ vengono riassunti i principali sviluppi futuri:
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
-\begin{acknowledgements}
-A conclusione di questa tesi, vorrei ringraziare il mio relatore, professor Mirko Viroli, e il mio correlatore, professor Gianluca 
-Aguzzi, per il tempo che mi è stato dedicato durante la realizzazione del progetto e dell'elaborato.\\ Successivamente, vorrei ringraziare 
-la mia famiglia per avermi supportato. In particolare, ringrazio Viola per essermi sempre stata vicina in questi anni, incoraggiandomi 
-ed aiutandomi a superare i momenti più difficili.\\ Vorrei ringraziare anche tutti i miei amici, quelli di sempre e quelli 
-che ho conosciuto durante questa esperienza, per tutti i bei momenti trascorsi insieme.\\
-Infine, vorrei ringraziare anche me, per averci creduto fino alla fine.
-\end{acknowledgements}
 \end{document}
