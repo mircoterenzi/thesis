@@ -59,16 +59,20 @@ le possibili estensioni future del progetto, evidenziando i potenziali scenari d
 \chapter{Introduzione}
 \label{chap:introduzione}
 %----------------------------------------------------------------------------------------
-Il presente lavoro di tesi si concentra sull’utilizzo di Neverlang, un framework per la creazione di linguaggi di programmazione 
-modulari, applicato alla modellazione di Domain-Specific Languages (DSL). I DSL sono linguaggi specializzati, progettati per 
-rispondere a specifiche esigenze di un dominio applicativo, offrendo un approccio più naturale rispetto ai linguaggi 
-di programmazione \textit{general-purpose}. Attraverso Neverlang è possibile costruire DSL componendo moduli che rappresentano le 
-varie caratteristiche del linguaggio, favorendo la riusabilità e l’estendibilità dei componenti.
+Il presente lavoro di tesi si concentra sull’utilizzo di Neverlang Language Workbench, un prototipo di ricerca sviluppato dal professor 
+W. Cazzola e dai suoi collaboratori, utilizzato per studiare metodologie agili nello sviluppo di Domain-Specific Languages (DSL). 
+Neverlang è un framework che facilita la definizione di linguaggi di programmazione in modo incrementale ed agile, consentendo la 
+separazione tra sintassi e semantica. L’utilizzo del framework, unito a una corretta progettazione modulare, permette a ogni 
+componente del linguaggio, chiamato \textit{slice}, di essere sviluppato, testato e sostituito in maniera indipendente \cite{Cazzola2023}.
 
-Il progetto sviluppato in questa tesi mira a ricreare le funzionalità di SQL utilizzando Neverlang, con un focus particolare sulla 
-modularità. Questo approccio è necessario per rispondere alle esigenze didattiche del progetto: l’obiettivo è creare un insieme di 
-\textit{features} che implementino singole caratteristiche di SQL, in modo da poter costruire una famiglia di linguaggi SQL che 
-soddisfi le necessità poste a lezione, mostrando solo una sottoparte del linguaggio complessivo. L’elaborato affronta l’intero 
+In particolare, i DSL sono linguaggi specializzati, progettati per rispondere a specifiche esigenze di un dominio applicativo, offrendo 
+un approccio più naturale rispetto ai linguaggi di programmazione \textit{general-purpose}. Attraverso Neverlang, è possibile costruire 
+DSL componendo moduli che rappresentano le varie caratteristiche del linguaggio, favorendo la riusabilità e l’estendibilità dei componenti.
+
+Il progetto sviluppato in questa tesi mira a ricreare le funzionalità di SQL utilizzando il framework Neverlang, con un particolare 
+focus sulla modularità. Questo approccio risponde alle esigenze didattiche del progetto: l’obiettivo è creare un insieme di 
+\textit{features} che implementino singole caratteristiche di SQL, in modo da poter costruire una famiglia di linguaggi SQL che soddisfi 
+le necessità poste a lezione, mostrando solamente una sottoparte del linguaggio complessivo. Nell’elaborato viene affrontato l’intero 
 processo di sviluppo del DSL, dalla progettazione alla validazione.
 
 \paragraph{Struttura della Tesi}
